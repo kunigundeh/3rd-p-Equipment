@@ -308,7 +308,7 @@ ThirdPersonEquipmentExtension.load_item = function(self, equipment_info, unit_na
 
 		if package then
 			unit = self:spawn(package, item_setting, item_data)
-			--mod:echo('spawned ' ..tostring(package))
+			mod:echo('spawned ' ..tostring(package))
 			if unit and material_settings then
 				GearUtils.apply_material_settings(unit, material_settings)
 			end
@@ -526,6 +526,7 @@ ThirdPersonEquipmentExtension.spawn = function(self, package_name, item_setting,
 	--local item_unit = World.spawn_unit(world, package_name)
 	
     local unit_spawner = Managers.state.unit_spawner
+	mod:echo("Equip:	"..package_name)
     local item_unit = unit_spawner:spawn_local_unit(package_name)
 	
 	-- Add to spawned units
@@ -705,8 +706,10 @@ ThirdPersonEquipmentExtension.delete_item_unit = function(self, item_unit, sub_u
         mod.spawned_units[item_unit[sub_unit]] = nil
         if Unit.alive(item_unit[sub_unit]) then
 			
-           World.destroy_unit(world, item_unit[sub_unit])
-		   POSITION_LOOKUP[item_unit[sub_unit]] = nil
+			if POSITION_LOOKUP[item_unit[sub_unit]] then
+				POSITION_LOOKUP[item_unit[sub_unit]] = nil
+			end
+			World.destroy_unit(world, item_unit[sub_unit])
 		   --local unit_spawner:world_delete_units(item_unit[sub_unit])
         end
     end
