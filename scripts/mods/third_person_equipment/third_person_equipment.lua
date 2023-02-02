@@ -54,7 +54,9 @@ mod.delete_all_units = function(self)
 				POSITION_LOOKUP[unit] = nil        -- dalo fix    	
 			 end
 			if Unit.alive(unit) then
-				POSITION_LOOKUP[item_unit[sub_unit]] = nil
+				if POSITION_LOOKUP[unit] then
+					POSITION_LOOKUP[unit] = nil
+				end
 				World.destroy_unit(world, unit)
 				--local unit_spawner:world_delete_units(item_unit[sub_unit])
 			
