@@ -143,6 +143,8 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
     -- Add to list
     mod.extensions[self.unit] = self
 
+	--setup a trophies list that a trinket can occupy
+	--may make it so more of the "generic_trophies" units can be used
 	self.attached_trophies = {}
 	--mod:echo("init flow unit attachment: " .. tostring(self.unit))
 end
@@ -672,6 +674,9 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 end
 
 
+--[[
+    Retrieves a player's mesh based off of career name
+--]]
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	local career_name = self:career_name()
 	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
@@ -680,6 +685,9 @@ ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	return mesh_name
 end
 
+--[[
+    Retrieves a player's equiped trinket based off of career name
+--]]
 ThirdPersonEquipmentExtension.get_trinket = function(self)
 	local career_name = self:career_name()
 	local trinket_data = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
@@ -714,6 +722,9 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 end
 
 
+--[[
+    Removes trinket
+--]]
 ThirdPersonEquipmentExtension.remove_trinket = function(self)
 	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
 	local trinket_unit = self.attached_trophies["trinket"]
