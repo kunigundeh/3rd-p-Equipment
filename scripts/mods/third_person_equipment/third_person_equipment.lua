@@ -12,6 +12,10 @@ mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
 -- Load extension
 mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_ext")
 
+
+mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
+
+
 -- ##### ██████╗  █████╗ ████████╗ █████╗ #############################################################################
 -- ##### ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗ ############################################################################
 -- ##### ██║  ██║███████║   ██║   ███████║ ############################################################################
