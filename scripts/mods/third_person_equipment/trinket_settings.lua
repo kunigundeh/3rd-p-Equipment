@@ -10,7 +10,7 @@ for cosmetic_name, cosmetic_data in pairs(Cosmetics) do
     if cosmetic_data.third_person_attachment then
         local mesh_name = cosmetic_data.third_person_attachment.unit
         mod.trinkets[mesh_name] = {
-            attachement_nodes = attachment_table, offset = {0,0,0},
+            attachement_nodes = attachment_table, offset = {0,0,0}, angle = {0,0,0},
         }
     end
 end
@@ -30,39 +30,65 @@ mod.trinket_lookup = {
 	trinket_12 = "",
 }
 
-
-
-local kruber = {
-    ["units/beings/player/empire_soldier_mercenary/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_mercenary_skin_01/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_huntsman/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_huntsman_skin_01/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_longshark/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_knight/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_knight_skin_01/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_knight_skin_02/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
-    },
-    ["units/beings/player/empire_soldier_breton/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = attachment_table, offset = {0,0,0},
+mod.rotation_correction = {
+    ["units/beings/player/generic_trophies/trophy_achievement_gem/trophy_achievement_gem"] = {
+        0,
+        3,
+        0
     },
 }
 
-for k,v in pairs(kruber) do 
+
+
+
+local default_salts_attach = {
+    {
+        target = 0,
+        source = "j_spine2"
+    },
+}
+
+local wp_salts_attach = {
+    {
+        target = 0,
+        source = "j_spine"
+    },
+}
+
+local salts = {
+    ["units/beings/player/witch_hunter/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.14, 0.05}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_bounty_hunter/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.1, 0.15, -0.08}, angle = {1.5,0,0},
+    },
+    ["units/beings/player/witch_hunter_bounty_hunter_skin_01/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.1, 0.13, 0.08}, angle = {1.5,0,0},
+    },
+    ["units/beings/player/witch_hunter_bounty_hunter_skin_02/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.1, 0.14, 0.08}, angle = {1,0,0},
+    },
+    ["units/beings/player/witch_hunter_captain/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.1, 0.15, 0.1}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_captain_skin_01/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.1, 0.12, 0.1}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_zealot/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_flagellant/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_zealot_skin_01/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+    },
+    ["units/beings/player/witch_hunter_warrior_priest/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = wp_salts_attach, offset = {0.14, 0.19, -0.05}, angle = {1.5,0,0},
+    },
+}
+
+for k,v in pairs(salts) do 
     mod.trinkets[k] = table.clone(v, true) 
 end
 

@@ -7,6 +7,21 @@ local mod = get_mod("third_person_equipment")
 	Author: grasmann
 --]]
 
+local function radians_to_quaternion(theta, ro, phi)
+    local c1 =  math.cos(theta/2)
+    local c2 = math.cos(ro/2)
+    local c3 = math.cos(phi/2)
+    local s1 = math.sin(theta/2)
+    local s2 = math.sin(ro/2)
+    local s3 = math.sin(phi/2)
+    local x = (s1*s2*c3) + (c1*c2*s3)
+    local y = (s1*c2*c3) + (c1*s2*s3)
+    local z = (c1*s2*c3) - (s1*c2*s3)
+    local w = (c1*c2*c3) - (s1*s2*s3)
+    local rot = Quaternion.from_elements(x, y, z, w)
+    return rot
+end
+
 -- ##### ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗ ###################################################################
 -- ##### ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝ ###################################################################
 -- ##### ███████║██║   ██║██║   ██║█████╔╝ ███████╗ ###################################################################
@@ -64,7 +79,9 @@ mod:hook_safe(SimpleHuskInventoryExtension, "add_equipment", add_equipment)
 mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
 	if slot_name == "slot_trinket_1" then
 		local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
-		inventory_extension.tpe_extension:add_trinket(player.player_unit)
+		if inventory_extension then
+			inventory_extension.tpe_extension:add_trinket(player.player_unit)
+		end
 	end
 end)
 
@@ -713,9 +730,24 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	Managers.package:load(package_name, "global")
 	local item_unit = unit_spawner:spawn_local_unit(package_name)
 
-	local attachment_table = mod.trinkets[mesh_name].attachement_nodes
+	local item_attach_data = mod.trinkets[mesh_name]
+	local attachment_table = item_attach_data.attachement_nodes
+	local attachment_offset = item_attach_data.offset
+	local attachment_angle = item_attach_data.angle
 	
 	AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
+
+	local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+	Unit.set_local_position(item_unit, 0, pos)
+
+	local rotation_correction = mod.rotation_correction[package_name]
+	if rotation_correction then
+		attachment_angle[1] = rotation_correction[1] + attachment_angle[1]
+		attachment_angle[2] = rotation_correction[2] + attachment_angle[2]
+		attachment_angle[3] = rotation_correction[3] + attachment_angle[3]
+	end
+	local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+	Unit.set_local_rotation(item_unit, 0, rot)
 
 	self.attached_trophies["trinket"] = item_unit
 	
