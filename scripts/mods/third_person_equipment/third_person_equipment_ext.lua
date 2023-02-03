@@ -740,12 +740,13 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 	Unit.set_local_position(item_unit, 0, pos)
 
-	local rotation_correction = mod.rotation_correction[package_name]
-	if rotation_correction then
-		attachment_angle[1] = rotation_correction[1] + attachment_angle[1]
-		attachment_angle[2] = rotation_correction[2] + attachment_angle[2]
-		attachment_angle[3] = rotation_correction[3] + attachment_angle[3]
-	end
+	-- using this method causes subsequent units to be rotated as well until rotation is reapplied
+	-- local rotation_correction = mod.rotation_correction[package_name]
+	-- if rotation_correction then
+	-- 	attachment_angle[1] = rotation_correction[1] + attachment_angle[1]
+	-- 	attachment_angle[2] = rotation_correction[2] + attachment_angle[2]
+	-- 	attachment_angle[3] = rotation_correction[3] + attachment_angle[3]
+	-- end
 	local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 	Unit.set_local_rotation(item_unit, 0, rot)
 

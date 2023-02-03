@@ -30,13 +30,14 @@ mod.trinket_lookup = {
 	trinket_12 = "",
 }
 
-mod.rotation_correction = {
-    ["units/beings/player/generic_trophies/trophy_achievement_gem/trophy_achievement_gem"] = {
-        0,
-        3,
-        0
-    },
-}
+-- using this method causes subsequent units to be rotated as well until rotation is reapplied
+-- mod.rotation_correction = {
+--     ["units/beings/player/generic_trophies/trophy_achievement_gem/trophy_achievement_gem"] = {
+--         0,
+--         3,
+--         0
+--     },
+-- }
 
 
 
@@ -75,13 +76,13 @@ local salts = {
         attachement_nodes = default_salts_attach, offset = {0.1, 0.12, 0.1}, angle = {90,0,0},
     },
     ["units/beings/player/witch_hunter_zealot/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {2, 0.15, 0},
     },
     ["units/beings/player/witch_hunter_flagellant/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.17, 0.1}, angle = {1.5, 0, 0.5},
     },
     ["units/beings/player/witch_hunter_zealot_skin_01/third_person_base/chr_third_person_mesh"] = {
-        attachement_nodes = default_salts_attach, offset = {0.05, 0.15, 0.1}, angle = {90,0,0},
+        attachement_nodes = default_salts_attach, offset = {0.05, 0.11, 0.1}, angle = {1.5, 0, 0.5},
     },
     ["units/beings/player/witch_hunter_warrior_priest/third_person_base/chr_third_person_mesh"] = {
         attachement_nodes = wp_salts_attach, offset = {0.14, 0.19, -0.05}, angle = {1.5,0,0},
