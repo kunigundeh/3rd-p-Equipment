@@ -5,6 +5,8 @@ local mod = get_mod("third_person_equipment")
 	Author: grasmann
 --]]
 
+mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
+
 local parts = {
 	backpack_1 = {
 		en = "-- Backpack --\n",
@@ -137,4 +139,22 @@ return {
 		en = "Downscale the biggest weapons.",
 		de = "Verkleinert die größten Waffen.",
 	},
+	test_setting_tooltip = {
+		en = "Tooltip for test-settings.",
+		de = "Verkleinert die größten Waffen.",
+	},
+	test_setting_text = {
+		en = "Weapon Height:",
+		de = "Große Waffen verkleinern",
+	},
+	item_positions_text = {
+		en = "Equipment Positions",
+		de = "Equipment Positionen",
+	},
+	item_positions_text = {
+		en = "Equipment Positions",
+		de = "Equipment Positionen",
+	},
+	
+	
 }

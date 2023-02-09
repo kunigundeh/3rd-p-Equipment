@@ -116,7 +116,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
     self.link_queue = {}
-    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade"}
+    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} --"slot_necklace", "slot_trinket_1", "slot_ring",} -- test additional slots
     self.slot = self.inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
@@ -125,7 +125,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 		"catapulted", "dead", "falling", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
-		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", 
+		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote", 
 	}
 	self.special_states_remote_only = {
 		"climbing_ladder",
@@ -187,6 +187,7 @@ end
 ThirdPersonEquipmentExtension.is_special_state = function(self)
 	local is_special_state = false
 	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
+	--mod:echo("state = " .. state_system)
 	if state_system ~= nil then
 		local state = state_system.state_machine.state_current
 		for _, special_state in pairs(self.special_states) do
@@ -261,9 +262,10 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, item_data)
         }
         -- Set slot
         self.slot = self.slot or tpe.inventory_extension:equipment().wielded_slot or "slot_melee"
-    elseif item_data.item_type ~= nil and item_data.item_type ~= "inventory_item" then
+    elseif item_data.item_type ~= nil and item_data.item_type ~= "inventory_item" 
+	then
         -- Item type not implemented
-		mod:echo(tostring(item_data.item_type).." is missing!") --correction: self-->echo
+		mod:echo(tostring(item_data.item_type).. " is missing!") --correction: self-->echo
 	end
     -- Update visibility
     self:set_equipment_visibility()
@@ -288,6 +290,14 @@ ThirdPersonEquipmentExtension.load_item = function(self, equipment_info, unit_na
 
 		if VT1 then
 			package = item_data[unit_name].."_3p"
+
+		--trinket test
+
+
+		--if slot_name == "slot_trinket_01" then
+			--mod:echo("slot is " .. slot_name)
+			--package = "units/beings/player/generic_trophies/trophy_luckstone/trophy_luckstone_01"
+
 		else
 			package = WeaponSkins and equipment.slots[slot_name] and WeaponSkins.skins[equipment.slots[slot_name].skin] and WeaponSkins.skins[equipment.slots[slot_name].skin][unit_name].."_3p"
 			local inventory_extension = ScriptUnit.extension(self.unit, "inventory_system")
@@ -316,8 +326,9 @@ ThirdPersonEquipmentExtension.get_item_setting = function(self, equipment_info, 
     local item_data = equipment_info.item_data
 
 	-- ####### Fixes and options #######
-	if slot_name == "slot_melee" or slot_name == "slot_ranged" then
-		
+	if slot_name == "slot_melee" or slot_name == "slot_ranged"  then
+	--or slot_name == "slot_trinket_01" or slot_name == "slot_ring" or slot_name == "slot_necklace"
+
 		-- Dwarf
 		if table.contains(def.dwarf_weapons, item_data.item_type) then
 			local dwarf_weapon_position = mod:get("dwarf_weapon_position")
@@ -545,15 +556,22 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
 
 	local attachment = item_setting.attachment or nil
 	local world = Managers.world:world("level_world")
-	--mod:echo('trying to link')
+	mod:echo('trying to link')
 
 	if attachment then
 		-- Attach unit to attachment unit
-        local unit_attachments = Unit.get_data(item_unit, "flow_unit_attachments")
-		mod:echo('unit_attachments = '.. tostring(unit_attachments))
+	
+		local world = Unit.world(item_unit)	
+		local unit_attachments = Unit.get_data(item_unit, "flow_unit_attachments")
+		--local unit_attachments = Unit.get_data(self.Unit, "flow_unit_attachments")
+        --local unit_attachments = Unit.get_data(self.unit, nodes)  
+		--mod:echo('unit_attachments = '.. tostring(#unit_attachments))
 		
-        if unit_attachments and #unit_attachments > 0 then
-            if item_setting.test then mod:echo("unit_attachments: "..tostring(#unit_attachments)) end
+        if unit_attachments --and #unit_attachments > 0 
+		then
+            --if item_setting.test then 
+				--mod:echo("unit_attachments: "..tostring(#unit_attachments)) 
+			--end
             local attachment_unit = attachment and unit_attachments[attachment]
             local bones = attachment_unit and Unit.bones(attachment_unit)
             if bones then
@@ -574,20 +592,31 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
             }
             return
         end
+		
 	elseif Unit.has_node(self.unit, item_setting.node) then
 		-- Attach unit to node
 		
 		local node = Unit.node(self.unit, item_setting.node)
-		--mod:echo('attaching' .. tostring(witem_unit) ..' to '.. node )
+		mod:echo("node " .. item_setting.node .. " found, index: " .. node)
+		mod:echo('attaching to '.. item_setting.node )
 		World.link_unit(world, item_unit, self.unit, node)
 	else
-		mod:echo('could not attach')
+		mod:echo("node: " .. item_setting.node ..' not found, could not attach')
 	end
 
-	-- Set position
+	--[[ Set position
 	local item_position = item_setting.position
 	local pos_offset = item_position ~= nil and Vector3(item_position[1], item_position[2], item_position[3]) or Vector3(0,0,0)
+	Unit.set_local_position(item_unit, 0, pos_offset)]]
+
+	-- test positioning
+	
+		
+	local item_position = item_setting.position
+	
+	local pos_offset = item_position ~= nil and Vector3(item_position[1], item_position[2], item_position[3]) or Vector3(0,0,0)
 	Unit.set_local_position(item_unit, 0, pos_offset)
+	
 
 	-- Set rotation
 	local item_rotation = item_setting.rotation
@@ -617,7 +646,7 @@ ThirdPersonEquipmentExtension.add_all = function(self)
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
         self:add(slot_name, slot.item_data)
 		mod:echo(tostring(slot_name) .. ' added')
-		mod:echo('add all exec')
+		--mod:echo('add all exec')
     end
 
 	if not self:is_local_player() then
@@ -642,6 +671,14 @@ ThirdPersonEquipmentExtension.remove = function(self, slot_name)
 				-- Set equipment nil
 				self.equipment[i] = nil
             end
+
+			if sub_unit then
+				if item_unit[sub_unit] then 
+				if POSITION_LOOKUP[item_unit[sub_unit]] then     -- dalo fix
+				POSITION_LOOKUP[item_unit[sub_unit]] = nil    -- dalo fix
+			  end
+			end
+		end
         end
     end
 end
@@ -667,7 +704,9 @@ ThirdPersonEquipmentExtension.delete_item_unit = function(self, item_unit, sub_u
 	if item_unit[sub_unit] ~= nil then
         mod.spawned_units[item_unit[sub_unit]] = nil
         if Unit.alive(item_unit[sub_unit]) then
+			
            World.destroy_unit(world, item_unit[sub_unit])
+		   POSITION_LOOKUP[item_unit[sub_unit]] = nil
 		   --local unit_spawner:world_delete_units(item_unit[sub_unit])
         end
     end

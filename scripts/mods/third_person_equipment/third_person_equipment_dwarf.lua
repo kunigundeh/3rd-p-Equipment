@@ -8,15 +8,17 @@ local mod = get_mod("third_person_equipment")
 
 local default_node = "j_spine"
 local default_node_2 = "j_spine2"
-local backpack_node = VT1 and "a_hanging_trophy_3" or default_node
+--local backpack_node = VT1 and "a_hanging_trophy_3" or default_node
+local backpack_node = "a_hanging_trophy_3"
 local hip_node = "j_hips"
 
 -- ##### Potion #######################################################################################################
 mod.definitions.potion.dwarf_ranger = {
     left = { node = backpack_node, position = {0.35, -0.13, -0.07}, rotation = {60, -20, -10},                                             -- Default / V1
     dr_ranger = { 
-        node = default_node, position = {-0.05, -0.18, 0.25}, rotation = {60, 120, 0},                                                    -- V2 ranger
-        skin_dr_default = { node = default_node, position = {-0.1, -0.18, 0.2}, rotation = {60, 120, 0}, },                             -- V2 classic ranger skin
+        --node = default_node, position = {-0.05, -0.18, 0.25}, rotation = {60, 120, 0},         
+        node = backpack_node, position = {0.35, -0.13, -0.07}, rotation = {60, -20, -10},                                           -- V2 ranger
+        skin_dr_default = { node = backpack_node, position = {-0.1, -0.18, 0.2}, rotation = {60, 120, 0}, },                             -- V2 classic ranger skin
     },
     dr_ironbreaker = { node = default_node, position = {-0.05, -0.18, 0.25}, rotation = {60, 120, 0}, },                                  -- V2 ironbreaker
     dr_slayer = { node = default_node, position = {-0.05, -0.18, 0.25}, rotation = {60, 120, 0}, },                                       -- V2 slayer
@@ -58,43 +60,40 @@ mod.definitions.healthkit.dwarf_ranger = {
 -- ##### Axe and Shield ###############################################################################################
 mod.definitions.dr_1h_axe_shield = {
     right = {
-        back = { node = default_node_2, position = {0.4, -0.2, 0.1}, rotation = {0, -110, 90}, 												-- Default / V1				2.1.0
-            dr_ranger = {
-                node = default_node_2, position = {0.3, -0.17, 0.1}, rotation = {0, -110, 90}, 												-- V2 ranger				2.1.0
-                skin_dr_default = { node = default_node_2, position = {0.35, -0.15, 0.1}, rotation = {0, -110, 90}, },						-- V2 classic ranger skin	2.1.0
-            },
-            dr_ironbreaker = { node = default_node_2, position = {0.3, -0.2, 0.1}, rotation = {0, -110, 90}, },								-- V2 ironbreaker			2.1.0
+        back = { node = default_node_2, position = {0.4, -0.2, 0.1}, rotation = {0, -110, 90},												-- Default / V1				2.1.0
+            dr_ranger = { copy = "backpack", },																								-- V2 ranger				2.1.0
+            dr_ironbreaker = { copy = "backpack", },																						-- V2 ironbreaker			2.1.0
         },
         backpack = { node = backpack_node, position = {0.3, -0.5, 0.1}, rotation = {40, 160, 20},											-- Default / V1				2.1.0
-            dr_ranger = {
+            dr_ranger = { 
                 attachment = 2, attachment_node = 9, position = {0.12, -0.03, -0.25}, rotation = {0, 15, 180},								-- V2 ranger				2.5.0
                 skin_dr_default = { attachment = 2, attachment_node = 13, position = {0.26, -0.5, 0.1}, rotation = {40, 150, 20}, },		-- V2 classic ranger skin	2.1.0
             },
-            dr_ironbreaker = { attachment = 1, attachment_node = 6, position = {-0.15, -0.03, 0.1}, rotation = {0, 180, 180}, },			-- V2 ironbreaker			2.1.0
+            dr_ironbreaker = { attachment = 1, attachment_node = 6, position = {-0.15, -0.03, 0.25}, rotation = {0, 180, 90}, },			-- V2 ironbreaker			2.1.0
         },
         belt = { node = hip_node, position = {0.13, 0.1, -0.27}, rotation = {130, -70, 110},												-- Default / V1				2.1.0
             dr_ranger = {
-                node = hip_node, position = {0.2, 0.1, -0.28}, rotation = {110, -70, -70},													-- V2 ranger				2.1.0
-                skin_dr_default = { node = hip_node, position = {0.13, 0.1, -0.25}, rotation = {130, -70, 110}, },							-- V2 classic ranger skin	2.1.0
+                node = hip_node, position = {0.13, 0.1, -0.27}, rotation = {130, -70, 110},													-- V2 ranger				2.1.0
+                skin_dr_default = { node = hip_node, position = {0.13, 0.1, -0.26}, rotation = {130, -70, 110}, },							-- V2 classic ranger skin	2.1.0
             },
-            dr_ironbreaker = { node = hip_node, position = {0.2, 0.1, -0.25}, rotation = {110, -70, -70}, },								-- V2 ironbreaker			2.1.0
+            dr_ironbreaker = { node = hip_node, position = {0.13, 0.1, -0.27}, rotation = {130, -70, 110}, },								-- V2 ironbreaker			2.1.0
         },
     },
     left = {
         back = { node = backpack_node, position = {0.3, -0.3, 0.12}, rotation = {60, -40, -100},											-- Default / V1				2.1.0
-            dr_ranger = { copy = "backpack", },																								-- V2 ranger				2.1.0
-            dr_ironbreaker = { copy = "backpack", },																						-- V2 ironbreaker			2.1.0
+            dr_ranger = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },																								-- V2 ranger				2.1.0
+            dr_ironbreaker = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },																						-- V2 ironbreaker			2.1.0
         },
         backpack = { node = backpack_node, position = {0.3, -0.3, 0.12}, rotation = {60, -40, -100},										-- Default / V1				2.1.0
-            dr_ranger = {
-                attachment = 2, attachment_node = 9, position = {0.02, -0.07, -0.2}, rotation = {0, -140, 90},								-- V2 ranger				2.5.0
-                skin_dr_default = { attachment = 2, attachment_node = 13, position = {0.3, -0.3, 0.12}, rotation = {60, -40, -100}, },		-- V2 classic ranger skin	2.1.0
+            dr_ranger = { 
+                node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75},								                    -- V2 ranger				2.5.0
+                skin_dr_default = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },		                    -- V2 classic ranger skin	2.1.0
             },
-            dr_ironbreaker = { attachment = 1, attachment_node = 6, position = {-0.15, -0.07, 0.1}, rotation = {0, 0, 90}, },				-- V2 ironbreaker
+            dr_ironbreaker = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },				                -- V2 ironbreaker			2.1.0
         },
         belt = { node = backpack_node, position = {0.3, -0.3, 0.12}, rotation = {60, -40, -100},											-- Default / V1				2.1.0
-            dr_ranger = { copy = "backpack", },																								-- V2 ranger				2.1.0
-            dr_ironbreaker = { copy = "backpack", },																						-- V2 ironbreaker			2.1.0
+            dr_ranger = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },																								-- V2 ranger				2.1.0
+            dr_ironbreaker = { node = default_node, position = {0.3, -0.22, 0.1}, rotation = {0, 110, 75}, },																						-- V2 ironbreaker			2.1.0
         },
     },
 }

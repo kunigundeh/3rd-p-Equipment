@@ -198,8 +198,8 @@ mod.definitions.bw_dagger = {
                 node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, 										-- V2 battle wizard					2.1.0
                 skin_bw_default = { node = hip_node, position = {0.2, 0.05, -0.14}, rotation = {130, -70, 110}, },				-- V2 classic battle wizard skin	2.1.0
             },
-            bw_unchained = { attachment = 1, attachment_node = 4, position = {-0.1, 0.05, -0.05}, rotation = {20, 60, -90}, },	-- V2 unchained						2.1.0
-            bw_scholar = { attachment = 1, attachment_node = 4, position = {-0.1, 0.05, -0.05}, rotation = {20, 60, -90}, },	-- V2 pyromancer					2.1.0
+            bw_unchained = { node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, },	-- V2 unchained						2.1.0
+            bw_scholar = { node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, },	-- V2 pyromancer					2.1.0
         },
         back = { node = default_node_2, position = {0.25, -0.14, 0.1}, rotation = {0, -110, 90},								-- Default / V1						2.1.0
             bw_adept = { 
@@ -221,8 +221,8 @@ mod.definitions.bw_1h_dagger = {
                 node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, 										-- V2 battle wizard					2.1.0
                 skin_bw_default = { node = hip_node, position = {0.2, 0.05, -0.14}, rotation = {130, -70, 110}, },				-- V2 classic battle wizard skin	2.1.0
             },
-            bw_unchained = { attachment = 1, attachment_node = 4, position = {-0.1, 0.05, -0.05}, rotation = {20, 60, -90}, },	-- V2 unchained						2.1.0
-            bw_scholar = { attachment = 1, attachment_node = 4, position = {-0.1, 0.05, -0.05}, rotation = {20, 60, -90}, },	-- V2 pyromancer					2.1.0
+            bw_unchained = { node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, },	-- V2 unchained						2.1.0
+            bw_scholar = { node = hip_node, position = {0.2, 0.05, -0.17}, rotation = {90, -60, 110}, },	-- V2 pyromancer					2.1.0
         },
         back = { node = default_node_2, position = {0.25, -0.14, 0.1}, rotation = {0, -110, 90},								-- Default / V1						2.1.0
             bw_adept = { 

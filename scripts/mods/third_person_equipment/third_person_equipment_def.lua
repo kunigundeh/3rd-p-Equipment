@@ -85,7 +85,10 @@ mod.definitions = {
 		"es_deus_01",
 		"we_deus_01",
 		"we_2h_spear",
+		"we_1h_spears_shield",
+	
 	},
+	
 
 	-- Pickups
 	wpn_side_objective_tome_01 = {
