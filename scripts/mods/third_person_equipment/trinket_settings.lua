@@ -89,6 +89,45 @@ local salts = {
     },
 }
 
+local elf = {
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+    [""] = {
+        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    },
+}
+
 for k,v in pairs(salts) do 
     mod.trinkets[k] = table.clone(v, true) 
 end
