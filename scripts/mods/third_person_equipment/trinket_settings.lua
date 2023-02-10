@@ -89,46 +89,59 @@ local salts = {
     },
 }
 
+
+local default_elf_attach = {
+    {
+        target = 0,
+        source = "j_spine2"
+    },
+}
+
+local alt_elf_attach = {
+    {
+        target = 0,
+        source = "j_spine"
+    },
+}
+
 local elf = {
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.06, 0.14, -0.065}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_upgraded/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.05, 0.155, -0.05}, angle = {1.5,0,0},
+    }, 
+    ["units/beings/player/way_watcher_upgraded_skin_01/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.15, 0.15, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_maiden_guard/third_person_base/chr_third_person_mesh"] = { --need another pass
+        attachement_nodes = alt_elf_attach, offset = {0.1, 0.12, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_maiden_guard_skin_01/third_person_base/chr_third_person_mesh"] = { --need another pass
+        attachement_nodes = attachment_table, offset = {0,0,0}, angle = {0,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_moon_mantle/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.1, 0.12, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_shade/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.1, 0.13, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_shade_skin_01/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.1, 0.13, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_shade_skin_02/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.1, 0.13, 0.08}, angle = {1.5,0,0},
     },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
-    },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
-    },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
-    },
-    [""] = {
-        attachement_nodes = attachment_table, offset = {0, 0,0 }, angle = {0, 0, 0},
+    ["units/beings/player/way_watcher_thornsister/third_person_base/chr_third_person_mesh"] = {
+        attachement_nodes = default_elf_attach, offset = {0.1, 0.13, 0.08}, angle = {1.5,0,0},
     },
 }
 
 for k,v in pairs(salts) do 
+    mod.trinkets[k] = table.clone(v, true) 
+end
+
+for k,v in pairs(elf) do 
     mod.trinkets[k] = table.clone(v, true) 
 end
 
