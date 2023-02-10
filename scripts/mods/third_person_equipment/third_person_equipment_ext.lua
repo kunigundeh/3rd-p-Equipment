@@ -725,9 +725,11 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local package_name = mod.trinket_lookup[trinket_name]
 	
 	local current_trinket_unit = self.attached_trophies["trinket"]
-	local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
-	if current_trinket_name == package_name then
-		return
+	if current_trinket_unit then
+		local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
+		if current_trinket_name == package_name then
+			return
+		end
 	end
 
 	if self.attached_trophies["trinket"] then
