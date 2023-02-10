@@ -7,6 +7,21 @@ local mod = get_mod("third_person_equipment")
 	Author: grasmann
 --]]
 
+local function radians_to_quaternion(theta, ro, phi)
+    local c1 =  math.cos(theta/2)
+    local c2 = math.cos(ro/2)
+    local c3 = math.cos(phi/2)
+    local s1 = math.sin(theta/2)
+    local s2 = math.sin(ro/2)
+    local s3 = math.sin(phi/2)
+    local x = (s1*s2*c3) + (c1*c2*s3)
+    local y = (s1*c2*c3) + (c1*s2*s3)
+    local z = (c1*s2*c3) - (s1*c2*s3)
+    local w = (c1*c2*c3) - (s1*s2*s3)
+    local rot = Quaternion.from_elements(x, y, z, w)
+    return rot
+end
+
 -- ##### ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗ ###################################################################
 -- ##### ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝ ###################################################################
 -- ##### ███████║██║   ██║██║   ██║█████╔╝ ███████╗ ###################################################################
@@ -53,12 +68,23 @@ local add_equipment = function(self, slot_name, item_data)
 			self.tpe_extension:add(slot_name, item_data)
 			--mod:echo("add_equipment ex")
 		end
+		self.tpe_extension:add_trinket(self.tpe_extension.unit)
 	else
 		mod:echo("add_equipment not executed")
 	end
 end
 mod:hook_safe(SimpleInventoryExtension, "add_equipment", add_equipment)
 mod:hook_safe(SimpleHuskInventoryExtension, "add_equipment", add_equipment)
+
+mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
+	if slot_name == "slot_trinket_1" then
+		local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+		if inventory_extension then
+			inventory_extension.tpe_extension:add_trinket(player.player_unit)
+		end
+	end
+end)
+
 --[[
 	Destroy slot
 --]]
@@ -134,6 +160,9 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
     -- Add to list
     mod.extensions[self.unit] = self
 
+	--setup a trophies list that a trinket can occupy
+	--may make it so more of the "generic_trophies" units can be used
+	self.attached_trophies = {}
 	--mod:echo("init flow unit attachment: " .. tostring(self.unit))
 end
 --[[
@@ -141,7 +170,9 @@ end
 --]]
 ThirdPersonEquipmentExtension.destroy = function(self)
     self:remove_all()
+	self:remove_trinket()
     mod.extensions[self.unit] = nil
+	self.attached_trophies = nil
 	--mod:echo('destroy ext exec')
 end
 
@@ -237,6 +268,8 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 			end
 		end
 	end
+
+	self:set_trinket_visibility(self.attached_trophies["trinket"])
 end
 --[[
     Add equipment
@@ -308,7 +341,6 @@ ThirdPersonEquipmentExtension.load_item = function(self, equipment_info, unit_na
 
 		if package then
 			unit = self:spawn(package, item_setting, item_data)
-			--mod:echo('spawned ' ..tostring(package))
 			if unit and material_settings then
 				GearUtils.apply_material_settings(unit, material_settings)
 			end
@@ -649,11 +681,102 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 		--mod:echo('add all exec')
     end
 
+
+
+	self:add_trinket(self.unit)
+
+
 	if not self:is_local_player() then
 		self.show = true
 	end
     self:set_equipment_visibility()
 end
+
+
+--[[
+    Retrieves a player's mesh based off of career name
+--]]
+ThirdPersonEquipmentExtension.get_player_mesh = function(self)
+	local career_name = self:career_name()
+	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
+	local skin_name = item_skin.data.name
+	local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
+	return mesh_name
+end
+
+--[[
+    Retrieves a player's equiped trinket based off of career name
+--]]
+ThirdPersonEquipmentExtension.get_trinket = function(self)
+	local career_name = self:career_name()
+	local trinket_data = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
+	local trinket_name = trinket_data.data.name
+	return trinket_name
+end
+
+--[[
+    Equips trinket
+--]]
+ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
+	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
+	local world = Managers.world:world("level_world") --needs to be a class variable
+
+	local mesh_name = self:get_player_mesh()
+	local trinket_name = self:get_trinket()
+
+	local package_name = mod.trinket_lookup[trinket_name]
+	
+	local current_trinket_unit = self.attached_trophies["trinket"]
+	if current_trinket_unit then
+		local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
+		if current_trinket_name == package_name then
+			return
+		end
+	end
+
+	if self.attached_trophies["trinket"] then
+		self:remove_trinket()
+	end
+	
+	Managers.package:load(package_name, "global")
+	local item_unit = unit_spawner:spawn_local_unit(package_name)
+
+	local item_attach_data = mod.trinkets[mesh_name]
+	local attachment_table = item_attach_data.attachement_nodes
+	local attachment_offset = item_attach_data.offset
+	local attachment_angle = item_attach_data.angle
+	
+	AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
+
+	local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+	Unit.set_local_position(item_unit, 0, pos)
+
+	local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+	Unit.set_local_rotation(item_unit, 0, rot)
+
+	self.attached_trophies["trinket"] = item_unit
+
+	self:set_trinket_visibility(item_unit)	
+end
+
+ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)
+	local hide = not self.show
+	Unit.set_unit_visibility(trinket_unit, not hide)
+end
+
+
+--[[
+    Removes trinket
+--]]
+ThirdPersonEquipmentExtension.remove_trinket = function(self)
+	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
+	local trinket_unit = self.attached_trophies["trinket"]
+	if Unit.alive(trinket_unit) then
+		unit_spawner:mark_for_deletion(trinket_unit)
+		self.attached_trophies["trinket"] = nil
+	end
+end
+
 --[[
     Remove equipment
 --]]
@@ -694,6 +817,7 @@ ThirdPersonEquipmentExtension.remove_all = function(self)
         end
         self.equipment = {}
     end
+	self:remove_trinket()
 end
 --[[
     Delete equipment units
@@ -705,8 +829,10 @@ ThirdPersonEquipmentExtension.delete_item_unit = function(self, item_unit, sub_u
         mod.spawned_units[item_unit[sub_unit]] = nil
         if Unit.alive(item_unit[sub_unit]) then
 			
-           World.destroy_unit(world, item_unit[sub_unit])
-		   POSITION_LOOKUP[item_unit[sub_unit]] = nil
+			if POSITION_LOOKUP[item_unit[sub_unit]] then
+				POSITION_LOOKUP[item_unit[sub_unit]] = nil
+			end
+			World.destroy_unit(world, item_unit[sub_unit])
 		   --local unit_spawner:world_delete_units(item_unit[sub_unit])
         end
     end

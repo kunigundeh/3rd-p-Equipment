@@ -242,7 +242,7 @@ mod.definitions.es_1h_mace = {
                 node = default_node, position = {0.5, -0.22, 0.1}, rotation = {0, -110, 90},								-- V2 mercenary					2.1.0
                 skin_es_default = { node = default_node, position = {0.5, -0.22, 0.1}, rotation = {0, -110, 90}, },			-- V2 classic mercenary skin	2.1.0
             },
-            es_knight = { attachment = 1, attachment_node = 10, position = {-0.2, 0.04, 0.1}, rotation = {0, 130, -90}, },	-- V2 knight					2.1.0
+            es_knight = { node = default_node, position = {0.5, -0.22, 0.1}, rotation = {0, -110, 90}, },	-- V2 knight					2.1.0
             es_huntsman = { node = default_node, position = {0.5, -0.22, 0.1}, rotation = {0, -110, 90}, },					-- V2 huntsman					2.1.0
         },
     },
