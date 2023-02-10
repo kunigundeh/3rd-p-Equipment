@@ -716,17 +716,24 @@ end
     Equips trinket
 --]]
 ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
-	if self.attached_trophies["trinket"] then
-		self:remove_trinket()
-	end
-	
 	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
 	local world = Managers.world:world("level_world") --needs to be a class variable
 
 	local mesh_name = self:get_player_mesh()
 	local trinket_name = self:get_trinket()
-	
+
 	local package_name = mod.trinket_lookup[trinket_name]
+	
+	local current_trinket_unit = self.attached_trophies["trinket"]
+	local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
+	if current_trinket_name == package_name then
+		return
+	end
+
+	if self.attached_trophies["trinket"] then
+		self:remove_trinket()
+	end
+	
 	Managers.package:load(package_name, "global")
 	local item_unit = unit_spawner:spawn_local_unit(package_name)
 
@@ -740,13 +747,6 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 	Unit.set_local_position(item_unit, 0, pos)
 
-	-- using this method causes subsequent units to be rotated as well until rotation is reapplied
-	-- local rotation_correction = mod.rotation_correction[package_name]
-	-- if rotation_correction then
-	-- 	attachment_angle[1] = rotation_correction[1] + attachment_angle[1]
-	-- 	attachment_angle[2] = rotation_correction[2] + attachment_angle[2]
-	-- 	attachment_angle[3] = rotation_correction[3] + attachment_angle[3]
-	-- end
 	local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 	Unit.set_local_rotation(item_unit, 0, rot)
 
