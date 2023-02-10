@@ -268,6 +268,8 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 			end
 		end
 	end
+
+	self:set_trinket_visibility(self.attached_trophies["trinket"])
 end
 --[[
     Add equipment
@@ -753,7 +755,13 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	Unit.set_local_rotation(item_unit, 0, rot)
 
 	self.attached_trophies["trinket"] = item_unit
-	
+
+	self:set_trinket_visibility(item_unit)	
+end
+
+ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)
+	local hide = not self.show
+	Unit.set_unit_visibility(trinket_unit, not hide)
 end
 
 
