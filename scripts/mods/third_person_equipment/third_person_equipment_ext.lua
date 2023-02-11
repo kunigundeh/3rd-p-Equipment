@@ -630,16 +630,15 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
 		
 	else 
 		--]]
-		if not Unit.has_node(self.unit, item_setting.node) 
-		then
+		if not item_setting.node then
 		 mod:echo("node not found, could not attach")
 		
-		elseif Unit.node(self.unit, item_setting.node) then
+		elseif Unit.has_node(self.unit, item_setting.node) then
 		-- Attach unit to node
 		
 		local node = Unit.node(self.unit, item_setting.node)
 		--mod:echo("node " .. item_setting.node .. " found, index: " .. node)
-		mod:echo('attaching to '.. item_setting.node )
+		mod:echo('attaching to '.. item_setting.node)
 		World.link_unit(world, item_unit, self.unit, node)
 	end
 
