@@ -240,7 +240,7 @@ end
 ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 	local hide = not self.show
 	self.special_state = self:is_special_state()
-	
+
 	if self.equipment then
 		for _, equip in pairs(self.equipment) do
 			if not self.special_state and (equip.slot == self.slot or hide) then
@@ -264,12 +264,14 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
                         end
                     end
 					equip.visible = true
+						
 				end
 			end
 		end
 	end
 
 	self:set_trinket_visibility(self.attached_trophies["trinket"])
+	
 end
 --[[
     Add equipment

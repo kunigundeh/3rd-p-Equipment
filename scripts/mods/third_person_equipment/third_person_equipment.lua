@@ -188,6 +188,7 @@ mod.on_setting_changed = function(setting_name)
 		mod.definitions[weapon_selection][side].belt[career_selection].position[3] = mod:get("y_adjust")
 		mod:echo("position test setting changed") 
 		mod:reload_extensions()
+		mod:update()
 	end
 end
 --[[

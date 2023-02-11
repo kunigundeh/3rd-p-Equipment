@@ -29,11 +29,16 @@ mod.definitions = {
 		"dr_drakegun",
 		"dr_drakefire_pistols",
 		"dr_dual_wield_hammers",
+		"dr_cog_hammer",
+		"dr_steam_pistol",
+		"dr_1h_throwing_axes",
+		"dr_deus_01"
 	},
 	dwarf_two_handed = {
 		"dr_2h_hammer",
 		"dr_2h_axes",
 		"dr_2h_picks",
+		"dr_cog_hammer",
 	},
 	one_handed = {
 		"es_1h_sword",
@@ -65,6 +70,9 @@ mod.definitions = {
 		"dr_dual_wield_hammers",
 		"wh_dual_wield_axe_falchion",
 		"bw_1h_crowbill",
+		"wh_1h_hammer",
+		"dr_steam_pistol",
+		"dr_1h_throwing_axes",
 	},
 	waywatcher_dual = {
 		"ww_dual_swords",

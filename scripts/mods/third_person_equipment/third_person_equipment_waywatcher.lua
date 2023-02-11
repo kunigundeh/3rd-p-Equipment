@@ -139,13 +139,13 @@ mod.definitions.wpn_side_objective_tome_01.way_watcher = {
 
 -- ##### 2H Axe #######################################################################################################
 mod.definitions.ww_2h_axe = {
-    right = { node = default_node_2, position = {0.4, -0.1, 0.1}, rotation = {0, -110, 90}, 									        -- Default / V1					2.1.0
+    right = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90},										-- Default / V1
         we_waywatcher = {
-            attachment = 2, attachment_node = 19, position = {-0.2, -0.05, 0}, rotation = {-30, 138, 75}, 						        -- V2 waystalker				2.1.0
-            skin_ww_default = { attachment = 2, attachment_node = 10, position = {-0.1, 0.07, 0.1}, rotation = {0, 120, 75}, },         -- V2 classic waywatcher skin	2.1.0
+            node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90},							-- V2 waystalker				2.1.0
+            skin_ww_default = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },		-- V2 classic waywatcher skin	2.1.0
         },
-        we_maidenguard = { attachment = 2, attachment_node = 19, position = {-0.2, 0.02, -0.05}, rotation = {0, 120, 75}, },	        -- V2 handmaiden				2.1.0
-        we_shade = { attachment = 2, attachment_node = 18, position = {-0.2, -0.02, 0.06}, rotation = {25, 120, 75}, },			        -- V2 shade						2.1.0
+        we_maidenguard = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },			-- V2 handmaiden				2.1.0
+        we_shade = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },				-- V2 shade						2.1.0
     },
 }
 
@@ -324,11 +324,11 @@ mod.definitions.ww_longbow = {
         es_huntsman = { node = default_node, position = {0.3, -0.23, 0.1}, rotation = {0, -60, -90}, },									-- V2 huntsman
         empire_soldier_tutorial = { node = default_node, position = {0.3, -0.23, 0.1}, rotation = {0, -60, -90}, },						-- V2 tutorial
         we_waywatcher = { 
-            attachment = 2, attachment_node = 5, position = {-0.2, -0.02, -0.1}, rotation = {45, 90, 0},								-- V2 waystalker				2.1.0
-            skin_ww_default = { attachment = 2, attachment_node = 11, position = {-0.15, 0.07, -0.05}, rotation = {-30, 60, 100}, },	-- V2 classic waywatcher skin	2.1.0
+            node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},								-- V2 waystalker				2.1.0
+            skin_ww_default = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },	-- V2 classic waywatcher skin	2.1.0
         },
-        we_maidenguard = { attachment = 2, attachment_node = 4, position = {0, 0.01, 0.15}, rotation = {0, 45, 90}, },					-- V2 handmaiden				2.1.0
-        we_shade = { attachment = 2, attachment_node = 5, position = {0, 0.03, 0.1}, rotation = {0, 45, 90}, },							-- V2 shade						2.1.0
+        we_maidenguard = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },					-- V2 handmaiden				2.1.0
+        we_shade = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },							-- V2 shade						2.1.0
     },
 }
 
@@ -336,11 +336,11 @@ mod.definitions.ww_longbow = {
 mod.definitions.ww_shortbow = {
     left = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},												-- Default / V1
         we_waywatcher = { 
-            attachment = 2, attachment_node = 5, position = {-0.2, -0.02, -0.1}, rotation = {45, 90, 0},								-- V2 waystalker				2.1.0
-            skin_ww_default = { attachment = 2, attachment_node = 11, position = {-0.15, 0.07, -0.05}, rotation = {-30, 60, 100}, },	-- V2 classic waywatcher skin	2.1.0
+            node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},								-- V2 waystalker				2.1.0
+            skin_ww_default = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },	-- V2 classic waywatcher skin	2.1.0
         },
-        we_maidenguard = { attachment = 2, attachment_node = 4, position = {0, 0.01, 0.15}, rotation = {0, 45, 90}, },					-- V2 handmaiden				2.1.0
-        we_shade = { attachment = 2, attachment_node = 5, position = {0, 0.03, 0.1}, rotation = {0, 45, 90}, },							-- V2 shade						2.1.0
+        we_maidenguard = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },					-- V2 handmaiden				2.1.0
+        we_shade = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },							-- V2 shade						2.1.0
     },
 }
 
@@ -371,26 +371,26 @@ mod.definitions.we_2h_spear = {
 
 -- ##### 2H Sword #####################################################################################################
 mod.definitions.ww_2h_sword = {
-    right = { node = default_node_2, position = {0.4, -0.1, 0.1}, rotation = {0, -110, 90},											-- Default / V1
+    right = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90},										-- Default / V1
         we_waywatcher = {
-            attachment = 2, attachment_node = 19, position = {-0.2, -0.05, 0}, rotation = {-30, 138, 75},							-- V2 waystalker				2.1.0
-            skin_ww_default = { attachment = 2, attachment_node = 10, position = {-0.1, 0.07, 0.1}, rotation = {0, 120, 75}, },		-- V2 classic waywatcher skin	2.1.0
-        },
-        we_maidenguard = { attachment = 2, attachment_node = 19, position = {-0.2, 0.02, -0.05}, rotation = {0, 120, 75}, },		-- V2 handmaiden				2.1.0
-        we_shade = { attachment = 2, attachment_node = 18, position = {-0.1, -0.01, 0.06}, rotation = {20, 120, 90}, },				-- V2 shade						2.1.0
-    },
-}
-
--- ##### we_deus_01 ########################################################################################################
-mod.definitions.we_deus_01 = {
-    right = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},										-- Default / V1
-        we_waywatcher = {
-            node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},							-- V2 waystalker				2.1.0
+            node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90},							-- V2 waystalker				2.1.0
             skin_ww_default = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },		-- V2 classic waywatcher skin	2.1.0
         },
         we_maidenguard = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },			-- V2 handmaiden				2.1.0
         we_shade = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },				-- V2 shade						2.1.0
     },
+}
+
+-- ##### Moonbow ########################################################################################################
+mod.definitions.we_deus_01 = {
+    left = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},												-- Default / V1
+    we_waywatcher = { 
+        node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90},								-- V2 waystalker				2.1.0
+        skin_ww_default = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },	-- V2 classic waywatcher skin	2.1.0
+    },
+    we_maidenguard = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },					-- V2 handmaiden				2.1.0
+    we_shade = { node = default_node_2, position = {0.1, -0.15, 0}, rotation = {0, -45, -90}, },							-- V2 shade						2.1.0
+},
 }
 
 -- ##### Spear&Shield ######################################################################################################
@@ -410,4 +410,28 @@ mod.definitions.we_1h_spears_shield = {
             },
             					
          },
+}
+
+-- ##### Javelin ########################################################################################################
+mod.definitions.we_javelin = {
+    right = { node = default_node_2, position = {0, -0.15, 0}, rotation = {90, 150, 250},										-- Default / V1
+        we_waywatcher = {
+            node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90},							-- V2 waystalker				2.1.0
+            skin_ww_default = { node = default_node_2, position = {0, -0.15, 0}, rotation = {0, 150, 180}, },		-- V2 classic waywatcher skin	2.1.0
+        },
+        we_maidenguard = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },			-- V2 handmaiden				2.1.0
+        we_shade = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },				-- V2 shade						2.1.0
+    },
+}
+
+-- ##### Deepwood Staff ########################################################################################################
+mod.definitions.we_life_staff = {
+    right = { node = default_node_2, position = {0, -0.15, 0}, rotation = {0, 110, 180},										-- Default / V1
+        we_waywatcher = {
+            node = default_node_2, position = {0, -0.15, 0}, rotation = {0, 110, 180},							-- V2 waystalker				2.1.0
+            skin_ww_default = { node = default_node_2, position = {0, -0.15, 0}, rotation = {0, 110, 180}, },		-- V2 classic waywatcher skin	2.1.0
+        },
+        we_maidenguard = { node = default_node_2, position = {0, -0.15, 0}, rotation = {0, 110, 180}, },			-- V2 handmaiden				2.1.0
+        we_shade = { node = default_node_2, position = {-0.1, -0.15, -0.1}, rotation = {0, -290, 90}, },				-- V2 shade						2.1.0
+    },
 }
