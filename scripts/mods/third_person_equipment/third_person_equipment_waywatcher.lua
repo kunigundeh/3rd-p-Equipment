@@ -16,7 +16,7 @@ mod.definitions.potion.wood_elf = {
     left = { node = default_node, position = {-0.1, -0.15, -0.1}, rotation = {120, 110, 90},                                            -- Default / V1                 2.1.1
         we_waywatcher = { 
             node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0},                                            -- V2 waystalker                2.1.1
-            skin_ww_default = { attachment = 3, attachment_node = 16, position = {-0.1, -0.06, 0.22}, rotation = {-30, -130, -90}, },   -- V2 classic waywatcher skin   2.1.1
+            skin_ww_default = { node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0}, },   -- V2 classic waywatcher skin   2.1.1
         },
         we_maidenguard = { node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0}, },                          -- V2 handmaiden                2.1.1
         we_shade = { node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0}, },                                -- V2 shade                     2.1.1
@@ -26,7 +26,7 @@ mod.definitions.potion.way_watcher = {
     left = { node = default_node, position = {-0.1, -0.15, -0.1}, rotation = {120, 110, 90},                                            -- Default / V1                 2.1.1
         we_waywatcher = { 
             node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0},                                            -- V2 waystalker                2.1.1
-            skin_ww_default = { attachment = 3, attachment_node = 16, position = {-0.1, -0.06, 0.22}, rotation = {-30, -130, -90}, },   -- V2 classic waywatcher skin   2.1.1
+            skin_ww_default = { node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0}, },   -- V2 classic waywatcher skin   2.1.1
         },
         we_maidenguard = { node = right_leg_node, position = {-0.1, -0.05, 0.12}, rotation = {-55, 110, 0}, },                          -- V2 handmaiden                2.1.1
         we_shade = { node = right_leg_node, position = {-0.07, -0.05, 0.12}, rotation = {-55, 110, 0}, },                               -- V2 shade                     2.1.1
