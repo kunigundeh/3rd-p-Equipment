@@ -75,7 +75,7 @@ local add_equipment = function(self, slot_name, item_data)
 end
 mod:hook_safe(SimpleInventoryExtension, "add_equipment", add_equipment)
 mod:hook_safe(SimpleHuskInventoryExtension, "add_equipment", add_equipment)
-
+--[[hot join fix]]--
 mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
 	if slot_name == "slot_trinket_1" then
 		local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
@@ -142,7 +142,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
     self.link_queue = {}
-    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} --"slot_necklace", "slot_trinket_1", "slot_ring",} -- test additional slots
+    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
     self.slot = self.inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
@@ -300,7 +300,7 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, item_data)
     elseif item_data.item_type ~= nil and item_data.item_type ~= "inventory_item" 
 	then
         -- Item type not implemented
-		mod:echo(tostring(item_data.item_type).. " is missing!") --correction: self-->echo
+		mod:echo(tostring(item_data.item_type).. " is missing!") 
 	end
     -- Update visibility
     self:set_equipment_visibility()
@@ -325,13 +325,6 @@ ThirdPersonEquipmentExtension.load_item = function(self, equipment_info, unit_na
 
 		if VT1 then
 			package = item_data[unit_name].."_3p"
-
-		--trinket test
-
-
-		--if slot_name == "slot_trinket_01" then
-			--mod:echo("slot is " .. slot_name)
-			--package = "units/beings/player/generic_trophies/trophy_luckstone/trophy_luckstone_01"
 
 		else
 			package = WeaponSkins and equipment.slots[slot_name] and WeaponSkins.skins[equipment.slots[slot_name].skin] and WeaponSkins.skins[equipment.slots[slot_name].skin][unit_name].."_3p"
@@ -361,7 +354,6 @@ ThirdPersonEquipmentExtension.get_item_setting = function(self, equipment_info, 
 
 	-- ####### Fixes and options #######
 	if slot_name == "slot_melee" or slot_name == "slot_ranged"  then
-	--or slot_name == "slot_trinket_01" or slot_name == "slot_ring" or slot_name == "slot_necklace"
 
 		-- Dwarf
 		if table.contains(def.dwarf_weapons, item_data.item_type) then
