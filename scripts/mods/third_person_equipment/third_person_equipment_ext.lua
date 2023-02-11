@@ -592,7 +592,7 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
 	local world = Managers.world:world("level_world")
 	mod:echo('trying to link')
 
-	if attachment then
+	--[[if attachment then
 		-- Attach unit to attachment unit
 	
 		local world = Unit.world(item_unit)	
@@ -627,7 +627,8 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
             return
         end
 		
-	elseif Unit.has_node(self.unit, item_setting.node) then
+	else--]]
+		if Unit.has_node(self.unit, item_setting.node) then
 		-- Attach unit to node
 		
 		local node = Unit.node(self.unit, item_setting.node)
