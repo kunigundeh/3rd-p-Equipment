@@ -12,6 +12,15 @@ return {
     allow_rehooking = true,
     options = {
         widgets = {
+            {
+                keybind_global = true,
+                keybind_trigger = "pressed",
+                setting_id = "print",
+                type = "keybind",
+                keybind_type = "function_call",
+                function_name = "print_slots",
+                default_value = {}
+            },
                         {
                             keybind_global = true,
                             keybind_trigger = "pressed",

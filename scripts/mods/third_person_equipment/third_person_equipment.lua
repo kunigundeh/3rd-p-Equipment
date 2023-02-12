@@ -289,38 +289,62 @@ local function spawn_trinket (package_name)
 	World.link_unit(world, unit, self.unit, node)
   return nil
 end
+local function print_info()
+	mod:echo('tryin to print info')
+end
+--[[local function print_info()
+    local player = Managers.player:local_player()
+    mod:echo('tryin to print info')
+	if player then 
+        local player_unit = player.player_unit    
+        local inventory_extension = ScriptUnit.extension(player_unit, "inventory_system")
+        local career_extension = ScriptUnit.extension(player_unit, "career_system")
+        if career_extension then
+            local career_name = career_extension._career_data.name
+            local item_one = BackendUtils.get_loadout_item(career_name, "slot_melee")
+            local item_two = BackendUtils.get_loadout_item(career_name, "slot_ranged")
+			print(career_name)
+            print(item_one.skin)
+            print(item_two.skin)
+      
+        end
+    end
+end --]]
+--print slots to console
 
-
-
---[[print slots to console
 local function print_slots(player)
-local player = Managers.player:local_player()
+    local player = Managers.player:local_player()
     if player then 
         local player_unit = player.player_unit    
         local inventory_extension = ScriptUnit.extension(player_unit, "inventory_system")
         local career_extension = ScriptUnit.extension(player_unit, "career_system")
         if career_extension then
-            local career_name = career_extension:career_name()
-            local item_one = BackendUtils.get_loadout_item(career_name, "slot_melee")
-            local item_two = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
-			local item_3 = BackendUtils.get_loadout_item(career_name, "slot_necklace")
-
-			local item_data = item_3.data
-			local backend_id = item_3.backend_id
-			local item_units = BackendUtils.get_item_units(item_data, backend_id)
-			local item_name = item_data and item_data.name
+            local career_name = career_extension._career_data.name
+            local item_melee = BackendUtils.get_loadout_item(career_name, "slot_melee")
+            local item_ranged = BackendUtils.get_loadout_item(career_name, "slot_ranged")
+			local item_trinket = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
+			local item_necklace = BackendUtils.get_loadout_item(career_name, "slot_necklace")
+			local item_charm = BackendUtils.get_loadout_item(career_name, "slot_charm")
+			
+			local item_data_melee = item_melee.data
+			local item_name_melee = item_data_melee and item_data_melee.name
+			local melee_item_name = item_melee.data.name
+			local backend_id = item_melee.backend_id
+			local item_units = BackendUtils.get_item_units(item_data_melee, backend_id)
 			local item_skin = item_units and item_units.skin
 			
         
-			print(item_name)
+			print(item_name_melee)
+			print(melee_item_name)
+			print(career_name)
         end
     end
+	
 end
 
+
+ 
 mod:command("print_slots", "", function() 
-	print_slots()
-	--spawn_package_to_player(unit_path)
-	
+	print_slots()	
 	mod:echo('slots printed')
 end)
---]]
