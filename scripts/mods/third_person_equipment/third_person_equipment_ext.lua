@@ -1,4 +1,6 @@
 local mod = get_mod("third_person_equipment")
+
+local MeshTisch = local_require("scripts/mods/third_person_equipment/mesh_tisch/mesh_tisch_init")
 --[[
     Third person equipment extension
 
@@ -565,6 +567,7 @@ ThirdPersonEquipmentExtension.spawn = function(self, package_name, item_setting,
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 	-- Link unit
+	item_setting["crap"] = item_data
 	self:link_unit(item_unit, item_setting)
 
 	-- Hardcoded scaling
@@ -592,79 +595,30 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, item_setting
 	local world = Managers.world:world("level_world")
 	mod:echo('trying to link')
 
-	--[[
-		if attachment then
-		-- Attach unit to attachment unit
+	local item_data = item_setting["crap"]
+	local item_type = item_data.item_type
+
+	local mesh_name = self:get_player_mesh()
+	local career_name = self:career_name()
+
 	
-		local world = Unit.world(item_unit)	
-		local unit_attachments = Unit.get_data(item_unit, "flow_unit_attachments")
-		--local unit_attachments = Unit.get_data(self.Unit, "flow_unit_attachments")
-        --local unit_attachments = Unit.get_data(self.unit, nodes)  
-		--mod:echo('unit_attachments = '.. tostring(#unit_attachments))
-		
-        if unit_attachments --and #unit_attachments > 0 
-		then
-            --if item_setting.test then 
-				--mod:echo("unit_attachments: "..tostring(#unit_attachments)) 
-			--end
-            local attachment_unit = attachment and unit_attachments[attachment]
-            local bones = attachment_unit and Unit.bones(attachment_unit)
-            if bones then
-                if item_setting.test then mod:echo("bones: "..tostring(#bones)) end
-            end
-            if item_setting.test then
-                World.link_unit(world, item_unit, attachment_unit, mod.used_index)
-            else
-                World.link_unit(world, item_unit, attachment_unit, item_setting.attachment_node)
-            end
-        elseif not queue then
-            -- In case attachement flow units are missing
-            -- Send to link queue
-			--mod:echo('not queue')
-            self.link_queue[item_unit] = {
-                item_unit = item_unit,
-                item_setting = item_setting,
-            }
-            return
-        end
-		
-	else 
-		--]]
-		if not item_setting.node then
-		 mod:echo("node not found, could not attach")
-		
-		elseif Unit.has_node(self.unit, item_setting.node) then
-		-- Attach unit to node
-		
-		local node = Unit.node(self.unit, item_setting.node)
-		--mod:echo("node " .. item_setting.node .. " found, index: " .. node)
-		mod:echo('attaching to '.. item_setting.node)
-		World.link_unit(world, item_unit, self.unit, node)
+
+	mod:echo(MeshTisch)
+	mod:echo(MeshTisch[mesh_name])
+	mod:echo(MeshTisch[mesh_name][item_type])
+	mod:echo(item_type)
+	mod:echo("check here")
+	
+	local attachment_table = MeshTisch[mesh_name][item_type].attachement_nodes
+	mod:echo(attachment_table)
+
+	local player = Managers.player:local_player()
+	local player_unit = player.player_unit
+	local world = Managers.world:world("level_world")
+
+	if item_unit and player_unit and world then
+		AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
 	end
-
-	--else
-	--	mod:echo("node: " .. item_setting.node ..' not found, could not attach')
-
-
-	--[[ Set position
-	local item_position = item_setting.position
-	local pos_offset = item_position ~= nil and Vector3(item_position[1], item_position[2], item_position[3]) or Vector3(0,0,0)
-	Unit.set_local_position(item_unit, 0, pos_offset)]]
-
-	-- test positioning
-	
-		
-	local item_position = item_setting.position
-	
-	local pos_offset = item_position ~= nil and Vector3(item_position[1], item_position[2], item_position[3]) or Vector3(0,0,0)
-	Unit.set_local_position(item_unit, 0, pos_offset)
-	
-
-	-- Set rotation
-	local item_rotation = item_setting.rotation
-	local rotation_offset = item_rotation ~= nil and Vector3(item_rotation[1], item_rotation[2], item_rotation[3]) or Vector3(0,0,0)
-	local rotation = Quaternion.from_euler_angles_xyz(rotation_offset[1], rotation_offset[2], rotation_offset[3])
-	Unit.set_local_rotation(item_unit, 0, rotation)
 
     -- In case of link queue remove from queue
     if queue and self.link_queue[item_unit] then
@@ -708,7 +662,7 @@ end
 --]]
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	local career_name = self:career_name()
-	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
+	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin") --use a mod table to lookup this
 	local skin_name = item_skin.data.name
 	local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
 	return mesh_name
