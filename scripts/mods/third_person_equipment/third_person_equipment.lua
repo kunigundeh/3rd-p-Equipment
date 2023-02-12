@@ -40,11 +40,11 @@ function draw_window()
 	Imgui.end_window()
   end
   
-  --[[mod.update = function()
+  mod.update = function()
 	draw_window()
-  end --]]
+  end
 
-  mod:command("3rd_settings", "", function() 
+mod:command("3rd_settings", "", function() 
 	draw_window()
 	--spawn_package_to_player(unit_path)
 	
