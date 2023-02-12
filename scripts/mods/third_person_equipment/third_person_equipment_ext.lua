@@ -772,7 +772,9 @@ end
 
 ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)
 	local hide = not self.show
+	if trinket_unit ~= nil then
 	Unit.set_unit_visibility(trinket_unit, not hide)
+	end
 end
 
 

@@ -12,7 +12,15 @@ return {
     allow_rehooking = true,
     options = {
         widgets = {
-            {
+                        {
+                            keybind_global = true,
+                            keybind_trigger = "pressed",
+                            setting_id = "open_settings_menu",
+                            type = "keybind",
+                            keybind_type = "function_call",
+                            function_name = "open_imgui",
+                            default_value = {}
+                        }, {
                 setting_id = "dwarf_weapon_position",
                 type = "dropdown",
                 title = "dwarf_weapon_position_text",

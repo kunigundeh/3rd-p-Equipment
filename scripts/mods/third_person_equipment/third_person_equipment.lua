@@ -12,8 +12,10 @@ mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
 -- Load extension
 mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_ext")
 
-
 mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
+
+
+
 
 
 -- ##### ██████╗  █████╗ ████████╗ █████╗ #############################################################################
@@ -24,36 +26,6 @@ mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
 -- ##### ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ############################################################################
 mod.extensions = {}
 mod.spawned_units = mod:persistent_table("spawned_units", {})
-
---IMGUI Test
-Imgui.enable_imgui_input_system(Imgui.KEYBOARD)
-Imgui.enable_imgui_input_system(Imgui.MOUSE)
-Imgui.open_imgui()
-
-function draw_window()
-	Imgui.begin_window("My window")
-  
-	if Imgui.button("Click me") then
-	  mod:echo("Clicked")
-	end
-  
-	Imgui.end_window()
-  end
-  
-  mod.update = function()
-	draw_window()
-  end
-
-mod:command("3rd_settings", "", function() 
-	draw_window()
-	--spawn_package_to_player(unit_path)
-	
-	mod:echo('settings opened')
-end)
-
-
-
-
 
 
 
@@ -72,6 +44,43 @@ end
 -- ##### ██╔══╝  ██║   ██║██║╚██╗██║██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║ ###################################
 -- ##### ██║     ╚██████╔╝██║ ╚████║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║ ###################################
 -- ##### ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ###################################
+
+local settings_menu = mod:dofile("scripts/mods/third_person_equipment/settings_imgui")
+mod.settings_menu = settings_menu:new()
+
+-- This function is referenced in the _data.lua file as a keybind
+-- See: https://vmf-docs.verminti.de/#/widgets?id=keybind
+function mod.open_imgui()
+	-- _is_open is some internal state to the UI class
+	if mod.settings_menu._is_open then
+		mod.settings_menu:close()
+	else
+		mod.settings_menu:open()
+	end
+end
+
+-- mod.update is a function VMF calls every game tick
+-- See: https://vmf-docs.verminti.de/#/events?id=update
+function mod.update()
+    if mod.settings_menu and mod.settings_menu._is_open then
+        mod.settings_menu:draw()
+    end
+end
+
+-- Hook the function you want to get data from and save the data
+mod:hook_safe(IngameHud, "update", function(self)
+    local player_manager = Managers.player
+	local local_player = player_manager.local_player(player_manager)
+	local player_unit = local_player and local_player.player_unit
+
+	if not player_unit then
+		return 
+	end
+
+    mod.position = Vector3Box(Unit.local_position(player_unit, 0))
+
+end)
+
 --[[
 	Delete all spawned units
 --]]
@@ -172,16 +181,16 @@ mod.on_setting_changed = function(setting_name)
 	
 	
 		
-	  --  mod:echo("position test setting changed") 
+	  --[[  mod:echo("position test setting changed") 
 		--mod:reload_extensions()
 		if setting_name == "weapon_selection" then
 			local weapon_selection = mod:get("weapon_selection")
 			local side = mod:get("side_select")
-			local height_set = mod.definitions[weapon_selection][side].belt[career_selection].position[1]
-			mod:set("height_adjust", height_set)
+			local z_set = mod.definitions[weapon_selection][side].belt[career_selection].position[1]
+			mod:set("z_adjust", z_set)
 			
 		end
-	
+	--]]
 	-- Dwarf weapons
 	if setting_name == "dwarf_weapon_position" then
 		mod:reload_extensions("dwarf_ranger")
@@ -204,17 +213,17 @@ mod.on_setting_changed = function(setting_name)
 		mod:reload_extensions()
 	end
 	-- positioning test
-	if setting_name == "height_adjust" or "x_adjust" or "y_adjust" then
+	if setting_name == "z_adjust" or "x_adjust" or "y_adjust" then
 		--mod.definitions.healthkit_first_aid_kit_01.empire_soldier.left.es_huntsman.position[1] = mod:get("position_test")
 		local weapon_selection = mod:get("weapon_selection")
 		local career_selection = mod:get("career_selection")
-		local height = mod:get("height_adjust")
+		local z_adjust = mod:get("z_adjust")
 		local x_adjust = mod:get("x_adjust")
 		local y_adjust = mod:get("y_adjust")
 		local side = mod:get("side_select")
 		mod:echo(weapon_selection .. "retrieved")
 		--mod:echo(testing_position .. "retrieved")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[1] = mod:get("height_adjust")
+		mod.definitions[weapon_selection][side].belt[career_selection].position[1] = mod:get("z_adjust")
 		mod.definitions[weapon_selection][side].belt[career_selection].position[2] = mod:get("x_adjust")
 		mod.definitions[weapon_selection][side].belt[career_selection].position[3] = mod:get("y_adjust")
 		mod:echo("position test setting changed") 
@@ -280,7 +289,10 @@ local function spawn_trinket (package_name)
 	World.link_unit(world, unit, self.unit, node)
   return nil
 end
---print slots to console
+
+
+
+--[[print slots to console
 local function print_slots(player)
 local player = Managers.player:local_player()
     if player then 
@@ -311,3 +323,4 @@ mod:command("print_slots", "", function()
 	
 	mod:echo('slots printed')
 end)
+--]]
