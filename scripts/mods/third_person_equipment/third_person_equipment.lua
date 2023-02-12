@@ -25,6 +25,37 @@ mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
 mod.extensions = {}
 mod.spawned_units = mod:persistent_table("spawned_units", {})
 
+--IMGUI Test
+Imgui.enable_imgui_input_system(Imgui.KEYBOARD)
+Imgui.enable_imgui_input_system(Imgui.MOUSE)
+Imgui.open_imgui()
+
+function draw_window()
+	Imgui.begin_window("My window")
+  
+	if Imgui.button("Click me") then
+	  mod:echo("Clicked")
+	end
+  
+	Imgui.end_window()
+  end
+  
+  --[[mod.update = function()
+	draw_window()
+  end --]]
+
+  mod:command("3rd_settings", "", function() 
+	draw_window()
+	--spawn_package_to_player(unit_path)
+	
+	mod:echo('settings opened')
+end)
+
+
+
+
+
+
 
 -- Test stuff
 mod.used_index = 1
@@ -249,19 +280,7 @@ local function spawn_trinket (package_name)
 	World.link_unit(world, unit, self.unit, node)
   return nil
 end
-
-mod:command("testModel", "", function() 
-	spawn_trinket()
-end)
-
-
-mod:command("inv_test", "", function() 
-	mod:hook_all_inventories()
-	--spawn_package_to_player(unit_path)
-	
-	mod:echo('hook all exec')
-end)
-
+--print slots to console
 local function print_slots(player)
 local player = Managers.player:local_player()
     if player then 
