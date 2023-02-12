@@ -46,6 +46,9 @@ end
 -- ##### ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ###################################
 
 local settings_menu = mod:dofile("scripts/mods/third_person_equipment/settings_imgui")
+
+--  ImGUI-Test
+
 mod.settings_menu = settings_menu:new()
 
 -- This function is referenced in the _data.lua file as a keybind
@@ -67,19 +70,7 @@ function mod.update()
     end
 end
 
--- Hook the function you want to get data from and save the data
-mod:hook_safe(IngameHud, "update", function(self)
-    local player_manager = Managers.player
-	local local_player = player_manager.local_player(player_manager)
-	local player_unit = local_player and local_player.player_unit
 
-	if not player_unit then
-		return 
-	end
-
-    mod.position = Vector3Box(Unit.local_position(player_unit, 0))
-
-end)
 
 --[[
 	Delete all spawned units

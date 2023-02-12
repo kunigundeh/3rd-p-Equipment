@@ -91,16 +91,15 @@ end
 
 function settings_menu.draw(self)
     Imgui.begin_window("settings_menu")
-    Imgui.spacing()
-    
-    
-    local position = mod.position:unbox()
-    Imgui.text(string.format("Position(%.2f, %.2f, %.2f)", position.x, position.y, position.z))
     
     Imgui.spacing()
-    career_name = get_cur_equip()
-    Imgui.slider_float("Skin name: " .. career_name, 0, -20, 20)
+    Imgui.spacing()
+
+    local career_name, item_melee, item_ranged = get_cur_equip()
+     
+    Imgui.slider_float("Skin name: " .. career_name .."  " .. item_melee, 0, -20, 20)
     Imgui.spacing()
     Imgui.end_window()
 end
+
 return settings_menu
