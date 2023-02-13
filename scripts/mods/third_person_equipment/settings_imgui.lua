@@ -86,14 +86,18 @@ function settings_menu.toggle(self)
         self:open()
     end
 end
+function settings_menu.get_equip_info(self)
+    self.item_health, self.item_potion, self.item_grenade = nil
+    self.career_name, self.item_melee, self.item_ranged, self.item_trinket = get_cur_equip()
+    self.item_health, self.item_potion, self.item_grenade = get_cur_pick()
+end
 
 function settings_menu.open(self)
     self._is_open = true
-    self.item_health, self.item_potion, self.item_grenade = nil
+    
     Imgui.open_imgui()
     self:capture_input()
-    self.career_name, self.item_melee, self.item_ranged, self.item_trinket = get_cur_equip()
-    self.item_health, self.item_potion, self.item_grenade = get_cur_pick()
+    settings_menu.get_equip_info(self)
 end
 
 function settings_menu.release_input()
@@ -123,25 +127,24 @@ function settings_menu.draw(self)
     Imgui.spacing()
     Imgui.spacing()
     
-    if Imgui.tree_node("Weapon 1: " .. self.item_melee) then
-     --Imgui.text("Weapon 1: " .. self.item_melee)
+   
+     Imgui.text("Weapon 1: " .. self.item_melee)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_melee, 0, 0, 0, -20, 20)
         Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_melee, 0, 0, 0, -20, 20)
         Imgui.spacing()
-        
-    end
-    imgui.tree_pop()
-    if Imgui.tree_node("Weapon 2: " .. self.item_ranged) then
-        --Imgui.text("Weapon 2: " .. self.item_ranged)
+       
+    
+    
+    Imgui.text("Weapon 2: " .. self.item_ranged)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_ranged, 0, 0, 0, -20, 20)
         Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_ranged, 0, 0, 0, -20, 20)
         Imgui.spacing()
-        imgui.tree_pop()
-    end
+        
+   
 
     Imgui.text("Trinket: " .. self.item_trinket)
     Imgui.spacing()
