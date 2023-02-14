@@ -75,8 +75,10 @@ end
 
 settings_menu = class(settings_menu)
 
-function settings_menu.init(self)
+function settings_menu.init(self, postion)
     self._is_open = false
+    --self.pos = { mod:get()  or 0, 0, 0 }
+    self.rot = { 0, 0, 0,}
 end
 
 function settings_menu.toggle(self)
@@ -86,7 +88,11 @@ function settings_menu.toggle(self)
         self:open()
     end
 end
+-- collect all equipment info
+
 function settings_menu.get_equip_info(self)
+    --self.pos = { mod:get(self.item_melee) or 0, 0, 0 }
+    self.pos = { mod:get(self.item_melee) or 0, 0, 0 }
     self.item_health, self.item_potion, self.item_grenade = nil
     self.career_name, self.item_melee, self.item_ranged, self.item_trinket = get_cur_equip()
     self.item_health, self.item_potion, self.item_grenade = get_cur_pick()
@@ -94,10 +100,10 @@ end
 
 function settings_menu.open(self)
     self._is_open = true
-    
+    settings_menu.get_equip_info(self)
     Imgui.open_imgui()
     self:capture_input()
-    settings_menu.get_equip_info(self)
+    
 end
 
 function settings_menu.release_input()
@@ -119,83 +125,117 @@ end
 
 function settings_menu.draw(self)
     Imgui.begin_window("settings_menu")
-    
     Imgui.spacing()
+
     Imgui.text("Career: " .. self.career_name)
     Imgui.spacing()
+    Imgui.separator()
+    Imgui.spacing()
+    Imgui.text("Loadout: ")
     Imgui.spacing()
     Imgui.spacing()
-    Imgui.spacing()
-    
-   
-     Imgui.text("Weapon 1: " .. self.item_melee)
+    Imgui.tree_push("Tree_Weapons")
+
+    if Imgui.tree_node("Weapon 1: " .. self.item_melee, false) then
+        --Imgui.text("Weapon 1: " .. self.item_melee)
         Imgui.spacing()
-        Imgui.slider_float_3("position: "..self.item_melee, 0, 0, 0, -20, 20)
+        self.pos[1], self.pos[2], self.pos[3] = Imgui.slider_float_3("Rosition: "..self.item_melee, self.pos[1], self.pos[2], self.pos[3], -20, 20)
+        --[[if Imgui.slider_float_3("position: "..self.item_melee) == true then
+            mod:echo("position test setting changed") 
+		--mod:reload_extensions()
+		--mod:update()
+        end]]
+        
+        
         Imgui.spacing()
-        Imgui.slider_float_3("rotation: "..self.item_melee, 0, 0, 0, -20, 20)
+        self.rot[1], self.rot[2], self.rot[3] = Imgui.slider_float_3("Rotation: "..self.item_melee, self.rot[1], self.rot[2], self.rot[3], -20, 20)
         Imgui.spacing()
-       
-    
-    
-    Imgui.text("Weapon 2: " .. self.item_ranged)
+        Imgui.tree_pop()
+    end
+
+    if Imgui.tree_node("Weapon 2: " .. self.item_ranged, false) then
+        --Imgui.text("Weapon 2: " .. self.item_ranged)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_ranged, 0, 0, 0, -20, 20)
         Imgui.spacing()
+        Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_ranged, 0, 0, 0, -20, 20)
         Imgui.spacing()
-        
-   
+        Imgui.tree_pop() 
+    end 
+    
+    if Imgui.tree_node("Trinket : " .. self.item_trinket, false) then
+        --Imgui.text("Trinket: " .. self.item_trinket)
+         Imgui.spacing()
+        Imgui.slider_float_3("position: "..self.item_trinket, 0, 0, 0, -20, 20)
+        Imgui.spacing()
+        Imgui.slider_float_3("rotation: "..self.item_trinket, 0, 0, 0, -20, 20)
+        Imgui.spacing()
+        Imgui.tree_pop()
+    end
 
-    Imgui.text("Trinket: " .. self.item_trinket)
+    Imgui.tree_pop()
+      
     Imgui.spacing()
-    Imgui.slider_float_3("position: "..self.item_trinket, 0, 0, 0, -20, 20)
+    Imgui.separator()
     Imgui.spacing()
-    Imgui.slider_float_3("rotation: "..self.item_trinket, 0, 0, 0, -20, 20)
-    Imgui.spacing()
+
 
     Imgui.text("Pickups: ")
     Imgui.spacing()
     Imgui.spacing()
+    Imgui.tree_push("Tree_Pickups")
 
-    if self.item_health and self.item_health ~= nil then
-        Imgui.text(self.item_health)
+    if self.item_health and self.item_health ~= nil and Imgui.tree_node(self.item_health, false) then
+        --Imgui.text(self.item_health)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_health, 0, 0, 0, -20, 20)
         Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_health, 0, 0, 0, -20, 20)
         Imgui.spacing()
-    end 
-    Imgui.spacing()
-    if self.item_potion and self.item_potion ~= nil then
-        Imgui.text(self.item_potion)
+        Imgui.spacing()
+        Imgui.tree_pop()
+    end
+
+    if self.item_potion and self.item_potion ~= nil and Imgui.tree_node(self.item_potion, false) then
+        --Imgui.text(self.item_potion)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_potion, 0, 0, 0, -20, 20)
         Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_potion, 0, 0, 0, -20, 20)
         Imgui.spacing()
+        Imgui.spacing()
+        Imgui.tree_pop()
     end 
-    Imgui.spacing()
-    if self.item_grenade and self.item_grenade ~= nil then
-        Imgui.text(self.item_grenade)
+    if self.item_grenade and self.item_grenade ~= nil and Imgui.tree_node(self.item_grenade, false)  then
+        --Imgui.text(self.item_grenade)
         Imgui.spacing()
         Imgui.slider_float_3("position: "..self.item_grenade, 0, 0, 0, -20, 20)
         Imgui.spacing()
         Imgui.slider_float_3("rotation: "..self.item_grenade, 0, 0, 0, -20, 20)
         Imgui.spacing()
+        Imgui.tree_pop()
     end 
+
+    Imgui.tree_pop()
+
     Imgui.spacing()
     Imgui.spacing()
     Imgui.spacing()
+    Imgui.separator()
     Imgui.spacing()
     Imgui.spacing()
     if Imgui.button("Confirm") then
         self:save()
+        local test = mod:get(self.item_melee)
+        mod:echo("pos1 ".. test .. " saved")
     end
     
     Imgui.end_window()
 end
 
 function settings_menu.save(self)
+    mod:set(self.item_melee, self.pos[1])
 end
 
 return settings_menu
