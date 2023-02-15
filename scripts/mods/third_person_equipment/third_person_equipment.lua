@@ -122,7 +122,7 @@ mod.reload_extensions = function(self, profile)
 		if not profile or extension.profile == profile then
 			local inventory_extension = ScriptUnit.extension(extension.unit, "inventory_system")
 			inventory_extension.tpe_extension:reload()
-			--mod:echo('ext reloaded')
+			mod:echo('ext reloaded')
 		end
 	end
 end
@@ -172,16 +172,7 @@ mod.on_setting_changed = function(setting_name)
 	
 	
 		
-	  --[[  mod:echo("position test setting changed") 
-		--mod:reload_extensions()
-		if setting_name == "weapon_selection" then
-			local weapon_selection = mod:get("weapon_selection")
-			local side = mod:get("side_select")
-			local z_set = mod.definitions[weapon_selection][side].belt[career_selection].position[1]
-			mod:set("z_adjust", z_set)
-			
-		end
-	--]]
+	
 	-- Dwarf weapons
 	if setting_name == "dwarf_weapon_position" then
 		mod:reload_extensions("dwarf_ranger")
@@ -208,18 +199,17 @@ mod.on_setting_changed = function(setting_name)
 		--mod.definitions.healthkit_first_aid_kit_01.empire_soldier.left.es_huntsman.position[1] = mod:get("position_test")
 		local weapon_selection = mod:get("weapon_selection")
 		local career_selection = mod:get("career_selection")
-		local z_adjust = mod:get("z_adjust")
+		local z_adjust = mod:get("height_adjust")
 		local x_adjust = mod:get("x_adjust")
 		local y_adjust = mod:get("y_adjust")
 		local side = mod:get("side_select")
 		mod:echo(weapon_selection .. "retrieved")
 		--mod:echo(testing_position .. "retrieved")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[1] = mod:get("z_adjust")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[2] = mod:get("x_adjust")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[3] = mod:get("y_adjust")
+		mod.definitions[weapon_selection][side].belt[career_selection].position[1] = mod:get("height_adjust")
+
 		mod:echo("position test setting changed") 
 		mod:reload_extensions()
-		mod:update()
+		--mod:update()
 	end
 end
 --[[

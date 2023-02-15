@@ -217,13 +217,18 @@ mod.definitions.wh_1h_axes = {
 
 -- ##### Brace of Pistols #############################################################################################
 mod.definitions.wh_brace_of_pisols = {
-    right = { node = hip_node, position = {0, 0, 0.2}, rotation = {70, 50, 100},										        -- Default / V1					2.1.0
+    right = {
+        node = hip_node, position = {0, 0, 0.2}, rotation = {70, 50, 100},										        -- Default / V1					2.1.0
         wh_captain = {
             node = hip_node, position = {0.1, 0, 0.18}, rotation = {70, 50, -240},				        	                    -- V2 captain					2.1.0
             skin_wh_default = { node = hip_node, position = {0.1, 0, 0.17}, rotation = {70, 50, 100}, },			        	-- V2 classic captain skin		2.1.0
         },
-        wh_bountyhunter = { node = hip_node, position = {0.1, 0, -0.2}, rotation = {70, 50, -240}, },				        	-- V2 bountyhunter				2.1.0
-        wh_zealot = { node = hip_node, position = {0, 0, 0.2}, rotation = {70, 50, 100}, },							        	-- V2 zealot					2.1.0
+        wh_bountyhunter = {
+            node = hip_node, position = {0.1, 0, -0.2}, rotation = {70, 50, -240}, 
+        },				        	-- V2 bountyhunter				2.1.0
+        wh_zealot = {
+            node = hip_node, position = {0, 0, 0.2}, rotation = {70, 50, 100},
+        },							        	-- V2 zealot					2.1.0
     },
     left = { node = hip_node, position = {0, 0, 0.2}, rotation = {70, 50, -240},									        	-- Default / V1					2.1.0
         wh_captain = {
