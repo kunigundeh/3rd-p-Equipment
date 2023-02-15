@@ -11,6 +11,17 @@ mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
 
   
 --helpers
+local function lookup(t, ...)
+    for _, k in ipairs{...} do
+        t = t[k]
+        if not t then
+            return nil
+        end
+    end
+    return t
+end
+
+
 
 function printAnyLuaType(AnyLuaType, identationSpaces, identationLevel)
 
@@ -45,6 +56,12 @@ function printAnyLuaType(AnyLuaType, identationSpaces, identationLevel)
         print(AnyLuaType)
     end
 end
+
+local function print_loadout()
+    print(get_cur_equip(player),
+    get_cur_pick(player))
+end
+
 
 --set up table for currently equipped items
 
@@ -109,15 +126,7 @@ local function get_cur_pick(player)
     end
 end
 
-local function lookup(t, ...)
-    for _, k in ipairs{...} do
-        t = t[k]
-        if not t then
-            return nil
-        end
-    end
-    return t
-end
+
 
 -- Menu
 
@@ -153,7 +162,7 @@ function settings_menu.get_equip_info(self)
     self._right = true
     self._left = false
     self._side = 1
-    self.side = "left"
+    self.side = "right"
     --self.pos = { mod:get(self.item_melee) or 0, 0, 0 }
     self.item_health, self.item_potion, self.item_grenade = nil
     self.career_name, self.item_melee, self.item_ranged, self.item_trinket = get_cur_equip()
@@ -161,10 +170,11 @@ function settings_menu.get_equip_info(self)
     --self.skin_name = ThirdPersonEquipmentExtension.character_skin()
     self.skin_name = "skin"
     self.item_health, self.item_potion, self.item_grenade = get_cur_pick()
-    mod:debug("should be full"..table.dump_string(mod.definitions))
+    --mod:debug("should be full"..table.dump_string(mod.definitions))
     --mod:debug("should be full"..table.dump_string(mod.definitions[self.item_melee][self.side].belt))
     print(self.career_name, self.item_melee, self.side)
-    --print(mod.definitions[self.item_melee][self.side]["belt"][self.career_name]["position"][1])
+    --mod:echo(lookup(mod.definitions, self.career_name, self.item_melee, self.side,)
+    --print(mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1])
     --[[
 
     mod:debug("should be empty"..table.dump_string(self.loadout))
@@ -237,8 +247,15 @@ function settings_menu.draw(self)
         Imgui.spacing()
         Imgui.spacing()
 
-        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1], mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2], mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3] = Imgui.slider_float_3("Position: "..self.item_melee, mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1], mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2], mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3], -20, 20)
+        local melee_x = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1]
+        local melee_y = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2]
+        local melee_z = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3]
+
+        melee_x, melee_y, melee_z = Imgui.slider_float_3("Position: "..self.item_melee, melee_x, melee_y, melee_z, -0.5, 0.5)
         
+        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1] = melee_x
+        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2] = melee_y
+        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3] = melee_z
         --self.tempItem[1], self.tempItem[2], self.tempItem[3] = Imgui.slider_float_3("Position: "..self.item_melee, self.tempItem[1], self.tempItem[2], self.tempItem[3], -20, 20)
         --[[
         self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][1], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][2], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][3] = Imgui.slider_float_3("Position: "..self.item_melee, self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][1], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][2], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][3], -20, 20)
@@ -326,7 +343,7 @@ function settings_menu.draw(self)
             self.side = left
         end
         Imgui.spacing()
-        Imgui.slider_float_3("Position: "..self.item_grenade, 0, 0, 0, -20, 20)
+        Imgui.slider_float_3("Position: "..self.item_grenade, 0, 0, 0, -0.5, 0.5)
         Imgui.spacing()
         Imgui.slider_float_3("Rotation: "..self.item_grenade, 0, 0, 0, -20, 20)
         Imgui.spacing()
@@ -352,7 +369,10 @@ function settings_menu.draw(self)
     if Imgui.button("Print Loadout") then
         mod:debug("test"..table.dump_string(loadout))
     end
-    
+    if Imgui.button("Reload") then
+    mod:reload_extensions()
+    end
+
     Imgui.end_window()
 end
 
