@@ -263,6 +263,8 @@ function settings_menu.draw(self)
         self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][4], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][5], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][6] = Imgui.slider_float_3("Rotation: "..self.item_melee, self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][4], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][5], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][6], -20, 20)
         --]]
         
+        
+
         Imgui.spacing()
         Imgui.tree_pop()
     end
@@ -385,7 +387,7 @@ function settings_menu.storeLoadout(self)
 
 end
 
-mod:debug("test"..table.dump_string(loadout))
+
 
 
 

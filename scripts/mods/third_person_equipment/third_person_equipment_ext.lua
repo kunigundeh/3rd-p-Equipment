@@ -1,4 +1,6 @@
 local mod = get_mod("third_person_equipment")
+
+local MeshTisch = local_require("scripts/mods/third_person_equipment/mesh_tisch/mesh_tisch_init")
 --[[
     Third person equipment extension
 

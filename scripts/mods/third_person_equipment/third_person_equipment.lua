@@ -13,6 +13,7 @@ mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
 mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_ext")
 
 mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
+local MeshTisch = local_require("scripts/mods/third_person_equipment/mesh_tisch/mesh_tisch_init")
 
 
 
@@ -37,15 +38,6 @@ mod.change_index = function()
 	mod:delete_all_units()
 	mod:hook_all_inventories()
 end
-
-
-mod:command("print_loadout", "", function() 
-	print_loadout()	
-	mod:echo('loadout printed')
-end)
-
-
-
 
 -- ##### ███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗ ###################################
 -- ##### ██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝ ###################################
@@ -337,4 +329,8 @@ end
 mod:command("print_slots", "", function() 
 	print_slots()	
 	mod:echo('slots printed')
+end)
+
+mod:command("dump_tisch", "", function()
+	mod:debug("MeshTisch"..table.dump_string(MeshTisch))
 end)
