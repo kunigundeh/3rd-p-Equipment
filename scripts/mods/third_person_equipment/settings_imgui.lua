@@ -6,6 +6,8 @@ mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
 mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_ext")
 
 mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
+
+local MeshTisch = local_require("scripts/mods/third_person_equipment/mesh_tisch/mesh_tisch_init")
 --[[ need settings-variable-constructor --> mesh, unit-name, side, ]]
 
 
@@ -79,10 +81,12 @@ local function get_cur_equip(player)
         local career_extension = ScriptUnit.extension(player_unit, "career_system")
         if career_extension then
             local career_name = career_extension._career_data.name
-            local item_melee = BackendUtils.get_loadout_item(career_name, "slot_melee").data.name
-            local item_ranged = BackendUtils.get_loadout_item(career_name, "slot_ranged").data.name
+            local item_melee = BackendUtils.get_loadout_item(career_name, "slot_melee").data.item_type 
+            local item_ranged = BackendUtils.get_loadout_item(career_name, "slot_ranged").data.item_type
 			local item_trinket = BackendUtils.get_loadout_item(career_name, "slot_trinket_1").data.name
-			
+            local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
+	        local skin_name = item_skin.data.name
+	        local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
 			
 			--local item_data_melee = item_melee.data
 			--local item_name_melee = item_data_melee and item_data_melee.name
@@ -94,10 +98,12 @@ local function get_cur_equip(player)
 			--print(career_name) 
             --print(item_melee)
             --print(item_ranged)               
-            return career_name, item_melee, item_ranged, item_trinket 
+            return career_name, item_melee, item_ranged, item_trinket, mesh_name
         end
     end
 end
+
+
 
 -- get current pickups
 
@@ -163,11 +169,9 @@ function settings_menu.get_equip_info(self)
     self._left = false
     self._side = 1
     self.side = "right"
-    --self.pos = { mod:get(self.item_melee) or 0, 0, 0 }
     self.item_health, self.item_potion, self.item_grenade = nil
-    self.career_name, self.item_melee, self.item_ranged, self.item_trinket = get_cur_equip()
-    --mod:echo(mod.extensions.character_skin())
-    --self.skin_name = ThirdPersonEquipmentExtension.character_skin()
+    self.career_name, self.item_melee, self.item_ranged, self.item_trinket, self.mesh_name = get_cur_equip()
+    
     self.skin_name = "skin"
     self.item_health, self.item_potion, self.item_grenade = get_cur_pick()
     --mod:debug("should be full"..table.dump_string(mod.definitions))
@@ -188,6 +192,7 @@ function settings_menu.get_equip_info(self)
     end
     mod:debug("should be full"..table.dump_string(self.loadout))
     --]]
+    
 end
 
 function settings_menu.open(self)
@@ -247,15 +252,24 @@ function settings_menu.draw(self)
         Imgui.spacing()
         Imgui.spacing()
 
-        local melee_x = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1]
-        local melee_y = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2]
-        local melee_z = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3]
+        --local melee_x = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1]
+        --local melee_y = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2]
+        --local melee_z = mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3]
+        local melee_x = MeshTisch[self.mesh_name][self.item_melee].offset[1]
+        local melee_y = MeshTisch[self.mesh_name][self.item_melee].offset[2]
+        local melee_z = MeshTisch[self.mesh_name][self.item_melee].offset[3]
 
         melee_x, melee_y, melee_z = Imgui.slider_float_3("Position: "..self.item_melee, melee_x, melee_y, melee_z, -0.5, 0.5)
         
-        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1] = melee_x
-        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2] = melee_y
-        mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3] = melee_z
+        MeshTisch[self.mesh_name][self.item_melee].offset[1] = melee_x
+        MeshTisch[self.mesh_name][self.item_melee].offset[2] = melee_y
+        MeshTisch[self.mesh_name][self.item_melee].offset[3] = melee_z
+
+        --mod.definitions[self.item_melee][self.side].belt[self.career_name].position[1] = melee_x
+        --mod.definitions[self.item_melee][self.side].belt[self.career_name].position[2] = melee_y
+        --mod.definitions[self.item_melee][self.side].belt[self.career_name].position[3] = melee_z
+
+
         --self.tempItem[1], self.tempItem[2], self.tempItem[3] = Imgui.slider_float_3("Position: "..self.item_melee, self.tempItem[1], self.tempItem[2], self.tempItem[3], -20, 20)
         --[[
         self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][1], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][2], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][3] = Imgui.slider_float_3("Position: "..self.item_melee, self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][1], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][2], self.loadout[self.career_name][self.skin_name][self.item_melee][self.side][3], -20, 20)
