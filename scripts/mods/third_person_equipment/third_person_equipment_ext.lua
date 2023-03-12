@@ -330,6 +330,18 @@ ThirdPersonEquipmentExtension.remove_weapons = function(self)
 	end
 end
 
+ThirdPersonEquipmentExtension.clear_slot = function(self, slot)
+	local equiped_weapons = self.weapons
+	for unit, slot_name in pairs(equiped_weapons) do
+		if slot == slot_name then
+			equiped_weapons[unit] =  nil
+			if Unit.alive(unit) then
+				Managers.state.unit_spawner:mark_for_deletion(unit)
+			end
+		end
+	end
+end
+
 --[[
     Get career name
 --]]
