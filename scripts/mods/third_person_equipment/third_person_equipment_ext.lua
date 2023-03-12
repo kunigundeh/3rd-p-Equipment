@@ -27,7 +27,6 @@ ThirdPersonEquipmentExtension = class(ThirdPersonEquipmentExtension)
     Initialize extension
 --]]
 ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
-    --mod:echo("Initializing extensions") 
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
     self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} --"slot_necklace", "slot_trinket_1", "slot_ring",} -- test additional slots
@@ -51,7 +50,6 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	--setup a trophies list that a trinket can occupy
 	--may make it so more of the "generic_trophies" units can be used
 	self.attached_trophies = {}
-	--mod:echo("init flow unit attachment: " .. tostring(self.unit))
 
 	self.world = Managers.world:world("level_world")
 	self.weapons = {}
@@ -64,7 +62,6 @@ ThirdPersonEquipmentExtension.destroy = function(self)
 	self:remove_trinket()
     mod.extensions[self.unit] = nil
 	self.attached_trophies = nil
-	--mod:echo('destroy ext exec')
 end
 
 --[[
@@ -88,17 +85,15 @@ end
 --]]
 ThirdPersonEquipmentExtension.wield = function(self, slot_name)
     self.active_slot = slot_name
-	--self:add_all()   -- addition test
     self:set_equipment_visibility()
-	--mod:echo(tostring(slot_name) ..' wield exec')
 end
+
 --[[
     Check for special state where melee and ranged weapon are visible
 --]]
 ThirdPersonEquipmentExtension.is_special_state = function(self)
 	local is_special_state = false
 	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
-	--mod:echo("state = " .. state_system)
 	if state_system ~= nil then
 		local state = state_system.state_machine.state_current
 		for _, special_state in pairs(self.special_states) do
@@ -110,7 +105,6 @@ ThirdPersonEquipmentExtension.is_special_state = function(self)
 			end
 		end
 	end
-	--mod:echo('checked for special state')
 	return is_special_state
 	
 end
@@ -295,9 +289,9 @@ end
 --[[
     Remove equipment
 --]]
-ThirdPersonEquipmentExtension.remove = function(self, slot_name)
+-- ThirdPersonEquipmentExtension.remove = function(self, slot_name)
     
-end
+-- end
 
 --[[
     Remove all equipment
@@ -360,10 +354,8 @@ end
 ThirdPersonEquipmentExtension.is_local_player = function(self)
     local player = Managers.player:local_player()
     if player and player.player_unit and self.unit == player.player_unit then
-        --mod:echo('check ext on local player: true')
 		return true
     end
-	--mod:echo('check ext on local player: false')
     return false
 end
 

@@ -18,7 +18,6 @@ mod:hook(SimpleHuskInventoryExtension, "destroy", destroy)
 	Wield weapons
 --]]
 local wield = function(self, slot_name)
-	mod:echo(slot_name)
     if self.tpe_extension and self.tpe_extension.initialized then
 		if table.contains(self.tpe_extension.slots, slot_name) then
 			self.tpe_extension:wield(slot_name)
@@ -63,18 +62,18 @@ end)
 --[[
 	Destroy slot
 --]]
-local destroy_slot = function(func, self, slot_name, ...)
-	if self.tpe_extension and self.tpe_extension.initialized then
-		if table.contains(self.tpe_extension.slots, slot_name) then
-			self.tpe_extension:remove(slot_name)
-		end
-	else
-		mod:echo("destroy_slot not executed")
-	end
-	return func(self, slot_name, ...)
-end
-mod:hook(SimpleInventoryExtension, "destroy_slot", destroy_slot)
-mod:hook(SimpleHuskInventoryExtension, "destroy_slot", destroy_slot)
+-- local destroy_slot = function(func, self, slot_name, ...)
+-- 	if self.tpe_extension and self.tpe_extension.initialized then
+-- 		if table.contains(self.tpe_extension.slots, slot_name) then
+-- 			self.tpe_extension:remove(slot_name)
+-- 		end
+-- 	else
+-- 		mod:echo("destroy_slot not executed")
+-- 	end
+-- 	return func(self, slot_name, ...)
+-- end
+-- mod:hook(SimpleInventoryExtension, "destroy_slot", destroy_slot)
+-- mod:hook(SimpleHuskInventoryExtension, "destroy_slot", destroy_slot)
 
 --[[
 	Update
