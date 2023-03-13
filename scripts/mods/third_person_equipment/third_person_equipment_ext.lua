@@ -28,7 +28,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
     self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
-    self.active_slot = self.inventory_extension:equipment().wielded_slot or "slot_melee"
+    self.active_slot = inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
 	self.delayed_visibility_check = false
@@ -236,10 +236,7 @@ ThirdPersonEquipmentExtension.reload = function(self)
 	self:add_all()
 end
 
-ThirdPersonEquipmentExtension.add_all = function(self)
-    local slots_by_name = InventorySettings.slots_by_name
-    local wieldable_slots = InventorySettings.slots_by_wield_input
-	
+ThirdPersonEquipmentExtension.add_all = function(self)	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
         if slot_name ~= "slot_packmaster_claw" then
 			self:add(slot_name, slot)
@@ -252,7 +249,7 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 		self.show = true
 	end
 
-    -- self:set_equipment_visibility()
+    self:set_equipment_visibility()
 end
 
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
