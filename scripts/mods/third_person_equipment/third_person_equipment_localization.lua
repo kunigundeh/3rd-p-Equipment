@@ -5,8 +5,6 @@ local mod = get_mod("third_person_equipment")
 	Author: grasmann
 --]]
 
-mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_def")
-
 local parts = {
 	backpack_1 = {
 		en = "-- Backpack --\n",
