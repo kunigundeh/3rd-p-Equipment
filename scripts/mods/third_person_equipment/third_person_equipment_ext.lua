@@ -83,7 +83,7 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
-		Unit.set_unit_visibility(unit, slot ~= active_slot)
+		Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
 	end
 
 	self:set_trinket_visibility(self.attached_trophies["trinket"])
@@ -218,6 +218,7 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 	if not self:is_local_player() then
 		self.show = true
 	end
+
     self:set_equipment_visibility()
 end
 
@@ -281,7 +282,7 @@ end
 ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)
 	local hide = not self.show
 	if Unit.alive(trinket_unit) then
-		Unit.set_unit_visibility(trinket_unit, not hide)
+		Unit.set_unit_visibility(trinket_unit, self.show)
 	end
 end
 
