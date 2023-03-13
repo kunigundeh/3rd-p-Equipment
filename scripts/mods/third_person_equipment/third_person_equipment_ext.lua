@@ -147,6 +147,8 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, unit_na
 
 			local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 			Unit.set_local_rotation(unit, 0, rot)
+		else
+			self:link_unit(unit, attachment_node_tisch)
 		end
 	else 
 		self:link_unit(unit, attachment_node_tisch)
