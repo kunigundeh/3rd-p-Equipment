@@ -73,6 +73,29 @@ ThirdPersonEquipmentExtension.update = function(self)
 	end
 end
 
+--[[
+    Check for special state where equipment should be visible but base game tries to make it not so.
+--]]
+ThirdPersonEquipmentExtension.is_special_state = function(self)
+	local is_special_state = false
+	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
+	--mod:echo("state = " .. state_system)
+	if state_system ~= nil then
+		local state = state_system.state_machine.state_current
+		for _, special_state in pairs(self.special_states) do
+			is_special_state = is_special_state or state.name == special_state
+		end
+		if not is_special_state and not self:is_local_player() then
+			for _, special_state in pairs(self.special_states_remote_only) do
+				is_special_state = is_special_state or state.name == special_state
+			end
+		end
+	end
+	--mod:echo('checked for special state')
+	return is_special_state
+	
+end
+
 ThirdPersonEquipmentExtension.wield = function(self, slot_name)
     self.active_slot = slot_name
     self:set_equipment_visibility()
@@ -83,7 +106,11 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
-		Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
+		if self:is_special_state() then
+			Unit.set_unit_visibility(unit, true)
+		else 
+			Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
+		end
 	end
 
 	self:set_trinket_visibility(self.attached_trophies["trinket"])
@@ -282,7 +309,11 @@ end
 ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)
 	local hide = not self.show
 	if Unit.alive(trinket_unit) then
-		Unit.set_unit_visibility(trinket_unit, self.show)
+		if self:is_special_state() then
+			Unit.set_unit_visibility(trinket_unit, true)
+		else
+			Unit.set_unit_visibility(trinket_unit, self.show)
+		end
 	end
 end
 
