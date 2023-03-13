@@ -89,7 +89,6 @@ mod.hook_all_inventories = function(self)
 		for _, player in pairs(players) do
 			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
 			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
-			inventory_extension.tpe_extension:add_all()
 			--mod:echo('all inv hooked')
         end
     end
@@ -101,7 +100,9 @@ mod.reload_extensions = function(self, profile)
 	for _, extension in pairs(self.extensions) do
 		if not profile or extension.profile == profile then
 			local inventory_extension = ScriptUnit.extension(extension.unit, "inventory_system")
-			inventory_extension.tpe_extension:reload()
+			inventory_extension.tpe_extension:destroy()
+			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
+			inventory_extension.tpe_extension:add_all()
 			--mod:echo('ext reloaded')
 		end
 	end
@@ -161,13 +162,39 @@ end
 	Mod Suspended
 --]]
 mod.on_disabled = function(initial_call)
-	mod:delete_all_units()
+	if Managers and Managers.state and Managers.state.network then
+        local players = Managers.player:players()
+		for _, player in pairs(players) do
+			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+			inventory_extension.tpe_extension:destroy()
+        end
+    end
 end
+
 --[[
 	Mod Unsuspended
 --]]
+local add_equipment = function(self, slot_name, item_data)
+	if self.tpe_extension and self.tpe_extension.initialized then
+		if table.contains(self.tpe_extension.slots, slot_name) then
+			local slot_data = self:equipment().slots[slot_name]
+            self.tpe_extension:add(slot_name, slot_data)
+		end
+		self.tpe_extension:add_trinket(self.tpe_extension.unit)
+	else
+		mod:echo("add_equipment not executed")
+	end
+end
 mod.on_enabled = function(initial_call)
-	mod:hook_all_inventories()
+	if Managers and Managers.state and Managers.state.network then
+        local players = Managers.player:players()
+		for _, player in pairs(players) do
+			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
+			inventory_extension.tpe_extension:reload()
+			--mod:echo('all inv hooked')
+        end
+    end
 	mod:echo("hooking inv after enable")
 end
 --[[

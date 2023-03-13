@@ -33,7 +33,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.show = false
 	self.delayed_visibility_check = false
 	self.special_states = {
-		"catapulted", "dead", "falling", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
+		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
 		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote", 
@@ -239,9 +239,11 @@ end
 ThirdPersonEquipmentExtension.add_all = function(self)
     local slots_by_name = InventorySettings.slots_by_name
     local wieldable_slots = InventorySettings.slots_by_wield_input
-
+	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
-        self:add(slot_name, slot)
+        if slot_name ~= "slot_packmaster_claw" then
+			self:add(slot_name, slot)
+		end
     end
 
 	self:add_trinket(self.unit)
@@ -250,7 +252,7 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 		self.show = true
 	end
 
-    self:set_equipment_visibility()
+    -- self:set_equipment_visibility()
 end
 
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
