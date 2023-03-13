@@ -153,9 +153,9 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
 				self:link_unit(unit, attachment_table)
 				
-				local attachment_offset = item_attach_data.offset
-				local attachment_angle = item_attach_data.angle
-				if attachment_table and attachment_offset and attachment_angle then
+				local attachment_offset = handed_attach_data.offset
+				local attachment_angle = handed_attach_data.angle
+				if attachment_offset and attachment_angle then
 					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 					Unit.set_local_position(unit, 0, pos)
 
@@ -168,7 +168,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 				
 				local attachment_offset = item_attach_data.offset
 				local attachment_angle = item_attach_data.angle
-				if attachment_table and attachment_offset and attachment_angle then
+				if attachment_offset and attachment_angle then
 					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 					Unit.set_local_position(unit, 0, pos)
 
