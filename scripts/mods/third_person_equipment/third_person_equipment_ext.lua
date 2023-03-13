@@ -231,10 +231,10 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, attachment_n
 	AttachmentUtils.link(world, player_unit, item_unit, attachment_node_tisch)
 end
 
---ThirdPersonEquipmentExtension.reload = function(self)
---    self:remove_all()
---	self:add_all()
---end
+ThirdPersonEquipmentExtension.reload = function(self)
+    self:remove_all()
+	self:add_all()
+end
 
 ThirdPersonEquipmentExtension.add_all = function(self)
     local slots_by_name = InventorySettings.slots_by_name
