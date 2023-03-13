@@ -89,31 +89,11 @@ ThirdPersonEquipmentExtension.wield = function(self, slot_name)
 end
 
 --[[
-    Check for special state where melee and ranged weapon are visible
---]]
-ThirdPersonEquipmentExtension.is_special_state = function(self)
-	local is_special_state = false
-	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
-	if state_system ~= nil then
-		local state = state_system.state_machine.state_current
-		for _, special_state in pairs(self.special_states) do
-			is_special_state = is_special_state or state.name == special_state
-		end
-		if not is_special_state and not self:is_local_player() then
-			for _, special_state in pairs(self.special_states_remote_only) do
-				is_special_state = is_special_state or state.name == special_state
-			end
-		end
-	end
-	return is_special_state
-	
-end
---[[
     Set equipment visibility
 --]]
 ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 	local hide = not self.show
-	self.special_state = self:is_special_state()
+	-- self.special_state = self:is_special_state()
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
@@ -124,6 +104,27 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 end
 
 --[[
+	gets material settings of skin
+--]]
+ThirdPersonEquipmentExtension.get_weapon_skin_material_settings = function(self, slot_data)
+	local skin = slot_data.skin
+	local skin_data = WeaponSkins.skins[skin]
+
+	local material_settings = skin_data.material_settings
+
+	return material_settings
+end
+
+--[[
+	applies material settings on unit
+--]]
+ThirdPersonEquipmentExtension.apply_skin_material_settings = function(self, unit, material_settings)
+	if material_settings then
+		GearUtils.apply_material_settings(unit, material_settings)
+	end
+end
+
+--[[
     Add equipment
 --]]
 ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
@@ -131,16 +132,20 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local weapon_template = slot_data.item_template
 	local left_hand_unit_name = slot_data.left_hand_unit_name
 	local right_hand_unit_name = slot_data.right_hand_unit_name
+
+	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
 		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch)
+		self:apply_skin_material_settings(left_unit, material_settings)
 		self.weapons[left_unit] = slot_name
 	end
 
 	if right_hand_unit_name then
 		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
 		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch)
+		self:apply_skin_material_settings(right_unit, material_settings)
 		self.weapons[right_unit] = slot_name
 	end
 
@@ -151,7 +156,7 @@ end
 --[[
 	Spawn equipment unit
 --]]
-ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch)
+ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, material_data)
 	
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
 	
@@ -287,37 +292,11 @@ ThirdPersonEquipmentExtension.remove_trinket = function(self)
 end
 
 --[[
-    Remove equipment
---]]
--- ThirdPersonEquipmentExtension.remove = function(self, slot_name)
-    
--- end
-
---[[
     Remove all equipment
 --]]
 ThirdPersonEquipmentExtension.remove_all = function(self)
     self:remove_weapons()
 	self:remove_trinket()
-end
-
---[[
-    Delete equipment units
---]]
-ThirdPersonEquipmentExtension.delete_item_unit = function(self, item_unit, sub_unit)
-    local world = self.world
-    --local unit_spawner = Managers.state.unit_spawner
-	if item_unit[sub_unit] ~= nil then
-        mod.spawned_units[item_unit[sub_unit]] = nil
-        if Unit.alive(item_unit[sub_unit]) then
-			
-			if POSITION_LOOKUP[item_unit[sub_unit]] then
-				POSITION_LOOKUP[item_unit[sub_unit]] = nil
-			end
-			World.destroy_unit(world, item_unit[sub_unit])
-		   --local unit_spawner:world_delete_units(item_unit[sub_unit])
-        end
-    end
 end
 
 ThirdPersonEquipmentExtension.remove_weapons = function(self)
