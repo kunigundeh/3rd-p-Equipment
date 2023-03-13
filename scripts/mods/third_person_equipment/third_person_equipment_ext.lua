@@ -4,7 +4,7 @@ local mod = get_mod("third_person_equipment")
 
     Extends simple_inventory_extension and simple_husk_inventory_extension with additional features
 
-	Author: grasmann
+	Authors: grasmann, kunigundeh, dalo_kraff
 --]]
 
 local function radians_to_quaternion(theta, ro, phi)
@@ -23,9 +23,7 @@ local function radians_to_quaternion(theta, ro, phi)
 end
 
 ThirdPersonEquipmentExtension = class(ThirdPersonEquipmentExtension)
---[[
-    Initialize extension
---]]
+
 ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
@@ -54,9 +52,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.world = Managers.world:world("level_world")
 	self.weapons = {}
 end
---[[
-    Destroy extension
---]]
+
 ThirdPersonEquipmentExtension.destroy = function(self)
     self:remove_all()
 	self:remove_trinket()
@@ -64,9 +60,6 @@ ThirdPersonEquipmentExtension.destroy = function(self)
 	self.attached_trophies = nil
 end
 
---[[
-    Update extension
---]]
 ThirdPersonEquipmentExtension.update = function(self)
 	if self.delayed_visibility_check then
 		self:set_equipment_visibility()
@@ -80,20 +73,13 @@ ThirdPersonEquipmentExtension.update = function(self)
 	end
 end
 
---[[
-    Wield equipment
---]]
 ThirdPersonEquipmentExtension.wield = function(self, slot_name)
     self.active_slot = slot_name
     self:set_equipment_visibility()
 end
 
---[[
-    Set equipment visibility
---]]
 ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 	local hide = not self.show
-	-- self.special_state = self:is_special_state()
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
@@ -103,9 +89,6 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 	self:set_trinket_visibility(self.attached_trophies["trinket"])
 end
 
---[[
-	gets material settings of skin
---]]
 ThirdPersonEquipmentExtension.get_weapon_skin_material_settings = function(self, slot_data)
 	local skin = slot_data.skin
 	local skin_data = WeaponSkins.skins[skin]
@@ -171,9 +154,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, unit_na
 		self:link_unit(unit, attachment_node_tisch)
 	end
 end
---[[
-    Add equipment
---]]
+
 ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 
 	local weapon_template = slot_data.item_template
@@ -200,9 +181,6 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
     self:set_equipment_visibility()
 end
 
---[[
-	Spawn equipment unit
---]]
 ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand)
 	
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
@@ -215,28 +193,18 @@ ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_
 	return item_unit
 end
 
---[[
-	Link equipment unit
---]]
 ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, attachment_node_tisch)
 	local world = self.world
 	local player_unit = self.unit
 
 	AttachmentUtils.link(world, player_unit, item_unit, attachment_node_tisch)
-
 end
 
---[[
-    Reload equipment
---]]
 ThirdPersonEquipmentExtension.reload = function(self)
     self:remove_all()
 	self:add_all()
 end
 
---[[
-    Add all equipment
---]]
 ThirdPersonEquipmentExtension.add_all = function(self)
     local slots_by_name = InventorySettings.slots_by_name
     local wieldable_slots = InventorySettings.slots_by_wield_input
@@ -253,9 +221,6 @@ ThirdPersonEquipmentExtension.add_all = function(self)
     self:set_equipment_visibility()
 end
 
---[[
-    Retrieves a player's mesh based off of career name
---]]
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	local career_name = self:career_name()
 	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
@@ -264,9 +229,6 @@ ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	return mesh_name
 end
 
---[[
-    Retrieves a player's equiped trinket based off of career name
---]]
 ThirdPersonEquipmentExtension.get_trinket = function(self)
 	local career_name = self:career_name()
 	local trinket_data = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
@@ -274,9 +236,6 @@ ThirdPersonEquipmentExtension.get_trinket = function(self)
 	return trinket_name
 end
 
---[[
-    Equips trinket
---]]
 ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
 	local world = self.world --needs to be a class variable
@@ -326,9 +285,6 @@ ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_un
 	end
 end
 
---[[
-    Removes trinket
---]]
 ThirdPersonEquipmentExtension.remove_trinket = function(self)
 	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
 	local trinket_unit = self.attached_trophies["trinket"]
@@ -338,9 +294,6 @@ ThirdPersonEquipmentExtension.remove_trinket = function(self)
 	end
 end
 
---[[
-    Remove all equipment
---]]
 ThirdPersonEquipmentExtension.remove_all = function(self)
     self:remove_weapons()
 	self:remove_trinket()
@@ -368,27 +321,18 @@ ThirdPersonEquipmentExtension.clear_slot = function(self, slot)
 	end
 end
 
---[[
-    Get career name
---]]
 ThirdPersonEquipmentExtension.career_name = function(self)
     local career_extension = ScriptUnit.extension(self.unit, "career_system")
     local career_name = career_extension._career_data.name
     return career_name
 end
 
---[[
-    Get skin name
---]]
 ThirdPersonEquipmentExtension.character_skin = function(self)
     local cosmetic_extension = ScriptUnit.extension(self.unit, "cosmetic_system")
     local skin = cosmetic_extension:get_equipped_skin().name
     return skin
 end
 
---[[
-    Check if extension is on local player
---]]
 ThirdPersonEquipmentExtension.is_local_player = function(self)
     local player = Managers.player:local_player()
     if player and player.player_unit and self.unit == player.player_unit then
@@ -397,9 +341,6 @@ ThirdPersonEquipmentExtension.is_local_player = function(self)
     return false
 end
 
---[[
-	Find profile
---]]
 ThirdPersonEquipmentExtension.find_profile = function(self)
 	if Managers and Managers.state and Managers.state.network then
         local players = Managers.player:players()

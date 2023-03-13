@@ -4,7 +4,7 @@ local mod = get_mod("third_person_equipment")
 		- Shows equipped items on characters
 		- Works with player and bots
 
-	Author: grasmann
+	Authors: grasmann, kunigundeh, dalo_kraff
 --]]
 
 mod:dofile("scripts/mods/third_person_equipment/hooks")
