@@ -103,7 +103,17 @@ mod.reload_extensions = function(self, profile)
 			inventory_extension.tpe_extension:destroy()
 			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
 			inventory_extension.tpe_extension:add_all()
-			--mod:echo('ext reloaded')
+			inventory_extension.tpe_extension:set_equipment_visibility()
+
+			local active_slot = inventory_extension["_equipment"].wielded_slot
+			local inventory_extension = ScriptUnit.extension(extension.unit, "inventory_system")
+			local career_extension = ScriptUnit.extension(extension.unit, "career_system")
+				
+			local career_name = career_extension:career_name()
+			local item_two = BackendUtils.get_loadout_item(career_name, active_slot)
+
+			BackendUtils.set_loadout_item(item_two.backend_id, career_name, active_slot)
+			inventory_extension:create_equipment_in_slot(active_slot, item_two.backend_id)
 		end
 	end
 end
