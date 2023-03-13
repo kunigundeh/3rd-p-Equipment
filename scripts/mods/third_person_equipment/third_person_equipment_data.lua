@@ -2,7 +2,7 @@ local mod = get_mod("third_person_equipment")
 --[[ 
   Third person equipment data
 	
-	Author: grasmann
+	Authors: grasmann, kunigundeh, dalo_kraff
 --]]
 
 return {
