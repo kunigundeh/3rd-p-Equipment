@@ -110,7 +110,10 @@ ThirdPersonEquipmentExtension.get_weapon_skin_material_settings = function(self,
 	local skin = slot_data.skin
 	local skin_data = WeaponSkins.skins[skin]
 
-	local material_settings = skin_data.material_settings
+	local material_settings = nil
+	if skin_data then
+		material_settings = skin_data.material_settings
+	end
 
 	return material_settings
 end
