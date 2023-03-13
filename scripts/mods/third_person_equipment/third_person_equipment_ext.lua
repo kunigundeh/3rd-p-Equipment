@@ -141,38 +141,40 @@ end
 	applies offset to a unit based off the mesh it's attached to, the unit name
 	defaults to vanilla preset nodes if the mod does not define an offset
 --]]
-ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, unit_name, attachment_node_tisch, hand)
+ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand)
 	local mesh_name = self:get_player_mesh()
 	local mesh_attach_data = mod.equipment[mesh_name]
 	if mesh_attach_data then
-		local item_attach_data = mesh_attach_data[unit_name]
+		local item_attach_data = mesh_attach_data[item_type]
 		if item_attach_data then
 			local handed_attach_data = item_attach_data[hand]
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
 			if handed_attach_data then
 				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
-				local attachment_offset = handed_attach_data.offset
-				local attachment_angle = handed_attach_data.angle
-
 				self:link_unit(unit, attachment_table)
 				
-				local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
-				Unit.set_local_position(unit, 0, pos)
-
-				local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
-				Unit.set_local_rotation(unit, 0, rot)
-			else 
-				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
 				local attachment_offset = item_attach_data.offset
 				local attachment_angle = item_attach_data.angle
+				if attachment_table and attachment_offset and attachment_angle then
+					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+					Unit.set_local_position(unit, 0, pos)
 
+					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+					Unit.set_local_rotation(unit, 0, rot)
+				end
+			else
+				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
 				self:link_unit(unit, attachment_table)
 				
-				local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
-				Unit.set_local_position(unit, 0, pos)
+				local attachment_offset = item_attach_data.offset
+				local attachment_angle = item_attach_data.angle
+				if attachment_table and attachment_offset and attachment_angle then
+					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+					Unit.set_local_position(unit, 0, pos)
 
-				local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
-				Unit.set_local_rotation(unit, 0, rot)
+					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+					Unit.set_local_rotation(unit, 0, rot)
+				end
 			end
 		else
 			self:link_unit(unit, attachment_node_tisch)
@@ -188,18 +190,20 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local left_hand_unit_name = slot_data.left_hand_unit_name
 	local right_hand_unit_name = slot_data.right_hand_unit_name
 
+	local item_type = slot_data.item_data.item_type
+
 	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
-		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left")
+		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type)
 		self:apply_skin_material_settings(left_unit, material_settings)
 		self.weapons[left_unit] = slot_name
 	end
 
 	if right_hand_unit_name then
 		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
-		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right")
+		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type)
 		self:apply_skin_material_settings(right_unit, material_settings)
 		self.weapons[right_unit] = slot_name
 	end
@@ -208,14 +212,14 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
     self:set_equipment_visibility()
 end
 
-ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand)
+ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type)
 	
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
 	
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 	-- Link unit
-	self:offset_unit_by_mesh(item_unit, unit_name, attachment_node_tisch, hand)
+	self:offset_unit_by_mesh(item_unit, item_type, attachment_node_tisch, hand, item_type)
 
 	return item_unit
 end

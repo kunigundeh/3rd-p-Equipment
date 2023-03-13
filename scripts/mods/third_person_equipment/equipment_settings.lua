@@ -22,7 +22,7 @@ table structure is like so:
 local new_items = {
     ["units/beings/player/empire_soldier_mercenary/third_person_base/chr_third_person_mesh"] = {
         --handed example
-        ["units/weapons/player/wpn_emp_grenade_01_t1/wpn_emp_grenade_01_t1_3p"] = {
+        ["grenade"] = {
             right = {
                 attachement_nodes = {
                     {
@@ -35,7 +35,7 @@ local new_items = {
             },
         },
         --non handed example
-        ["units/weapons/player/wpn_emp_grenade_01_t2/wpn_emp_grenade_01_t2_3p"] = {
+        ["healthkit"] = {
             attachement_nodes = {
                 {
                     target = 0, 
@@ -44,6 +44,17 @@ local new_items = {
             },
             offset = {0.2,0.2,-0.1},
             angle = {0.5,0,2},          
+        },
+        --weapon example
+        ["es_2h_war_hammer"] = {
+            attachement_nodes = {
+                {
+                    target = 0, 
+                    source = "a_unwielded_2h" 
+                },
+            },
+            offset = {0,0,0},
+            angle = {1.5,0,0},          
         },
     },
 }
