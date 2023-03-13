@@ -19,6 +19,7 @@ table structure is like so:
 --]]
 
 --example of using this data structure to assign offsets to a location to frag grenades on the default merc mesh
+--[[
 local new_items = {
     ["units/beings/player/empire_soldier_mercenary/third_person_base/chr_third_person_mesh"] = {
         --handed example
@@ -59,5 +60,5 @@ local new_items = {
     },
 }
 
-
 table.merge(mod.equipment, new_items)
+--]]

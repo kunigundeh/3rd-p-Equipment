@@ -27,7 +27,7 @@ ThirdPersonEquipmentExtension = class(ThirdPersonEquipmentExtension)
 ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
-    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} --"slot_necklace", "slot_trinket_1", "slot_ring",} -- test additional slots
+    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
     self.active_slot = self.inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
@@ -231,10 +231,10 @@ ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, attachment_n
 	AttachmentUtils.link(world, player_unit, item_unit, attachment_node_tisch)
 end
 
-ThirdPersonEquipmentExtension.reload = function(self)
-    self:remove_all()
-	self:add_all()
-end
+--ThirdPersonEquipmentExtension.reload = function(self)
+--    self:remove_all()
+--	self:add_all()
+--end
 
 ThirdPersonEquipmentExtension.add_all = function(self)
     local slots_by_name = InventorySettings.slots_by_name
