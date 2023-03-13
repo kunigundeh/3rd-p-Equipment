@@ -128,6 +128,31 @@ ThirdPersonEquipmentExtension.apply_skin_material_settings = function(self, unit
 end
 
 --[[
+	applies offset to a unit based off the mesh it's attached to, the unit name
+--]]
+ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, unit_name, attachment_node_tisch)
+	local mesh_name = self:get_player_mesh()
+	local mesh_attach_data = mod.equipment[mesh_name]
+	if mesh_attach_data then
+		local item_attach_data = mesh_attach_data[unit_name]
+		if item_attach_data then
+			local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
+			local attachment_offset = item_attach_data.offset
+			local attachment_angle = item_attach_data.angle
+
+			self:link_unit(unit, attachment_table)
+			
+			local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+			Unit.set_local_position(unit, 0, pos)
+
+			local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+			Unit.set_local_rotation(unit, 0, rot)
+		end
+	else 
+		self:link_unit(unit, attachment_node_tisch)
+	end
+end
+--[[
     Add equipment
 --]]
 ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
@@ -166,7 +191,7 @@ ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 	-- Link unit
-	self:link_unit(item_unit, attachment_node_tisch)
+	self:offset_unit_by_mesh(item_unit, unit_name, attachment_node_tisch)
 
 	return item_unit
 end
