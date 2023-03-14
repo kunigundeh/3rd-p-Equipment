@@ -692,7 +692,7 @@ function settings_menu.draw(self)
             local health_y_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2]
             local health_z_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3]
 
-            health_x_l, health_y_l, health_z_l = Imgui.slider_float_3("Position:", health_x_l, health_y_l, health_z_l, -0.5, 0.5)
+            health_x_l, health_y_l, health_z_l = Imgui.slider_float_3("Position left:", health_x_l, health_y_l, health_z_l, -0.5, 0.5)
             
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1] = health_x_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2] = health_y_l
@@ -706,7 +706,7 @@ function settings_menu.draw(self)
             local health_r2_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2]
             local health_r3_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3]
 
-            health_r1_l, health_r2_l, health_r3_l = Imgui.slider_float_3("Rotation:", health_r1_l, health_r2_l, health_r3_l, -math.pi, math.pi)
+            health_r1_l, health_r2_l, health_r3_l = Imgui.slider_float_3("Rotation left:", health_r1_l, health_r2_l, health_r3_l, -math.pi, math.pi)
         
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1] = health_r1_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2] = health_r2_l
@@ -731,27 +731,27 @@ function settings_menu.draw(self)
 
             local health_x_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[1]
             local health_y_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[2]
-            local health_z_r = mod.equipment[self.mesh_name][self.item_healthe][self.item_health_r].offset[3]
+            local health_z_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[3]
 
-            health_x_r, health_y_r, health_z_r = Imgui.slider_float_3("Position:", health_x_r, health_y_r, health_z_r, -0.5, 0.5)
+            health_x_r, health_y_r, health_z_r = Imgui.slider_float_3("Position right:", health_x_r, health_y_r, health_z_r, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1] = health_x_r
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2] = health_y_r
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3] = health_z_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[1] = health_x_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[2] = health_y_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[3] = health_z_r
             ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- health rot
 
-            local health_r1_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1]
-            local health_r2_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2]
-            local health_r3_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3]
+            local health_r1_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[1]
+            local health_r2_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[2]
+            local health_r3_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[3]
 
-            health_r1_r, health_r2_r, health_r3_r = Imgui.slider_float_3("Rotation:", health_r1_r, health_r2_r, health_r3_r, -math.pi, math.pi)
+            health_r1_r, health_r2_r, health_r3_r = Imgui.slider_float_3("Rotation right:", health_r1_r, health_r2_r, health_r3_r, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1] = health_r1_r
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2] = health_r2_r
-            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3] = health_r3_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[1] = health_r1_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[2] = health_r2_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[3] = health_r3_r
             ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -814,13 +814,13 @@ function settings_menu.draw(self)
         if self.item_grenade_l ~= nil then
             Imgui.text("left")
          
-            -- grenade pos
+            -- grenade l pos
 
             local grenade_x_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1]
             local grenade_y_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2]
             local grenade_z_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3]
 
-            grenade_x_l, grenade_y_l, grenade_z_l = Imgui.slider_float_3("Position:", grenade_x_l, grenade_y_l, grenade_z_l, -0.5, 0.5)
+            grenade_x_l, grenade_y_l, grenade_z_l = Imgui.slider_float_3("Position left:", grenade_x_l, grenade_y_l, grenade_z_l, -0.5, 0.5)
             
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1] = grenade_x_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2] = grenade_y_l
@@ -828,13 +828,13 @@ function settings_menu.draw(self)
             _changed = Imgui.is_item_active()
             Imgui.spacing()
             
-            -- grenade rot
+            -- grenade l rot
 
             local grenade_r1_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1]
             local grenade_r2_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2]
             local grenade_r3_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3]
 
-            grenade_r1, grenade_r2, grenade_r3 = Imgui.slider_float_3("Rotation:", grenade_r1_l, grenade_r2_l, grenade_r3_l, -math.pi, math.pi)
+            grenade_r1_l, grenade_r2_l, grenade_r3_l = Imgui.slider_float_3("Rotation left:", grenade_r1_l, grenade_r2_l, grenade_r3_l, -math.pi, math.pi)
         
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r2_l
@@ -850,31 +850,31 @@ function settings_menu.draw(self)
         if self.item_grenade_r ~= nil then
             Imgui.text("right")
             
-            -- grenade pos
+            -- grenade r pos
 
             local grenade_x_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[1]
             local grenade_y_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[2]
             local grenade_z_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[3]
 
-            grenade_x_r, grenade_y_r, grenade_z_r = Imgui.slider_float_3("Position:", grenade_x_r, grenade_y_r, grenade_z_r, -0.5, 0.5)
+            grenade_x_r, grenade_y_r, grenade_z_r = Imgui.slider_float_3("Position right:", grenade_x_r, grenade_y_r, grenade_z_r, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1] = grenade_x_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2] = grenade_y_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3] = grenade_z_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[1] = grenade_x_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[2] = grenade_y_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[3] = grenade_z_r
             ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
-            -- grenade rot
+            -- grenade r rot
 
-            local grenade_r1_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1]
-            local grenade_r2_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2]
-            local grenade_r3_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3]
+            local grenade_r1_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1]
+            local grenade_r2_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[2]
+            local grenade_r3_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[3]
 
-            grenade_r1_r, grenade_r2_r, grenade_r3_r = Imgui.slider_float_3("Rotation:", grenade_r1_r, grenade_r2_r, grenade_r3_r, -math.pi, math.pi)
+            grenade_r1_r, grenade_r2_r, grenade_r3_r = Imgui.slider_float_3("Rotation right:", grenade_r1_r, grenade_r2_r, grenade_r3_r, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r2_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r3_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r1_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r2_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r3_r
             ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -915,7 +915,11 @@ function settings_menu.draw(self)
     if Imgui.button("Print Pretty Settings") then
         settings_menu.print_settings()
     end
-    
+
+    if Imgui.button("Print Pretty by Mesh") then
+        settings_menu.print_by_mesh()
+    end
+
     Imgui.same_line()
     if Imgui.button("Print Pretty Trinkets") then
         
@@ -937,6 +941,11 @@ end
 
 function settings_menu.print_settings()
     require 'pl.pretty'.dump(mod.equipment)
+end
+
+function settings_menu.print_by_mesh()
+    local tisch = mod.equipment[mesh_name]
+    require 'pl.pretty'.dump(tisch)
 end
 
 function settings_menu.print_trinkets()
