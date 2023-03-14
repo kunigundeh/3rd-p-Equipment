@@ -56,22 +56,22 @@ local function get_cur_equip(player)
             local item_ranged_r = nil
 
             if BackendUtils.get_loadout_item(career_name, "slot_melee").data.right_hand_unit then
-                item_melee_r = BackendUtils.get_loadout_item(career_name, "slot_melee").data.right_hand_unit
+                item_melee_r = "right"
             else item_melee_r = nil
             end
             
             if BackendUtils.get_loadout_item(career_name, "slot_melee").data.left_hand_unit then
-                  item_melee_l = BackendUtils.get_loadout_item(career_name, "slot_melee").data.left_hand_unit
+                  item_melee_l = "left"
                 else item_melee_l = nil
             end
 
             if BackendUtils.get_loadout_item(career_name, "slot_ranged").data.left_hand_unit then
-                item_ranged_l = BackendUtils.get_loadout_item(career_name, "slot_ranged").data.left_hand_unit
+                item_ranged_l = "left"
             else item_ranged_l = nil
             end
 
             if BackendUtils.get_loadout_item(career_name, "slot_ranged").data.right_hand_unit then
-                item_ranged_r = BackendUtils.get_loadout_item(career_name, "slot_ranged").data.right_hand_unit
+                item_ranged_r = "right"
             else item_ranged_r = nil
             end
 
@@ -80,20 +80,6 @@ local function get_cur_equip(player)
 
 	        local skin_name = item_skin.data.name
 	        local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
-			
-			-- handedness - can be implemented above
-            if item_melee_r ~= nil then
-            item_melee_r = "right"
-            end
-            if item_melee_l ~= nil then
-                item_melee_l = "left"
-            end
-            if item_ranged_r ~= nil then
-                item_ranged_r = "right"
-            end
-            if item_ranged_l ~= nil then
-                item_ranged_l = "left"
-            end
 
             print("fetched cur_equip:")
 			print(career_name, item_melee_type, item_ranged_type, item_melee_r, item_melee_l, item_ranged_r, item_ranged_l, item_trinket, mesh_name)
@@ -388,8 +374,7 @@ function settings_menu.open(self)
     self:capture_input()
     self._paused = true
     disable_input(player)
-    _locked = true
-    
+    mod.toggle_camera_lock()    
 end
 
 function settings_menu.release_input()
@@ -403,6 +388,7 @@ function settings_menu.close(self)
     Imgui.close_imgui()
     enable_input(player)
     self:release_input()
+    mod.toggle_camera_lock()
 end
 
 function settings_menu.capture_input()
@@ -415,11 +401,13 @@ function settings_menu.draw(self)
     Imgui.begin_window("Third Person Equipment - Settings")
     Imgui.spacing()
 
+    --- hacky on update reloading ---
     if _changed or __changed or ___changed or ____changed == true then
         mod:delete_all_units()
         mod:reload_extensions()
         mod:echo("reload--------")
     end
+    ---
 
     Imgui.text("Career: " .. self.career_name)
     Imgui.spacing()
@@ -436,10 +424,8 @@ function settings_menu.draw(self)
     if Imgui.tree_node("Weapon 1: " .. self.item_melee_type, false) then 
         --right
         if self.item_melee_r ~= nil then
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
             Imgui.text("Right:") 
+
             -- right pos
             
             local melee_x_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].offset[1]
@@ -454,7 +440,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].offset[3] = melee_z_r
 
             _changed = Imgui.is_item_active()
-           
+            Imgui.spacing()
          
             -- right rot
 
@@ -473,7 +459,6 @@ function settings_menu.draw(self)
 
             Imgui.spacing()
             Imgui.spacing()
-            Imgui.text(self.item_melee_r)
             Imgui.spacing()
         end
 
@@ -507,7 +492,6 @@ function settings_menu.draw(self)
             ____changed = Imgui.is_item_active()
             Imgui.spacing()
             Imgui.spacing()
-            Imgui.text(self.item_melee_l)
             Imgui.spacing()
 
         end
@@ -520,9 +504,6 @@ function settings_menu.draw(self)
     -- Weapon 2 --done
     if Imgui.tree_node("Weapon 2: " .. self.item_ranged_type, false) then 
         if self.item_ranged_r ~= nil then
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
             -- right pos
             Imgui.text("Right:") 
             local ranged_x_r = mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].offset[1]
@@ -555,7 +536,6 @@ function settings_menu.draw(self)
           
             Imgui.spacing()
             Imgui.spacing()
-            Imgui.text(self.item_ranged_r)
             Imgui.spacing()
         end
 
@@ -590,7 +570,6 @@ function settings_menu.draw(self)
 
             Imgui.spacing()
             Imgui.spacing()
-            Imgui.text(self.item_ranged_l)
             Imgui.spacing()
         end
         Imgui.spacing()
@@ -781,9 +760,8 @@ function settings_menu.draw(self)
     if self.item_grenade_type and self.item_grenade_type ~= nil and Imgui.tree_node(self.item_grenade, false) then
         --left
         if self.item_grenade_l ~= nil then
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
+            Imgui.text("left")
+         
             -- grenade pos
 
             local grenade_x_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[1]
@@ -818,10 +796,8 @@ function settings_menu.draw(self)
         end
          --right
         if self.item_grenade_r ~= nil then
+            Imgui.text("right")
             
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
             -- grenade pos
 
             local grenade_x_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r].offset[1]
@@ -871,17 +847,8 @@ function settings_menu.draw(self)
     Imgui.separator()
     Imgui.spacing()
     Imgui.spacing()
-    if Imgui.button("Unlock Camera") then
-        Managers.input:device_unblock_all_services("mouse")
-    end
-	Imgui.same_line()
-    if Imgui.button("Lock Camera") then
-        Managers.input:block_device_except_service(nil, "mouse", 1)
-        Managers.input:block_device_except_service(nil, "keyboard", 1)
-    end
-    
-    if Imgui.button("Dump equipment") then
-        mod:debug("equipment"..table.dump_string(mod.equipment))
+    if Imgui.button("Toggle Camera") then
+        mod.toggle_camera_lock()
     end
     
     Imgui.same_line()
@@ -891,31 +858,27 @@ function settings_menu.draw(self)
         mod:echo("reload--------")
     end
 
+    
     if Imgui.button("Print Pretty Settings") then
-
         settings_menu.print_settings()
     end
-
+    
+    Imgui.same_line()
     if Imgui.button("Print Pretty Trinkets") then
-
+        
         settings_menu.print_trinkets()
     end
-
-    if Imgui.button("Print Pretty spawned Units") then
-
-        settings_menu.print_spawned_units()
+    
+    if Imgui.button("Dump equipment") then
+        mod:debug("equipment"..table.dump_string(mod.equipment))
     end
-    if Imgui.button("Dump spawned Units") then
 
+    Imgui.same_line()
+    if Imgui.button("Dump spawned Units") then
         mod:debug("Spawned_units: "..table.dump_string(mod.spawned_units))
     end
     
     Imgui.separator()
-    --Imgui.text(Imgui.get_window_size())
-    
-    
-
-
     Imgui.end_window()
 end
 
