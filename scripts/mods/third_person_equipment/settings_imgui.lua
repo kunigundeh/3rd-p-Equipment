@@ -426,7 +426,7 @@ function settings_menu.draw(self)
     Imgui.spacing()
 
     --- hacky on update reloading ---
-    if _changed or __changed or ___changed or ____changed == true then
+    if _changed == true or __changed == true or ___changed == true or ____changed == true then
         mod:delete_all_units()
         mod:reload_extensions()
         mod:echo("reload--------")
