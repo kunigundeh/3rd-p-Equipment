@@ -223,6 +223,10 @@ function settings_menu.get_equip_info(self)
                 angle = {0, 0, 0}
             }
         end
+        
+        if self.item_health_type ~= nil then
+            mod.equipment[self.mesh_name][self.item_health_type] = {}
+        end
 
         if self.item_health_l ~= nil then
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l] = {
@@ -242,6 +246,26 @@ function settings_menu.get_equip_info(self)
         if self.item_potion_type ~= nil then
             mod.equipment[self.mesh_name][self.item_potion_type] = {
                
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
+            }
+        end
+
+        if self.item_grenade_type ~= nil then
+            mod.equipment[self.mesh_name][self.item_grenade_type] = {}
+        end
+
+        if self.item_grenade_l ~= nil then
+            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l] = {
+               
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
+            }
+        end
+        
+        if self.item_grenade_r ~= nil then
+            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r] = {
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -413,12 +437,12 @@ function settings_menu.draw(self)
     Imgui.spacing()
     Imgui.separator()
     Imgui.spacing()
+
+    --Loadout
     Imgui.text("Loadout: ")
     Imgui.spacing()
     Imgui.spacing()
-
     Imgui.tree_push("Tree_Weapons")
-    --local _changed 
 
     -- Weapon 1 --done
     if Imgui.tree_node("Weapon 1: " .. self.item_melee_type, false) then 
@@ -858,6 +882,7 @@ function settings_menu.draw(self)
         mod:echo("reload--------")
     end
 
+    Imgui.text("!! Set Keybind for cam toggle in Mod-Menu !!")
     
     if Imgui.button("Print Pretty Settings") then
         settings_menu.print_settings()
