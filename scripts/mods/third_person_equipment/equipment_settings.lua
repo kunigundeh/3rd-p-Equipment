@@ -1,6 +1,49 @@
 local mod = get_mod("third_person_equipment")
 
-mod.equipment = {}
+mod.equipment = {
+    ["units/beings/player/witch_hunter_warrior_priest_skin_02/third_person_base/chr_third_person_mesh"] = {
+      wh_flail_shield = {
+        right = {
+          angle = {
+            0,
+            0,
+            0
+          },
+          offset = {
+            0,
+            0,
+            0
+          }
+        },
+        left = {
+          angle = {
+            0,
+            0,
+            0
+          },
+          offset = {
+            0,
+            0,
+            0
+          }
+        }
+      },
+      wh_2h_hammer = {
+        right = {
+          angle = {
+            0,
+            0,
+            0
+          },
+          offset = {
+            0,
+            0,
+            0
+          }
+        }
+      }
+    }
+  }
 
 --[[
 

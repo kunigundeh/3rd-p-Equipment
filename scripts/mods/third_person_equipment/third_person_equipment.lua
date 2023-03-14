@@ -52,6 +52,21 @@ function mod.update()
     end
 end
 
+function mod.toggle_camera_lock()
+	local locked = _locked
+	if locked == true then
+        Managers.input:device_unblock_all_services("mouse")
+		_locked = false
+		mod:echo("cam unlocked")
+    else
+    
+        Managers.input:block_device_except_service(nil, "mouse", 1)
+		_locked = true
+		mod:echo("cam locked")
+        
+    end
+end
+
 --[[
 	Delete all spawned units
 --]]

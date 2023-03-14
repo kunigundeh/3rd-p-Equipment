@@ -22,6 +22,15 @@ return {
                 function_name = "open_imgui",
                 default_value = {}
             },
+            {
+                keybind_global = true,
+                keybind_trigger = "pressed",
+                setting_id = "toggle_camera",
+                type = "keybind",
+                keybind_type = "function_call",
+                function_name = "toggle_camera_lock",
+                default_value = {}
+            },
 
             {
                 setting_id = "downscale_big_weapons",
