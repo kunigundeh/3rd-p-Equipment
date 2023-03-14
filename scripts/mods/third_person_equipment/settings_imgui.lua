@@ -10,6 +10,7 @@ mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
 
  
 --helpers
+
 local function lookup(t, ...)
     for _, k in ipairs{...} do
         t = t[k]
@@ -23,9 +24,7 @@ local function lookup(t, ...)
     return t
 end
 
-
 local function disable_input(player)
-    
     Managers.input:block_device_except_service(nil, "keyboard", 1)
 	Managers.input:block_device_except_service(nil, "mouse", 1)
 	Managers.input:block_device_except_service(nil, "gamepad", 1) 
@@ -36,6 +35,7 @@ local function enable_input(player)
 	Managers.input:device_unblock_all_services("mouse")
 	Managers.input:device_unblock_all_services("gamepad")
 end
+
 -- get current weapons & trinket 
 
 local function get_cur_equip(player)
@@ -75,74 +75,13 @@ local function get_cur_equip(player)
             else item_ranged_r = nil
             end
 
-
-            --[[
-            if BackendUtils.get_loadout_item(career_name, "slot_healthkit").data then
-                local item_health_type = BackendUtils.get_loadout_item(career_name, "slot_healthkit").data.item_type
-            else local item_health_type = nil
-            end
-
-            if BackendUtils.get_loadout_item(career_name, "slot_potion").data ~= nil then
-                local item_potion_type = BackendUtils.get_loadout_item(career_name, "slot_potion").data.item_type
-            else local item_potion_type = nil
-            end
-            if BackendUtils.get_loadout_item(career_name, "slot_grenade").data ~= nil then
-                local item_grenade_type = BackendUtils.get_loadout_item(career_name, "slot_grenade").data.item_type
-            else local item_grenade_type = nil
-            end
-           
-            local item_health_r = nil
-            local item_health_l = nil 
-            local item_potion_r = nil 
-            local item_potion_l = nil 
-            local item_grenade_r = nil 
-            local item_grenade_l = nil 
-            
-            
-            if item_health_type ~= nil then   
-                if BackendUtils.get_loadout_item(career_name, "slot_healthkit").data.right_hand_unit then
-                    item_health_r = BackendUtils.get_loadout_item(career_name, "slot_healthkit").data.right_hand_unit
-                else item_health_r = nil
-                end
-
-                if BackendUtils.get_loadout_item(career_name, "slot_healthkit").data.left_hand_unit then
-                    item_health_l = BackendUtils.get_loadout_item(career_name, "slot_healthkit").data.left_hand_unit
-                else item_health_l = nil
-                end
-            end
-            
-            if item_potion_type ~= nil then
-                if BackendUtils.get_loadout_item(career_name, "slot_potion").data.right_hand_unit then
-                    item_potion_r = BackendUtils.get_loadout_item(career_name, "slot_potion").data.right_hand_unit
-                else item_potion_r = nil
-                end
-                
-                if BackendUtils.get_loadout_item(career_name, "slot_potion").data.left_hand_unit then
-                item_potion_l = BackendUtils.get_loadout_item(career_name, "slot_potion").data.left_hand_unit
-                else item_potion_l = nil
-                end
-            end
-            
-            if item_grenade_type ~= nil then
-                if BackendUtils.get_loadout_item(career_name, "slot_grenade").data.right_hand_unit then
-                    item_grenade_r = BackendUtils.get_loadout_item(career_name, "slot_grenade").data.right_hand_unit
-                else item_grenade_r = nil
-                end
-                
-                if BackendUtils.get_loadout_item(career_name, "slot_grenade").data.left_hand_unit then
-                    item_grenade_l = BackendUtils.get_loadout_item(career_name, "slot_grenade").data.left_hand_unit
-                else item_grenade_l = nil
-                end
-            end
-            --]]
-            
 			local item_trinket = BackendUtils.get_loadout_item(career_name, "slot_trinket_1").data.name
             local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
 
 	        local skin_name = item_skin.data.name
 	        local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
 			
-			--test left right
+			-- handedness - can be implemented above
             if item_melee_r ~= nil then
             item_melee_r = "right"
             end
@@ -155,28 +94,7 @@ local function get_cur_equip(player)
             if item_ranged_l ~= nil then
                 item_ranged_l = "left"
             end
---[[
-            if item_health_r ~= nil then
-                item_health_r = "right"
-            end
-            if item_health_l ~= nil then
-                item_health_l = "left"
-            end
 
-            if item_potion_r ~= nil then
-                item_potion_r = "right"
-            end
-            if item_potion_l ~= nil then
-                item_potion_l = "left"
-            end
-
-            if item_grenade_r ~= nil then
-                item_grenade_r = "right"
-            end
-            if item_grenade_l ~= nil then
-                item_grenade_l = "left"
-            end
-            --]]
             print("fetched cur_equip:")
 			print(career_name, item_melee_type, item_ranged_type, item_melee_r, item_melee_l, item_ranged_r, item_ranged_l, item_trinket, mesh_name)
 			          
@@ -194,15 +112,15 @@ local function get_cur_pick(player)
         local slot_data_health = inventory_extension:get_slot_data("slot_healthkit")
         local slot_data_potion = inventory_extension:get_slot_data("slot_potion")
         local slot_data_grenade = inventory_extension:get_slot_data("slot_grenade")
-        local item_health
-        local item_potion
-        local item_grenade
-        local item_health_r
-        local item_health_l 
-        local item_potion_r 
-        local item_potion_l 
-        local item_grenade_r
-        local item_grenade_l
+        local item_health = nil 
+        local item_potion = nil
+        local item_grenade = nil
+        local item_health_r = nil
+        local item_health_l = nil 
+        local item_potion_r = nil 
+        local item_potion_l = nil 
+        local item_grenade_r = nil
+        local item_grenade_l = nil
 
         if slot_data_health and slot_data_health.item_data and slot_data_health.item_data.name ~= nil then
           item_health = inventory_extension:get_slot_data("slot_healthkit").item_data.name
@@ -335,25 +253,20 @@ function settings_menu.get_equip_info(self)
             }
         end
 
-        if self.item_potion_l ~= nil then
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l] = {
+        if self.item_potion_type ~= nil then
+            mod.equipment[self.mesh_name][self.item_potion_type] = {
                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
         end
-        if self.item_potion_r ~= nil then
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_r] = {
-                
-                offset = {0, 0, 0},
-                angle = {0, 0, 0}
-            }
-        end
+        
 
         mod:echo("mod.equipment appended with skin_mesh")
 
     else
         mod:echo("looking for weapon")
+
         if lookup(mod.equipment[self.mesh_name], self.item_ranged_type) == nil then
 
             mod.equipment[self.mesh_name][self.item_ranged_type] = {}
@@ -376,6 +289,7 @@ function settings_menu.get_equip_info(self)
         else
             mod:echo("ranged weapon already set")
         end
+
         if lookup(mod.equipment[self.mesh_name], self.item_melee_type) == nil then
 
             mod.equipment[self.mesh_name][self.item_melee_type] = {}
@@ -425,21 +339,12 @@ function settings_menu.get_equip_info(self)
         
         if lookup(mod.equipment[self.mesh_name], self.item_potion_type) == nil then
 
-            mod.equipment[self.mesh_name][self.item_potion_type] = {}
-            if self.item_potion_r ~= nil then
-                mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_r] = {
+            mod.equipment[self.mesh_name][self.item_potion_type] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
-            end
-            if self.item_potion_l ~= nil then
-                mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l] = {
-                    
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
-                }
-            end
+            
             mod:echo("mod.equipment appended potion item")
 
         else
@@ -509,6 +414,12 @@ function settings_menu.draw(self)
     Imgui.begin_window("Third Person Equipment - Settings")
     Imgui.spacing()
 
+    if _changed or __changed or ___changed or ____changed == true then
+        mod:delete_all_units()
+        mod:reload_extensions()
+        mod:echo("reload--------")
+    end
+
     Imgui.text("Career: " .. self.career_name)
     Imgui.spacing()
     Imgui.separator()
@@ -557,7 +468,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[2] = melee_r2_r
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[3] = melee_r3_r
            
-            _changed = Imgui.is_item_active()
+            __changed = Imgui.is_item_active()
 
             Imgui.spacing()
             Imgui.spacing()
@@ -579,7 +490,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].offset[2] = melee_y_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].offset[3] = melee_z_l
         
-            _changed = Imgui.is_item_active()
+            ___changed = Imgui.is_item_active()
             Imgui.spacing()
 
             local melee_r1_l = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[1]
@@ -592,7 +503,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[1] = melee_r1_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[2] = melee_r2_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[3] = melee_r3_l
-            _changed = Imgui.is_item_active()
+            ____changed = Imgui.is_item_active()
             Imgui.spacing()
             Imgui.spacing()
             Imgui.text(self.item_melee_l)
@@ -639,7 +550,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[1] = ranged_r1_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[2] = ranged_r2_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[3] = ranged_r3_r
-            _changed = Imgui.is_item_active()
+            __changed = Imgui.is_item_active()
           
             Imgui.spacing()
             Imgui.spacing()
@@ -660,7 +571,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[1] = ranged_x_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[2] = ranged_y_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[3] = ranged_z_l
-            _changed = Imgui.is_item_active()
+            ___changed = Imgui.is_item_active()
             
             Imgui.spacing()
 
@@ -674,7 +585,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[1] = ranged_r1_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[2] = ranged_r2_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[3] = ranged_r3_l
-            _changed = Imgui.is_item_active()
+            ____changed = Imgui.is_item_active()
 
             Imgui.spacing()
             Imgui.spacing()
@@ -715,7 +626,7 @@ function settings_menu.draw(self)
         mod.trinkets[self.mesh_name].angle[1] = trinket_r1
         mod.trinkets[self.mesh_name].angle[2] = trinket_r2
         mod.trinkets[self.mesh_name].angle[3] = trinket_r3
-        _changed = Imgui.is_item_active()
+        __changed = Imgui.is_item_active()
         Imgui.spacing()
         Imgui.tree_pop()
     end
@@ -768,7 +679,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1] = health_r1_l
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2] = health_r2_l
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3] = health_r3_l
-            _changed = Imgui.is_item_active()
+            __changed = Imgui.is_item_active()
             
             Imgui.spacing()
             Imgui.spacing()
@@ -795,7 +706,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[1] = health_x_r
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[2] = health_y_r
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[3] = health_z_r
-            _changed = Imgui.is_item_active()
+            ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- health rot
@@ -809,7 +720,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1] = health_r1_r
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2] = health_r2_r
             mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3] = health_r3_r
-            _changed = Imgui.is_item_active()
+            ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
             Imgui.spacing()
@@ -824,81 +735,41 @@ function settings_menu.draw(self)
 
     -- Potion_slot done
     if self.item_potion_type and self.item_potion_type ~= nil and Imgui.tree_node(self.item_potion, false) then
-        --left
-        if item_potion_l ~= nil then
+        
         
             Imgui.spacing()
             Imgui.spacing()
             Imgui.spacing()
             -- potion pos
 
-            local potion_x_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[1]
-            local potion_y_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[2]
-            local potion_z_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[3]
+            local potion_x = mod.equipment[self.mesh_name][self.item_potion_type].offset[1]
+            local potion_y = mod.equipment[self.mesh_name][self.item_potion_type].offset[2]
+            local potion_z = mod.equipment[self.mesh_name][self.item_potion_type].offset[3]
 
-            potion_x_l, potion_y_l, potion_z_l = Imgui.slider_float_3("Position:", potion_x_l, potion_y_l, potion_z_l, -0.5, 0.5)
+            potion_x, potion_y, potion_z = Imgui.slider_float_3("Position:", potion_x, potion_y, potion_z, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[1] = potion_x_l
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[2] = potion_y_l
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[3] = potion_z_l
-            _changed = Imgui.is_item_active()
+            mod.equipment[self.mesh_name][self.item_potion_type].offset[1] = potion_x
+            mod.equipment[self.mesh_name][self.item_potion_type].offset[2] = potion_y
+            mod.equipment[self.mesh_name][self.item_potion_type].offset[3] = potion_z
+            __changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- potion rot
 
-            local potion_r1_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[1]
-            local potion_r2_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[2]
-            local potion_r3_l = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[3]
+            local potion_r1 = mod.equipment[self.mesh_name][self.item_potion_type].angle[1]
+            local potion_r2 = mod.equipment[self.mesh_name][self.item_potion_type].angle[2]
+            local potion_r3 = mod.equipment[self.mesh_name][self.item_potion_type].angle[3]
 
-            potion_r1, potion_r2, potion_r3 = Imgui.slider_float_3("Rotation:", potion_r1_l, potion_r2_l, potion_r3_l, -math.pi, math.pi)
+            potion_r1, potion_r2, potion_r3 = Imgui.slider_float_3("Rotation:", potion_r1, potion_r2, potion_r3, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[1] = potion_r1_l
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[2] = potion_r2_l
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[3] = potion_r3_l
+            mod.equipment[self.mesh_name][self.item_potion_type].angle[1] = potion_r1
+            mod.equipment[self.mesh_name][self.item_potion_type].angle[2] = potion_r2
+            mod.equipment[self.mesh_name][self.item_potion_type].angle[3] = potion_r3
             _changed = Imgui.is_item_active()
             
             Imgui.spacing()
             Imgui.spacing()
             Imgui.spacing()
-        end
-        --right
-        if self.item_potion_r ~= nil then
-            
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
-            -- potion pos
-
-            local potion_x_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_r].offset[1]
-            local potion_y_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_r].offset[2]
-            local potion_z_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_r].offset[3]
-
-            potion_x_r, potion_y_r, potion_z_r = Imgui.slider_float_3("Position:", potion_x_r, potion_y_r, potion_z_r, -0.5, 0.5)
-            
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[1] = potion_x_r
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[2] = potion_y_r
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].offset[3] = potion_z_r
-            _changed = Imgui.is_item_active()
-            Imgui.spacing()
-            
-            -- potion rot
-
-            local potion_r1_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[1]
-            local potion_r2_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[2]
-            local potion_r3_r = mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[3]
-
-            potion_r1_r, potion_r2_r, potion_r3_r = Imgui.slider_float_3("Rotation:", potion_r1_r, potion_r2_r, potion_r3_r, -math.pi, math.pi)
-        
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[1] = potion_r1_r
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[2] = potion_r2_r
-            mod.equipment[self.mesh_name][self.item_potion_type][self.item_potion_l].angle[3] = potion_r3_r
-            _changed = Imgui.is_item_active()
-            
-            Imgui.spacing()
-            Imgui.spacing()
-            Imgui.spacing()
-            
-        end
         Imgui.spacing()
         Imgui.spacing()
         Imgui.spacing()
@@ -937,7 +808,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r1_l
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r2_l
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r3_l
-            _changed = Imgui.is_item_active()
+            __changed = Imgui.is_item_active()
             
             Imgui.spacing()
             Imgui.spacing()
@@ -961,7 +832,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[1] = grenade_x_r
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[2] = grenade_y_r
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[3] = grenade_z_r
-            _changed = Imgui.is_item_active()
+            ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- grenade rot
@@ -975,7 +846,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r1_r
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r2_r
             mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r3_r
-            _changed = Imgui.is_item_active()
+            ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
             Imgui.spacing()
@@ -1040,12 +911,8 @@ function settings_menu.draw(self)
     
     Imgui.separator()
     --Imgui.text(Imgui.get_window_size())
-    --[[if _changed == true then
-        mod:delete_all_units()
-        mod:reload_extensions()
-        mod:echo("reload--------")
-    end
-    --]]
+    
+    
 
 
     Imgui.end_window()
