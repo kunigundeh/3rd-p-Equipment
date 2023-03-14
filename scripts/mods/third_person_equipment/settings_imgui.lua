@@ -388,6 +388,7 @@ function settings_menu.open(self)
     self:capture_input()
     self._paused = true
     disable_input(player)
+    _locked = true
     
 end
 
