@@ -141,11 +141,17 @@ end
 	applies offset to a unit based off the mesh it's attached to, the unit name
 	defaults to vanilla preset nodes if the mod does not define an offset
 --]]
-ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand)
+ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand, item_name)
 	local mesh_name = self:get_player_mesh()
 	local mesh_attach_data = mod.equipment[mesh_name]
+	local item_attach_data
+	--check if pickup item and index by name if true
 	if mesh_attach_data then
-		local item_attach_data = mesh_attach_data[item_type]
+		if item_type == "healthkit" or "potion" or "grenade" then
+			item_attach_data = mesh_attach_data[item_name] 
+		else
+			item_attach_data = mesh_attach_data[item_type]
+		end
 		if item_attach_data then
 			local handed_attach_data = item_attach_data[hand]
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
@@ -191,6 +197,7 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local right_hand_unit_name = slot_data.right_hand_unit_name
 
 	local item_type = slot_data.item_data.item_type
+	local item_name = slot_data.item_data.name --for pickups
 
 	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	
@@ -212,14 +219,14 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
     self:set_equipment_visibility()
 end
 
-ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type)
+ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type, item_name)
 	
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
 	
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 	-- Link unit
-	self:offset_unit_by_mesh(item_unit, item_type, attachment_node_tisch, hand, item_type)
+	self:offset_unit_by_mesh(item_unit, item_type, attachment_node_tisch, hand, item_name)
 
 	return item_unit
 end

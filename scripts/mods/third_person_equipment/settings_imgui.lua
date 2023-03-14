@@ -225,18 +225,18 @@ function settings_menu.get_equip_info(self)
         end
         
         if self.item_health_type ~= nil then
-            mod.equipment[self.mesh_name][self.item_health_type] = {}
+            mod.equipment[self.mesh_name][self.item_health] = {}
         end
 
         if self.item_health_l ~= nil then
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l] = {
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
         end
         if self.item_health_r ~= nil then
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_r] = {
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                 
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
@@ -244,7 +244,7 @@ function settings_menu.get_equip_info(self)
         end
 
         if self.item_potion_type ~= nil then
-            mod.equipment[self.mesh_name][self.item_potion_type] = {
+            mod.equipment[self.mesh_name][self.item_potion] = {
                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
@@ -252,19 +252,19 @@ function settings_menu.get_equip_info(self)
         end
 
         if self.item_grenade_type ~= nil then
-            mod.equipment[self.mesh_name][self.item_grenade_type] = {}
+            mod.equipment[self.mesh_name][self.item_grenade] = {}
         end
 
         if self.item_grenade_l ~= nil then
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l] = {
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
         end
-        
+
         if self.item_grenade_r ~= nil then
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r] = {
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                 
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
@@ -323,18 +323,18 @@ function settings_menu.get_equip_info(self)
             mod:echo("melee weapon already set")
         end
 
-        if lookup(mod.equipment[self.mesh_name], self.item_health_type) == nil then
+        if lookup(mod.equipment[self.mesh_name], self.item_health) == nil then
 
-            mod.equipment[self.mesh_name][self.item_health_type] = {}
+            mod.equipment[self.mesh_name][self.item_health] = {}
             if self.item_health_r ~= nil then
-                mod.equipment[self.mesh_name][self.item_health_type][self.item_health_r] = {
+                mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                    
                     offset = {0, 0, 0},
                     angle = {0, 0, 0}
                 }
             end
             if self.item_health_l ~= nil then
-                mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l] = {
+                mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                     
                     offset = {0, 0, 0},
                     angle = {0, 0, 0}
@@ -347,9 +347,9 @@ function settings_menu.get_equip_info(self)
         end
 
         
-        if lookup(mod.equipment[self.mesh_name], self.item_potion_type) == nil then
+        if lookup(mod.equipment[self.mesh_name], self.item_potion) == nil then
 
-            mod.equipment[self.mesh_name][self.item_potion_type] = {
+            mod.equipment[self.mesh_name][self.item_potion] = {
                     
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
@@ -361,18 +361,18 @@ function settings_menu.get_equip_info(self)
             mod:echo("potion item already set")
         end
 
-        if lookup(mod.equipment[self.mesh_name], self.item_grenade_type) == nil then
+        if lookup(mod.equipment[self.mesh_name], self.item_grenade) == nil then
 
-            mod.equipment[self.mesh_name][self.item_grenade_type] = {}
+            mod.equipment[self.mesh_name][self.item_grenade] = {}
             if self.item_grenade_r ~= nil then
-                mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r] = {
+                mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                     
                     offset = {0, 0, 0},
                     angle = {0, 0, 0}
                 }
             end
             if self.item_potion_l ~= nil then
-                mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l] = {
+                mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                     
                     offset = {0, 0, 0},
                     angle = {0, 0, 0}
@@ -465,23 +465,49 @@ function settings_menu.draw(self)
 
             _changed = Imgui.is_item_active()
             Imgui.spacing()
-         
+            
+            
             -- right rot
-
+            
             local melee_r1_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[1]
             local melee_r2_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[2]
             local melee_r3_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[3]
-
+            
             melee_r1_r, melee_r2_r, melee_r3_r = Imgui.slider_float_3("Rotation: right", melee_r1_r, melee_r2_r, melee_r3_r, -math.pi, math.pi)
-        
-
+            
+            
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[1] = melee_r1_r
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[2] = melee_r2_r
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[3] = melee_r3_r
-           
+            
             __changed = Imgui.is_item_active()
-
+            
+            --[[ test node-input
             Imgui.spacing()
+            local _node_r
+            if mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes then
+             _node_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes[1].source
+            else  _node_r = "default"
+            end
+
+            _node_r =  Imgui.input_text("node right:", _node_r)
+            Imgui.same_line()
+
+            if Imgui.button("Set new node") then
+                local node_r = _node_r
+                if node_r == "j_spine2" then
+                mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {}
+                mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {
+                    {
+                        target = 0, 
+                        source = "j_spine2" 
+                    },
+                } 
+                end 
+            end
+            Imgui.text(_node_r)
+
+            ]]--
             Imgui.spacing()
             Imgui.spacing()
         end
@@ -515,6 +541,8 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[3] = melee_r3_l
             ____changed = Imgui.is_item_active()
             Imgui.spacing()
+            local _node_l = Imgui.input_text("node left:", text)
+        
             Imgui.spacing()
             Imgui.spacing()
 
@@ -660,29 +688,29 @@ function settings_menu.draw(self)
 
             -- health pos
 
-            local health_x_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[1]
-            local health_y_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[2]
-            local health_z_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[3]
+            local health_x_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1]
+            local health_y_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2]
+            local health_z_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3]
 
             health_x_l, health_y_l, health_z_l = Imgui.slider_float_3("Position:", health_x_l, health_y_l, health_z_l, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[1] = health_x_l
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[2] = health_y_l
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[3] = health_z_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1] = health_x_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2] = health_y_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3] = health_z_l
             _changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- health rot
 
-            local health_r1_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1]
-            local health_r2_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2]
-            local health_r3_l = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3]
+            local health_r1_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1]
+            local health_r2_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2]
+            local health_r3_l = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3]
 
             health_r1_l, health_r2_l, health_r3_l = Imgui.slider_float_3("Rotation:", health_r1_l, health_r2_l, health_r3_l, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1] = health_r1_l
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2] = health_r2_l
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3] = health_r3_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1] = health_r1_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2] = health_r2_l
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3] = health_r3_l
             __changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -701,29 +729,29 @@ function settings_menu.draw(self)
             Imgui.spacing()
             -- health pos
 
-            local health_x_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_r].offset[1]
-            local health_y_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_r].offset[2]
-            local health_z_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_r].offset[3]
+            local health_x_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[1]
+            local health_y_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[2]
+            local health_z_r = mod.equipment[self.mesh_name][self.item_healthe][self.item_health_r].offset[3]
 
             health_x_r, health_y_r, health_z_r = Imgui.slider_float_3("Position:", health_x_r, health_y_r, health_z_r, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[1] = health_x_r
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[2] = health_y_r
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].offset[3] = health_z_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1] = health_x_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2] = health_y_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3] = health_z_r
             ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- health rot
 
-            local health_r1_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1]
-            local health_r2_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2]
-            local health_r3_r = mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3]
+            local health_r1_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1]
+            local health_r2_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2]
+            local health_r3_r = mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3]
 
             health_r1_r, health_r2_r, health_r3_r = Imgui.slider_float_3("Rotation:", health_r1_r, health_r2_r, health_r3_r, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[1] = health_r1_r
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[2] = health_r2_r
-            mod.equipment[self.mesh_name][self.item_health_type][self.item_health_l].angle[3] = health_r3_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1] = health_r1_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2] = health_r2_r
+            mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3] = health_r3_r
             ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -746,29 +774,29 @@ function settings_menu.draw(self)
             Imgui.spacing()
             -- potion pos
 
-            local potion_x = mod.equipment[self.mesh_name][self.item_potion_type].offset[1]
-            local potion_y = mod.equipment[self.mesh_name][self.item_potion_type].offset[2]
-            local potion_z = mod.equipment[self.mesh_name][self.item_potion_type].offset[3]
+            local potion_x = mod.equipment[self.mesh_name][self.item_potion].offset[1]
+            local potion_y = mod.equipment[self.mesh_name][self.item_potion].offset[2]
+            local potion_z = mod.equipment[self.mesh_name][self.item_potion].offset[3]
 
             potion_x, potion_y, potion_z = Imgui.slider_float_3("Position:", potion_x, potion_y, potion_z, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_potion_type].offset[1] = potion_x
-            mod.equipment[self.mesh_name][self.item_potion_type].offset[2] = potion_y
-            mod.equipment[self.mesh_name][self.item_potion_type].offset[3] = potion_z
+            mod.equipment[self.mesh_name][self.item_potion].offset[1] = potion_x
+            mod.equipment[self.mesh_name][self.item_potion].offset[2] = potion_y
+            mod.equipment[self.mesh_name][self.item_potion].offset[3] = potion_z
             __changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- potion rot
 
-            local potion_r1 = mod.equipment[self.mesh_name][self.item_potion_type].angle[1]
-            local potion_r2 = mod.equipment[self.mesh_name][self.item_potion_type].angle[2]
-            local potion_r3 = mod.equipment[self.mesh_name][self.item_potion_type].angle[3]
+            local potion_r1 = mod.equipment[self.mesh_name][self.item_potion].angle[1]
+            local potion_r2 = mod.equipment[self.mesh_name][self.item_potion].angle[2]
+            local potion_r3 = mod.equipment[self.mesh_name][self.item_potion].angle[3]
 
             potion_r1, potion_r2, potion_r3 = Imgui.slider_float_3("Rotation:", potion_r1, potion_r2, potion_r3, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_potion_type].angle[1] = potion_r1
-            mod.equipment[self.mesh_name][self.item_potion_type].angle[2] = potion_r2
-            mod.equipment[self.mesh_name][self.item_potion_type].angle[3] = potion_r3
+            mod.equipment[self.mesh_name][self.item_potion].angle[1] = potion_r1
+            mod.equipment[self.mesh_name][self.item_potion].angle[2] = potion_r2
+            mod.equipment[self.mesh_name][self.item_potion].angle[3] = potion_r3
             _changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -788,29 +816,29 @@ function settings_menu.draw(self)
          
             -- grenade pos
 
-            local grenade_x_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[1]
-            local grenade_y_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[2]
-            local grenade_z_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[3]
+            local grenade_x_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1]
+            local grenade_y_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2]
+            local grenade_z_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3]
 
             grenade_x_l, grenade_y_l, grenade_z_l = Imgui.slider_float_3("Position:", grenade_x_l, grenade_y_l, grenade_z_l, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[1] = grenade_x_l
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[2] = grenade_y_l
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[3] = grenade_z_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1] = grenade_x_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2] = grenade_y_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3] = grenade_z_l
             _changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- grenade rot
 
-            local grenade_r1_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1]
-            local grenade_r2_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[2]
-            local grenade_r3_l = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[3]
+            local grenade_r1_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1]
+            local grenade_r2_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2]
+            local grenade_r3_l = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3]
 
             grenade_r1, grenade_r2, grenade_r3 = Imgui.slider_float_3("Rotation:", grenade_r1_l, grenade_r2_l, grenade_r3_l, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r1_l
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r2_l
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r3_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r2_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r3_l
             __changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -824,29 +852,29 @@ function settings_menu.draw(self)
             
             -- grenade pos
 
-            local grenade_x_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r].offset[1]
-            local grenade_y_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r].offset[2]
-            local grenade_z_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_r].offset[3]
+            local grenade_x_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[1]
+            local grenade_y_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[2]
+            local grenade_z_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[3]
 
             grenade_x_r, grenade_y_r, grenade_z_r = Imgui.slider_float_3("Position:", grenade_x_r, grenade_y_r, grenade_z_r, -0.5, 0.5)
             
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[1] = grenade_x_r
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[2] = grenade_y_r
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].offset[3] = grenade_z_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1] = grenade_x_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2] = grenade_y_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3] = grenade_z_r
             ___changed = Imgui.is_item_active()
             Imgui.spacing()
             
             -- grenade rot
 
-            local grenade_r1_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1]
-            local grenade_r2_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[2]
-            local grenade_r3_r = mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[3]
+            local grenade_r1_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1]
+            local grenade_r2_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2]
+            local grenade_r3_r = mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3]
 
             grenade_r1_r, grenade_r2_r, grenade_r3_r = Imgui.slider_float_3("Rotation:", grenade_r1_r, grenade_r2_r, grenade_r3_r, -math.pi, math.pi)
         
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r1_r
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r2_r
-            mod.equipment[self.mesh_name][self.item_grenade_type][self.item_grenade_l].angle[1] = grenade_r3_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r2_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r3_r
             ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
