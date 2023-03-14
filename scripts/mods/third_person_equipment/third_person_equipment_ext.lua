@@ -143,11 +143,11 @@ end
 --]]
 ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand, item_name)
 	local mesh_name = self:get_player_mesh()
-	local mesh_attach_data = mod.equipment[mesh_name]
+	local mesh_attach_data = mod.equipment[mesh_name]  
 	local item_attach_data
 	--check if pickup item and index by name if true
 	if mesh_attach_data then
-		if item_type == "healthkit" or "potion" or "grenade" then
+		if item_type == "healthkit" or item_type == "potion" or item_type == "grenade" then
 			item_attach_data = mesh_attach_data[item_name] 
 		else
 			item_attach_data = mesh_attach_data[item_type]
@@ -198,19 +198,18 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 
 	local item_type = slot_data.item_data.item_type
 	local item_name = slot_data.item_data.name --for pickups
-
 	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
-		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type)
+		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name)
 		self:apply_skin_material_settings(left_unit, material_settings)
 		self.weapons[left_unit] = slot_name
 	end
 
 	if right_hand_unit_name then
 		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
-		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type)
+		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type, item_name)
 		self:apply_skin_material_settings(right_unit, material_settings)
 		self.weapons[right_unit] = slot_name
 	end
