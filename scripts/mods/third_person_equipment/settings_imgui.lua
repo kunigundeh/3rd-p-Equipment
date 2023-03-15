@@ -444,7 +444,7 @@ function settings_menu.draw(self)
     if _changed == true or __changed == true or ___changed == true or ____changed == true then
         mod:delete_all_units()
         mod:reload_extensions()
-        mod:echo("reload--------")
+       -- mod:echo("reload--------")
     end
     ---
 
@@ -852,8 +852,8 @@ function settings_menu.draw(self)
             grenade_r1_l, grenade_r2_l, grenade_r3_l = Imgui.slider_float_3("Rotation left:", grenade_r1_l, grenade_r2_l, grenade_r3_l, -math.pi, math.pi)
         
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_l
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r2_l
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r3_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2] = grenade_r2_l
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3] = grenade_r3_l
             __changed = Imgui.is_item_active()
             
             Imgui.spacing()
@@ -922,7 +922,7 @@ function settings_menu.draw(self)
     if Imgui.button("Reload") then
         mod:delete_all_units()
         mod:reload_extensions()
-        mod:echo("reload--------")
+        --mod:echo("reload--------")
     end
 
     Imgui.text("!! Set Keybind for cam toggle in Mod-Menu !!")
