@@ -386,7 +386,7 @@ function settings_menu.get_equip_info(self)
                     angle = {0, 0, 0}
                 }
             end
-            if self.item_potion_l ~= nil then
+            if self.item_grenade_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                     
                     offset = {0, 0, 0},
