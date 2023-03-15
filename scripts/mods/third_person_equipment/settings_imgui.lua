@@ -7,7 +7,11 @@ mod:dofile("scripts/mods/third_person_equipment/third_person_equipment_ext")
 
 mod:dofile("scripts/mods/third_person_equipment/trinket_settings")
 
-
+-- init globals for Nodes-Menu
+_node_melee_r = 1
+_node_melee_l = 1
+_node_ranged_r = 1
+_node_ranged_l = 1 
  
 --helpers
 
@@ -99,7 +103,7 @@ local function get_cur_equip(player)
             print("fetched cur_equip:")
 			print(career_name, item_melee_type, item_ranged_type, item_melee_r, item_melee_l, item_ranged_r, item_ranged_l, item_trinket, mesh_name)
 			          
-            return career_name, item_melee_type, item_ranged_type, item_melee_r, item_melee_l, item_ranged_r, item_ranged_l, item_trinket, mesh_name
+            return career_name, item_melee_type, item_ranged_type, item_melee_r, item_melee_l, item_ranged_r, item_ranged_l, item_trinket, mesh_name, player_unit
         end
     end
 end
@@ -169,8 +173,6 @@ local function get_cur_pick(player)
     end
 end
 
-
-
 -- Menu
 
 settings_menu = class(settings_menu)
@@ -196,7 +198,7 @@ end
 function settings_menu.get_equip_info(self)
 
     mod:echo("start get equip")
-    self.career_name, self.item_melee_type, self.item_ranged_type, self.item_melee_r, self.item_melee_l, self.item_ranged_r, self.item_ranged_l, self.item_trinket, self.mesh_name = get_cur_equip()
+    self.career_name, self.item_melee_type, self.item_ranged_type, self.item_melee_r, self.item_melee_l, self.item_ranged_r, self.item_ranged_l, self.item_trinket, self.mesh_name, self.player_unit = get_cur_equip()
     self.item_health, self.item_potion, self.item_grenade = nil
     self.item_health, self.item_potion, self.item_grenade, self.item_health_type, self.item_potion_type, self.item_grenade_type, self.item_grenade_r, self.item_grenade_l, self.item_health_r, self.item_health_l, self.item_potion_r, self.item_potion_l = get_cur_pick()
    
@@ -440,6 +442,8 @@ function settings_menu.draw(self)
     Imgui.begin_window("Third Person Equipment - Settings")
     Imgui.spacing()
 
+    local _player_nodes = Unit.bones(self.player_unit)
+
     --- hacky on update reloading ---
     if _changed == true or __changed == true or ___changed == true or ____changed == true then
         mod:delete_all_units()
@@ -497,39 +501,47 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[3] = melee_r3_r
             
             __changed = Imgui.is_item_active()
-            
-            --[[ test node-input
             Imgui.spacing()
-            local _node_r
-            if mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes then
-             _node_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes[1].source
-            else  _node_r = "default"
+            -- Nodes m r 
+
+            if Imgui.tree_node("Nodes", false) then
+                
+                if Imgui.begin_combo("Combo Box", _player_nodes[_node_melee_r]) then
+                    -- Loop over all choices
+                    for i = 1, #_player_nodes do
+                        if Imgui.selectable(_player_nodes[i], _node_melee_r == i) then
+                            
+                            _node_melee_r = i
+                            
+                        end
+                    end
+                    
+                    Imgui.end_combo()
+                end
+                
+                if Imgui.button("Set new node") then
+                    local node_melee_r = _player_nodes[_node_melee_r] 
+                    -- append mod.equipment and set node
+                    mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {}
+                    mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {
+                        {
+                            target = 0, 
+                            source = node_melee_r 
+                        },
+                    } 
+                    mod:echo("node: "..node_melee_r)
+                end
+
+                Imgui.tree_pop()
             end
-
-            _node_r =  Imgui.input_text("node right:", _node_r)
-            Imgui.same_line()
-
-            if Imgui.button("Set new node") then
-                local node_r = _node_r
-                if node_r == "j_spine2" then
-                mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {}
-                mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].attachement_nodes = {
-                    {
-                        target = 0, 
-                        source = "j_spine2" 
-                    },
-                } 
-                end 
-            end
-            Imgui.text(_node_r)
-
-            ]]--
+            
             Imgui.spacing()
             Imgui.spacing()
         end
 
         --left
         if self.item_melee_l ~= nil then
+           
             Imgui.text("Left:") 
 
             local melee_x_l = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].offset[1]
@@ -556,6 +568,43 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[2] = melee_r2_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[3] = melee_r3_l
             ____changed = Imgui.is_item_active()
+
+            Imgui.spacing()
+            -- Nodes m l 
+
+            if Imgui.tree_node("#Nodes", false) then
+                          
+                -- local _nodes = {"Choice 1", "Choice 2", "Choice 3"}
+                
+                if Imgui.begin_combo("Combo Box", _player_nodes[_node_melee_l]) then
+                    -- Loop over all choices
+                    for i = 1, #_player_nodes do
+                        if Imgui.selectable(_player_nodes[i], _node_melee_l == i) then
+                            
+                            _node_melee_l = i
+                            
+                        end
+                    end
+                    
+                    Imgui.end_combo()
+                end
+                
+                if Imgui.button("#Set new node") then
+                    local node_melee_r = _player_nodes[_node_melee_l] 
+                    -- append mod.equipment and set node
+                    mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].attachement_nodes = {}
+                    mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].attachement_nodes = {
+                        {
+                            target = 0, 
+                            source = node_melee_l 
+                        },
+                    } 
+                    mod:echo("node: "..node_melee_l)
+                end
+
+                Imgui.tree_pop()
+            end
+
             Imgui.spacing()        
             Imgui.spacing()
             Imgui.spacing()
@@ -599,6 +648,40 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[2] = ranged_r2_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[3] = ranged_r3_r
             __changed = Imgui.is_item_active()
+
+            Imgui.spacing()
+            -- Nodes 
+
+            if Imgui.tree_node("Nodes", false) then
+                                          
+                if Imgui.begin_combo("Combo Box", _player_nodes[_node_ranged_r]) then
+                    -- Loop over all choices
+                    for i = 1, #_player_nodes do
+                        if Imgui.selectable(_player_nodes[i], _node_ranged_r == i) then
+                            
+                            _node_ranged_r = i
+                            
+                        end
+                    end
+                    
+                    Imgui.end_combo()
+                end
+                
+                if Imgui.button("Set new node") then
+                    local node_ranged_r = _player_nodes[_node_ranged_r] 
+                    -- append mod.equipment and set node
+                    mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].attachement_nodes = {}
+                    mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].attachement_nodes = {
+                        {
+                            target = 0, 
+                            source = node_ranged_r 
+                        },
+                    } 
+                    mod:echo("node: "..node_ranged_r)
+                end
+
+                Imgui.tree_pop()
+            end
           
             Imgui.spacing()
             Imgui.spacing()
@@ -633,6 +716,40 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[2] = ranged_r2_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[3] = ranged_r3_l
             ____changed = Imgui.is_item_active()
+
+            Imgui.spacing()
+            -- Nodes 
+
+            if Imgui.tree_node("#Nodes", false) then
+                
+                if Imgui.begin_combo("Combo Box", _player_nodes[_node_ranged_l]) then
+                    -- Loop over all choices
+                    for i = 1, #_player_nodes do
+                        if Imgui.selectable(_player_nodes[i], _node_ranged_l == i) then
+                            
+                            _node_ranged_l = i
+                            
+                        end
+                    end
+                    
+                    Imgui.end_combo()
+                end
+                
+                if Imgui.button("#Set new node") then
+                    local node_ranged_l = _player_nodes[_node_ranged_l] 
+                    -- append mod.equipment and set node
+                    mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].attachement_nodes = {}
+                    mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].attachement_nodes = {
+                        {
+                            target = 0, 
+                            source = node_ranged_l 
+                        },
+                    } 
+                    mod:echo("node: "..node_ranged_l)
+                end
+
+                Imgui.tree_pop()
+            end
 
             Imgui.spacing()
             Imgui.spacing()
@@ -909,7 +1026,11 @@ function settings_menu.draw(self)
     Imgui.spacing()
     Imgui.spacing()
     Imgui.separator()
+    Imgui.text("Nodes:")
+
     
+
+
     -- Buttons
     Imgui.separator()
     Imgui.spacing()
