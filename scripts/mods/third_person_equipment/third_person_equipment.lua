@@ -175,16 +175,17 @@ end)
 -- ##### ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ #########################################################
 --[[
 	Mod Setting changed
---]]
-mod.on_setting_changed = function(setting_name)
-	
-	-- Downscale big weapons
-	if setting_name == "downscale_big_weapons" then
-		mod:echo("scale setting changed")
-		mod:reload_extensions()
+	mod.on_setting_changed = function(setting_name)
+		
+		-- Downscale big weapons
+		if setting_name == "downscale_big_weapons" then
+			mod:echo("scale setting changed")
+			mod:delete_all_units()
+			mod:reload_extensions()
+		end
+		
 	end
-	
-end
+	--]]
 --[[
 	Mod Suspended
 --]]

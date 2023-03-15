@@ -174,7 +174,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					end
 				
 					-- optional weapon scaling
-					local scaling = mod:get("downscale_big_weapons") / 100
+					local scaling = mod:get("big_weapon_scale") / 100
 					if table.contains(mod.big_weapons, tostring(item_type)) then
 						local scale = Vector3(scaling, scaling, scaling)
 						Unit.set_local_scale(unit, 0, scale)

@@ -33,13 +33,13 @@ return {
             },
 
             {
-                setting_id = "downscale_big_weapons",
+                setting_id = "big_weapon_scale",
                 type = "numeric",
                 title = "scale_big_weapons_text",
                 ["unit_text"] = "%",
                 ["tooltip"] = "scale_big_weapons_tooltip",
                 ["range"] = {70, 100},
-                ["default_value"] = 75
+                ["default_value"] = 100
             },
         }
     }
