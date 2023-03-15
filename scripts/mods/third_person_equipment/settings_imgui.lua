@@ -555,9 +555,7 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[2] = melee_r2_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[3] = melee_r3_l
             ____changed = Imgui.is_item_active()
-            Imgui.spacing()
-            local _node_l = Imgui.input_text("node left:", text)
-        
+            Imgui.spacing()        
             Imgui.spacing()
             Imgui.spacing()
 
