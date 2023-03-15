@@ -1,4 +1,6 @@
 local mod = get_mod("third_person_equipment")
+
+
 --[[
 	Third person equipment
 		- Shows equipped items on characters

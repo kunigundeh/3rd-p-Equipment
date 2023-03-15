@@ -329,6 +329,24 @@ mod.equipment = {
   }
 }
 
+mod.big_weapons = {
+  "dr_drakegun",
+  "wh_repeating_crossbow",
+  "wh_crossbow",
+  "bw_staff_beam",
+  "bw_staff_spear",
+  "bw_staff_geiser",
+  "bw_staff_firball",
+  "bw_staff_flamethrower",
+  "es_2h_halberd",
+  "es_2h_heavy_spear",
+  "es_deus_01",
+  "we_deus_01",
+  "we_2h_spear",
+  "we_1h_spears_shield",
+
+}
+
 --[[
 
 table structure is like so:
