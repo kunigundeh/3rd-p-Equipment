@@ -167,20 +167,6 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
-
-					-- scaling for tome, grim, healthkit
-					if item_name == "wpn_side_objective_tome_01" or item_name == "wpn_grimoire_01" then
-						Unit.set_local_scale(unit, 0, Vector3(0.75, 0.75, 0.75))
-					end
-				
-					-- optional weapon scaling
-					local scaling = mod:get("big_weapon_scale") / 100
-					if table.contains(mod.big_weapons, tostring(item_type)) then
-						local scale = Vector3(scaling, scaling, scaling)
-						Unit.set_local_scale(unit, 0, scale)
-					end
-
-
 				end
 			else
 				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch

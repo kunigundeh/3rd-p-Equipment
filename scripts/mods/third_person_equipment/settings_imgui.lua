@@ -910,10 +910,6 @@ function settings_menu.draw(self)
     Imgui.spacing()
     Imgui.separator()
     
-    local _scale = mod:get("big_weapon_scale")
-    _scale = Imgui.slider_int("Big Weapon Scale %", _scale, 70, 100)
-    mod:set("big_weapon_scale", _scale) 
-
     -- Buttons
     Imgui.separator()
     Imgui.spacing()
