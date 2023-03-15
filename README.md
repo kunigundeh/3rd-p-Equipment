@@ -3,5 +3,5 @@ Update and partial rewrite of grassman's [Third Person Equipment Mod](https://gi
 
 Description :
 Shows your equipment on your character.
-Melee- and ranged weapon as well as tomes, grims, potions, bombs, heal items and equiped trinket.
+Melee- and ranged weapon as well as tomes, grims, potions, bombs, heal items and equipped trinket.
 Works for yourself, other players and bots
