@@ -216,20 +216,6 @@ mod.equipment = {
         }
       }
     },
-    grenade_fire_01 = {
-      right = {
-        angle = {
-          0,
-          0,
-          0
-        },
-        offset = {
-          0,
-          0,
-          0
-        }
-      }
-    },
     dr_1h_axe_shield = {
       right = {
         angle = {
