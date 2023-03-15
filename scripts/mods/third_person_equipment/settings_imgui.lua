@@ -507,7 +507,7 @@ function settings_menu.draw(self)
             if Imgui.tree_node("Nodes", false) then
                 
                 if Imgui.begin_combo("Combo Box", _player_nodes[_node_melee_r]) then
-                    -- Loop over all choices
+                    -- Loop over all nodes
                     for i = 1, #_player_nodes do
                         if Imgui.selectable(_player_nodes[i], _node_melee_r == i) then
                             
@@ -574,10 +574,8 @@ function settings_menu.draw(self)
 
             if Imgui.tree_node("#Nodes", false) then
                           
-                -- local _nodes = {"Choice 1", "Choice 2", "Choice 3"}
-                
                 if Imgui.begin_combo("Combo Box", _player_nodes[_node_melee_l]) then
-                    -- Loop over all choices
+                    -- Loop over all nodes
                     for i = 1, #_player_nodes do
                         if Imgui.selectable(_player_nodes[i], _node_melee_l == i) then
                             
@@ -590,7 +588,7 @@ function settings_menu.draw(self)
                 end
                 
                 if Imgui.button("#Set new node") then
-                    local node_melee_r = _player_nodes[_node_melee_l] 
+                    local node_melee_l = _player_nodes[_node_melee_l] 
                     -- append mod.equipment and set node
                     mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].attachement_nodes = {}
                     mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].attachement_nodes = {
