@@ -936,7 +936,7 @@ function settings_menu.draw(self)
     end
 
     if Imgui.button("Print Pretty by Mesh") then
-        settings_menu.print_by_mesh()
+        settings_menu.print_by_mesh(self.mesh_name)
     end
 
     Imgui.same_line()
@@ -962,9 +962,9 @@ function settings_menu.print_settings()
     require 'pl.pretty'.dump(mod.equipment)
 end
 
-function settings_menu.print_by_mesh()
-    local tisch = mod.equipment[mesh_name]
-    require 'pl.pretty'.dump(tisch)
+function settings_menu.print_by_mesh(_mesh_name)
+    print(_mesh_name)
+    require 'pl.pretty'.dump(mod.equipment[_mesh_name])
 end
 
 function settings_menu.print_trinkets()
