@@ -36,6 +36,21 @@ local function enable_input(player)
 	Managers.input:device_unblock_all_services("gamepad")
 end
 
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
 -- get current weapons & trinket 
 
 local function get_cur_equip(player)
@@ -873,8 +888,8 @@ function settings_menu.draw(self)
             grenade_r1_r, grenade_r2_r, grenade_r3_r = Imgui.slider_float_3("Rotation right:", grenade_r1_r, grenade_r2_r, grenade_r3_r, -math.pi, math.pi)
         
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r1_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r2_r
-            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r3_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[2] = grenade_r2_r
+            mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[3] = grenade_r3_r
             ____changed = Imgui.is_item_active()
             
             Imgui.spacing()
