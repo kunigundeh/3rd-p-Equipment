@@ -1,4 +1,6 @@
 local mod = get_mod("third_person_equipment")
+
+
 --[[
 	Third person equipment
 		- Shows equipped items on characters
@@ -19,18 +21,10 @@ mod:dofile("scripts/mods/third_person_equipment/equipment_settings")
 -- ##### ██║  ██║██╔══██║   ██║   ██╔══██║ ############################################################################
 -- ##### ██████╔╝██║  ██║   ██║   ██║  ██║ ############################################################################
 -- ##### ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ############################################################################
+
 mod.extensions = {}
 mod.spawned_units = mod:persistent_table("spawned_units", {})
 
-
--- Test stuff
-mod.used_index = 1
-mod.change_index = function()
-	mod.used_index = mod.used_index + 1
-	mod:echo("used index = "..tostring(mod.used_index))
-	mod:delete_all_units()
-	mod:hook_all_inventories()
-end
 
 -- ##### ███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗ ###################################
 -- ##### ██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝ ###################################
@@ -38,6 +32,43 @@ end
 -- ##### ██╔══╝  ██║   ██║██║╚██╗██║██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║ ###################################
 -- ##### ██║     ╚██████╔╝██║ ╚████║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║ ###################################
 -- ##### ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ###################################
+
+--  ImGUI Menu
+local settings_menu = mod:dofile("scripts/mods/third_person_equipment/settings_imgui")
+
+mod.settings_menu = settings_menu:new()
+
+function mod.open_imgui()
+	-- _is_open is some internal state to the UI class
+	if mod.settings_menu._is_open then
+		mod.settings_menu:close()
+	else
+		mod.settings_menu:open()
+	end
+end
+
+
+function mod.update()
+    if mod.settings_menu and mod.settings_menu._is_open then
+        mod.settings_menu:draw()
+    end
+end
+
+function mod.toggle_camera_lock()
+	local locked = _locked
+	if locked == true then
+        Managers.input:device_unblock_all_services("mouse")
+		_locked = false
+		mod:echo("cam unlocked")
+    else
+    
+        Managers.input:block_device_except_service(nil, "mouse", 1)
+		_locked = true
+		mod:echo("cam locked")
+        
+    end
+end
+
 --[[
 	Delete all spawned units
 --]]
@@ -75,7 +106,6 @@ mod.hook_all_inventories = function(self)
 		for _, player in pairs(players) do
 			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
 			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
-			inventory_extension.tpe_extension:add_all()
 			--mod:echo('all inv hooked')
         end
     end
@@ -87,8 +117,20 @@ mod.reload_extensions = function(self, profile)
 	for _, extension in pairs(self.extensions) do
 		if not profile or extension.profile == profile then
 			local inventory_extension = ScriptUnit.extension(extension.unit, "inventory_system")
-			inventory_extension.tpe_extension:reload()
-			--mod:echo('ext reloaded')
+			inventory_extension.tpe_extension:destroy()
+			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
+			inventory_extension.tpe_extension:add_all()
+			inventory_extension.tpe_extension:set_equipment_visibility()
+
+			local active_slot = inventory_extension["_equipment"].wielded_slot
+			local inventory_extension = ScriptUnit.extension(extension.unit, "inventory_system")
+			local career_extension = ScriptUnit.extension(extension.unit, "career_system")
+				
+			local career_name = career_extension:career_name()
+			local item_two = BackendUtils.get_loadout_item(career_name, active_slot)
+
+			BackendUtils.set_loadout_item(item_two.backend_id, career_name, active_slot)
+			inventory_extension:create_equipment_in_slot(active_slot, item_two.backend_id)
 		end
 	end
 end
@@ -133,72 +175,54 @@ end)
 -- ##### ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ #########################################################
 --[[
 	Mod Setting changed
---]]
-mod.on_setting_changed = function(setting_name)
-	
-	
+	mod.on_setting_changed = function(setting_name)
 		
-	  --  mod:echo("position test setting changed") 
-		--mod:reload_extensions()
-		if setting_name == "weapon_selection" then
-			local weapon_selection = mod:get("weapon_selection")
-			local side = mod:get("side_select")
-			local height_set = mod.definitions[weapon_selection][side].belt[career_selection].position[1]
-			mod:set("height_adjust", height_set)
-			
+		-- Downscale big weapons
+		if setting_name == "downscale_big_weapons" then
+			mod:echo("scale setting changed")
+			mod:delete_all_units()
+			mod:reload_extensions()
 		end
-	
-	-- Dwarf weapons
-	if setting_name == "dwarf_weapon_position" then
-		mod:reload_extensions("dwarf_ranger")
+		
 	end
-	-- Dwarf one-handed weapons
-	if setting_name == "dwarf_onehand_weapon_position" then
-		mod:reload_extensions("dwarf_ranger")
-	end
-	-- Waywatcher dual weapons
-	if setting_name == "waywatcher_dualweapon_position" then
-		mod:reload_extensions("way_watcher")
-	end
-	-- One-handed weapons
-	if setting_name == "onehand_weapon_position" then
-		mod:reload_extensions()
-	end
-	-- Downscale big weapons
-	if setting_name == "downscale_big_weapons" then
-		mod:echo("scale setting changed")
-		mod:reload_extensions()
-	end
-	-- positioning test
-	if setting_name == "height_adjust" or "x_adjust" or "y_adjust" then
-		--mod.definitions.healthkit_first_aid_kit_01.empire_soldier.left.es_huntsman.position[1] = mod:get("position_test")
-		local weapon_selection = mod:get("weapon_selection")
-		local career_selection = mod:get("career_selection")
-		local height = mod:get("height_adjust")
-		local x_adjust = mod:get("x_adjust")
-		local y_adjust = mod:get("y_adjust")
-		local side = mod:get("side_select")
-		mod:echo(weapon_selection .. "retrieved")
-		--mod:echo(testing_position .. "retrieved")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[1] = mod:get("height_adjust")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[2] = mod:get("x_adjust")
-		mod.definitions[weapon_selection][side].belt[career_selection].position[3] = mod:get("y_adjust")
-		mod:echo("position test setting changed") 
-		mod:reload_extensions()
-		mod:update()
-	end
-end
+	--]]
 --[[
 	Mod Suspended
 --]]
 mod.on_disabled = function(initial_call)
-	mod:delete_all_units()
+	if Managers and Managers.state and Managers.state.network then
+        local players = Managers.player:players()
+		for _, player in pairs(players) do
+			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+			inventory_extension.tpe_extension:destroy()
+        end
+    end
 end
+
 --[[
 	Mod Unsuspended
 --]]
+local add_equipment = function(self, slot_name, item_data)
+	if self.tpe_extension and self.tpe_extension.initialized then
+		if table.contains(self.tpe_extension.slots, slot_name) then
+			local slot_data = self:equipment().slots[slot_name]
+            self.tpe_extension:add(slot_name, slot_data)
+		end
+		self.tpe_extension:add_trinket(self.tpe_extension.unit)
+	else
+		mod:echo("add_equipment not executed")
+	end
+end
 mod.on_enabled = function(initial_call)
-	mod:hook_all_inventories()
+	if Managers and Managers.state and Managers.state.network then
+        local players = Managers.player:players()
+		for _, player in pairs(players) do
+			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
+			inventory_extension.tpe_extension:reload()
+			--mod:echo('all inv hooked')
+        end
+    end
 	mod:echo("hooking inv after enable")
 end
 --[[
@@ -220,72 +244,4 @@ mod:hook_safe(PlayerManager, "add_remote_player", function(self)
 end
 )
 
---test trinket spawn
- 
 
-
-local function spawn_trinket (package_name)
-	local unit_path = "units/beings/player/generic_trophies/trophy_zhufbar_karak_vlag_ancestral_badge/trophy_karak_vlag_ancestral_badge_01"
-	local package_name = "units/beings/player/generic_trophies/trophy_zhufbar_karak_vlag_ancestral_badge/trophy_karak_vlag_ancestral_badge_01"
-
-  local player = Managers.player:local_player()
-  local world = Managers.world:world("level_world")
-  if world and player and player.player_unit then
-	local player_unit = player.player_unit
-
-	local position = Unit.local_position(player_unit, 0) + Vector3(0, 0, 1)
-	local rotation = Unit.local_rotation(player_unit, 0)
-	Managers.package:load(unit_path, "global")
-	local unit = World.spawn_unit(world, package_name, position, rotation)
-
-	return unit
-
-	
-  end
-  local node = Unit.node(self.unit, "j_hips")
-	World.link_unit(world, unit, self.unit, node)
-  return nil
-end
-
-mod:command("testModel", "", function() 
-	spawn_trinket()
-end)
-
-
-mod:command("inv_test", "", function() 
-	mod:hook_all_inventories()
-	--spawn_package_to_player(unit_path)
-	
-	mod:echo('hook all exec')
-end)
-
-local function print_slots(player)
-local player = Managers.player:local_player()
-    if player then 
-        local player_unit = player.player_unit    
-        local inventory_extension = ScriptUnit.extension(player_unit, "inventory_system")
-        local career_extension = ScriptUnit.extension(player_unit, "career_system")
-        if career_extension then
-            local career_name = career_extension:career_name()
-            local item_one = BackendUtils.get_loadout_item(career_name, "slot_melee")
-            local item_two = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
-			local item_3 = BackendUtils.get_loadout_item(career_name, "slot_necklace")
-
-			local item_data = item_3.data
-			local backend_id = item_3.backend_id
-			local item_units = BackendUtils.get_item_units(item_data, backend_id)
-			local item_name = item_data and item_data.name
-			local item_skin = item_units and item_units.skin
-			
-        
-			print(item_name)
-        end
-    end
-end
-
-mod:command("print_slots", "", function() 
-	print_slots()
-	--spawn_package_to_player(unit_path)
-	
-	mod:echo('slots printed')
-end)

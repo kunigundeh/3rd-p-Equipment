@@ -27,13 +27,13 @@ ThirdPersonEquipmentExtension = class(ThirdPersonEquipmentExtension)
 ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
-    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} --"slot_necklace", "slot_trinket_1", "slot_ring",} -- test additional slots
-    self.active_slot = self.inventory_extension:equipment().wielded_slot or "slot_melee"
+    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
+    self.active_slot = inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
 	self.delayed_visibility_check = false
 	self.special_states = {
-		"catapulted", "dead", "falling", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
+		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
 		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote", 
@@ -141,11 +141,17 @@ end
 	applies offset to a unit based off the mesh it's attached to, the unit name
 	defaults to vanilla preset nodes if the mod does not define an offset
 --]]
-ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand)
+ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand, item_name)
 	local mesh_name = self:get_player_mesh()
-	local mesh_attach_data = mod.equipment[mesh_name]
+	local mesh_attach_data = mod.equipment[mesh_name]  
+	local item_attach_data
+	--check if pickup item and index by name if true
 	if mesh_attach_data then
-		local item_attach_data = mesh_attach_data[item_type]
+		if item_type == "healthkit" or item_type == "potion" or item_type == "grenade" then
+			item_attach_data = mesh_attach_data[item_name] 
+		else
+			item_attach_data = mesh_attach_data[item_type]
+		end
 		if item_attach_data then
 			local handed_attach_data = item_attach_data[hand]
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
@@ -153,9 +159,9 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
 				self:link_unit(unit, attachment_table)
 				
-				local attachment_offset = item_attach_data.offset
-				local attachment_angle = item_attach_data.angle
-				if attachment_table and attachment_offset and attachment_angle then
+				local attachment_offset = handed_attach_data.offset
+				local attachment_angle = handed_attach_data.angle
+				if attachment_offset and attachment_angle then
 					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 					Unit.set_local_position(unit, 0, pos)
 
@@ -168,7 +174,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 				
 				local attachment_offset = item_attach_data.offset
 				local attachment_angle = item_attach_data.angle
-				if attachment_table and attachment_offset and attachment_angle then
+				if attachment_offset and attachment_angle then
 					local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
 					Unit.set_local_position(unit, 0, pos)
 
@@ -191,19 +197,19 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local right_hand_unit_name = slot_data.right_hand_unit_name
 
 	local item_type = slot_data.item_data.item_type
-
+	local item_name = slot_data.item_data.name --for pickups
 	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
-		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type)
+		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name)
 		self:apply_skin_material_settings(left_unit, material_settings)
 		self.weapons[left_unit] = slot_name
 	end
 
 	if right_hand_unit_name then
 		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
-		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type)
+		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type, item_name)
 		self:apply_skin_material_settings(right_unit, material_settings)
 		self.weapons[right_unit] = slot_name
 	end
@@ -212,14 +218,14 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
     self:set_equipment_visibility()
 end
 
-ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type)
+ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type, item_name)
 	
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
 	
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 	-- Link unit
-	self:offset_unit_by_mesh(item_unit, item_type, attachment_node_tisch, hand, item_type)
+	self:offset_unit_by_mesh(item_unit, item_type, attachment_node_tisch, hand, item_name)
 
 	return item_unit
 end
@@ -236,12 +242,11 @@ ThirdPersonEquipmentExtension.reload = function(self)
 	self:add_all()
 end
 
-ThirdPersonEquipmentExtension.add_all = function(self)
-    local slots_by_name = InventorySettings.slots_by_name
-    local wieldable_slots = InventorySettings.slots_by_wield_input
-
+ThirdPersonEquipmentExtension.add_all = function(self)	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
-        self:add(slot_name, slot)
+        if slot_name ~= "slot_packmaster_claw" then
+			self:add(slot_name, slot)
+		end
     end
 
 	self:add_trinket(self.unit)
