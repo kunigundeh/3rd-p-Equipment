@@ -2,6 +2,7 @@
 local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_person_mesh"] = {
     es_blunderbuss = {
       right = {
+        scale = 1,
         angle = {
           -3.1419999599457,
           -0.065999999642372,
@@ -82,6 +83,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     es_repeating_handgun = {
       right = {
+        scale = 1,
         angle = {
           -3.1419999599457,
           0.021999999880791,
@@ -122,6 +124,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     es_1h_sword = {
       right = {
+        scale = 1,
         angle = {
           0,
           0,
@@ -136,6 +139,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     es_2h_halberd = {
       right = {
+        scale = 1,
         angle = {
           0,
           0,
@@ -214,6 +218,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     es_2h_sword_executioner = {
       right = {
+        scale = 1,
         angle = {
           0,
           0,
@@ -228,6 +233,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     es_handgun = {
       right = {
+        scale = 1,
         angle = {
           3.1419999599457,
           -0.065999999642372,

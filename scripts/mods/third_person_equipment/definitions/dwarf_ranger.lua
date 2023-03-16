@@ -3,6 +3,7 @@ local tisch = {
     ["units/beings/player/dwarf_ranger/third_person_base/chr_third_person_mesh"] = {
         dr_handgun = {
           right = {
+            scale = 1,
             offset = {
               0.003000000026077,
               0.003000000026077,
@@ -17,6 +18,7 @@ local tisch = {
         },
         dr_1h_axe_shield = {
           right = {
+            scale = 1,
             offset = {
               0.21299999952316,
               -0.16400000452995,
@@ -29,6 +31,7 @@ local tisch = {
             }
           },
           left = {
+            scale = 1,
             offset = {
               -0.2339999973774,
               0.093999996781349,
