@@ -6,16 +6,37 @@ mod.trinkets = {}
 local trinket_attachment_table = AttachmentNodeLinking.trophies.hanging.slot_trinket_1
 local base_path = "scripts/mods/third_person_equipment/definitions/"
 local base_skins = {
-    "witch_hunter_warrior_priest_skin_02",
-    "empire_soldier",
-    "dwarf_ranger",
-    "dwarf_ranger_upgraded",
-    "dwarf_ranger_upgraded_skin_01",
     "dwarf_ranger_ironbreaker_skin_01",
+    "dwarf_ranger_upgraded_skin_01",
+    "dwarf_ranger_upgraded",
+    "dwarf_ranger_upgraded",
+    "empire_soldier",
+    "way_watcher_maiden_guard_skin_01",
+    "way_watcher_maiden_guard",
+    "way_watcher_moon_mantle",
+    "way_watcher_shade_skin_01",
+    "way_watcher_shade_skin_02",
+    "way_watcher_shade_skin_02",
+    "way_watcher_shade",
+    "way_watcher_thornsister",
+    "way_watcher_upgraded_skin_01",
+    "way_watcher_upgraded",
+    "way_watcher",
+    "witch_hunter_bounty_hunter_skin_01",
+    "witch_hunter_bounty_hunter_skin_02",
+    "witch_hunter_bounty_hunter",
+    "witch_hunter_captain_skin_01",
+    "witch_hunter_captain",
+    "witch_hunter_flagellant",
+    "witch_hunter_warrior_priest_skin_02",
+    "witch_hunter_warrior_priest",
+    "witch_hunter_zealot_skin_01",
+    "witch_hunter_zealot",
+    "witch_hunter",
 }
 
 for _, file_name in pairs(base_skins) do
-    local equipment_config = require(base_path..file_name)
+    local equipment_config = mod:dofile(base_path..file_name)
     table.merge(mod.equipment, equipment_config)
     for mesh_name, data in pairs(equipment_config) do
         local trinket_data = data.trinket or { attachement_nodes = trinket_attachment_table, offset = {0,0,0}, angle = {0,0,0}, }
