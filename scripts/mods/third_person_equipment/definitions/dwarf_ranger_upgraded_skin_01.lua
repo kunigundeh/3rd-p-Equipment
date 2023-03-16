@@ -43,6 +43,7 @@ local tisch = {
         },
         dr_handgun = {
           right = {
+            scale = 1,
             offset = {
               0.12200000137091,
               -0.0099999997764826,
@@ -69,6 +70,7 @@ local tisch = {
         },
         dr_1h_axes = {
           right = {
+            scale = 1,
             offset = {
               -0.28999999165535,
               0,
@@ -83,6 +85,7 @@ local tisch = {
         },
         dr_1h_axe_shield = {
           right = {
+            scale = 1,
             offset = {
               -0.28299999237061,
               -0.024000000208616,
@@ -95,6 +98,7 @@ local tisch = {
             }
           },
           left = {
+            scale = 1,
             offset = {
               0.037999998778105,
               -0.12899999320507,
