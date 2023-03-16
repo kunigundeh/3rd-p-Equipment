@@ -16,7 +16,7 @@ local base_skins = {
 }
 
 for _, file_name in pairs(base_skins) do
-    local equipment_config = require(base_path..file_name)
+    local equipment_config = mod:dofile(base_path..file_name)
     table.merge(mod.equipment, equipment_config)
     for mesh_name, data in pairs(equipment_config) do
         local trinket_data = data.trinket or { attachement_nodes = trinket_attachment_table, offset = {0,0,0}, angle = {0,0,0}, }
