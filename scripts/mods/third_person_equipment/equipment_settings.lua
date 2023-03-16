@@ -12,6 +12,7 @@ local base_skins = {
     "dwarf_ranger_upgraded",
     "dwarf_ranger_upgraded_skin_01",
     "dwarf_ranger_ironbreaker_skin_01",
+    "empire_soldier_mercenary_skin_01",
 }
 
 for _, file_name in pairs(base_skins) do
