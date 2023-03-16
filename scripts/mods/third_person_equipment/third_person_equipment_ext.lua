@@ -167,6 +167,11 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
+
+					-- scaling for tome, grim
+					if item_name == "wpn_side_objective_tome_01" or item_name == "wpn_grimoire_01" then
+						Unit.set_local_scale(unit, 0, Vector3(0.75, 0.75, 0.75))
+					end
 				end
 			else
 				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
@@ -180,6 +185,11 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
+
+					-- scaling for tome, grim
+					if item_name == "wpn_side_objective_tome_01" or item_name == "wpn_grimoire_01" then
+						Unit.set_local_scale(unit, 0, Vector3(0.75, 0.75, 0.75))
+					end
 				end
 			end
 		else
