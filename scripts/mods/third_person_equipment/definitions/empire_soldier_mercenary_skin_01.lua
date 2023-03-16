@@ -1,5 +1,6 @@
 -- config for Kruber Mercenary Flamboyant Sellsword skin
-local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_person_base/chr_third_person_mesh"] = {
+local tisch = {
+    ["units/beings/player/empire_soldier_mercenary_skin_01/third_person_base/chr_third_person_mesh"] = {
     wpn_side_objective_tome_01 = {
       left = {
         angle = {
