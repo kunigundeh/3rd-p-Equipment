@@ -24,11 +24,11 @@ local function lookup(t, ...)
         t = t[k]
         if not t then
             
-            mod:echo("lookup done, return nil")
+            --mod:echo("lookup done, return nil")
             return nil
         end
     end
-    mod:echo("lookup return t ")
+    --mod:echo("lookup return t ")
     return t
 end
 
@@ -218,7 +218,7 @@ function settings_menu.get_equip_info(self)
 
         if self.item_melee_r ~= nil then
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r] = {
-               
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -226,6 +226,7 @@ function settings_menu.get_equip_info(self)
         if self.item_ranged_r ~= nil then
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r] = {
                 
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -233,6 +234,7 @@ function settings_menu.get_equip_info(self)
         if self.item_melee_l ~= nil then
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l] = {
                 
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -240,6 +242,7 @@ function settings_menu.get_equip_info(self)
         if self.item_ranged_l ~= nil then
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l] = {
                
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -252,6 +255,7 @@ function settings_menu.get_equip_info(self)
         if self.item_health_l ~= nil then
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -259,6 +263,7 @@ function settings_menu.get_equip_info(self)
         if self.item_health_r ~= nil then
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                 
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -267,6 +272,7 @@ function settings_menu.get_equip_info(self)
         if self.item_potion_type ~= nil then
             mod.equipment[self.mesh_name][self.item_potion] = {
                
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -279,6 +285,7 @@ function settings_menu.get_equip_info(self)
         if self.item_grenade_l ~= nil then
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -287,6 +294,7 @@ function settings_menu.get_equip_info(self)
         if self.item_grenade_r ~= nil then
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                 
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -304,15 +312,17 @@ function settings_menu.get_equip_info(self)
             if self.item_ranged_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r] = {
                    
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             if self.item_ranged_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             mod:echo("mod.equipment appended ranged weapon")
@@ -327,15 +337,17 @@ function settings_menu.get_equip_info(self)
             if self.item_melee_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             if self.item_melee_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             mod:echo("mod.equipment appended melee weapon")
@@ -350,15 +362,17 @@ function settings_menu.get_equip_info(self)
             if self.item_health_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                    
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             if self.item_health_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             mod:echo("mod.equipment appended health item")
@@ -372,6 +386,7 @@ function settings_menu.get_equip_info(self)
 
             mod.equipment[self.mesh_name][self.item_potion] = {
                     
+                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
@@ -388,15 +403,17 @@ function settings_menu.get_equip_info(self)
             if self.item_grenade_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             if self.item_grenade_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                     
-                    offset = {0, 0, 0},
-                    angle = {0, 0, 0}
+                    scale = 1,
+                offset = {0, 0, 0},
+                angle = {0, 0, 0}
                 }
             end
             mod:echo("mod.equipment appended grenade item")
@@ -520,6 +537,17 @@ function settings_menu.draw(self)
             end
 
             Imgui.spacing()
+
+            -- scaling                       
+            local _scale_melee_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].scale * 100
+            
+            _scale_melee_r = Imgui.slider_int("Size %", _scale_melee_r, 50, 100)
+
+            mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].scale = _scale_melee_r / 100
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
             -- Nodes m r 
 
             if Imgui.tree_node("Nodes", false) then
@@ -595,6 +623,14 @@ function settings_menu.draw(self)
             
 
             Imgui.spacing()
+
+            -- scaling                       
+            local _scale_melee_l = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].scale * 100
+            
+            _scale_melee_l = Imgui.slider_int("Size %", _scale_melee_l, 50, 100)
+
+            mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].scale = _scale_melee_l / 100
+
             -- Nodes m l 
 
             if Imgui.tree_node("#Nodes", false) then
@@ -658,7 +694,6 @@ function settings_menu.draw(self)
             if Imgui.is_item_active() == true then 
                 _changed = Imgui.is_item_active()
             end
-            
 
             Imgui.spacing()
          
@@ -679,6 +714,17 @@ function settings_menu.draw(self)
                 _changed = Imgui.is_item_active()
             end
             
+            Imgui.spacing()
+            -- scaling                       
+            local _scale_ranged_r = mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].scale * 100
+            
+            _scale_ranged_r = Imgui.slider_int("Size %", _scale_ranged_r, 50, 100)
+
+            mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].scale = _scale_ranged_r / 100
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
 
             Imgui.spacing()
             -- Nodes 
@@ -755,6 +801,17 @@ function settings_menu.draw(self)
                 _changed = Imgui.is_item_active()
             end
             
+            Imgui.spacing()
+            -- scaling                       
+            local _scale_ranged_l = mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].scale * 100
+            
+            _scale_ranged_l = Imgui.slider_int("Size %", _scale_ranged_l, 50, 100)
+
+            mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].scale = _scale_ranged_l / 100
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
 
             Imgui.spacing()
             -- Nodes 

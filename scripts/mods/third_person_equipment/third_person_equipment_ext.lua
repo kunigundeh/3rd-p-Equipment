@@ -195,7 +195,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
 
-					-- scaling for tome, grim
+					-- scaling 
 					self:apply_scaling(unit, scaling_data)
 				end
 			else
