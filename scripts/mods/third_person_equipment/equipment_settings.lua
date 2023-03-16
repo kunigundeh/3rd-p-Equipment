@@ -3,6 +3,7 @@ local mod = get_mod("third_person_equipment")
 mod.equipment = {}
 mod.trinkets = {}
 
+local trinket_attachment_table = AttachmentNodeLinking.trophies.hanging.slot_trinket_1
 local base_path = "scripts/mods/third_person_equipment/definitions/"
 local base_skins = {
     "witch_hunter_warrior_priest_skin_02",
@@ -14,9 +15,39 @@ local base_skins = {
 }
 
 for _, file_name in pairs(base_skins) do
-    table.merge(mod.equipment, require(base_path..file_name))
+    local equipment_config = require(base_path..file_name)
+    table.merge(mod.equipment, equipment_config)
+    for mesh_name, data in pairs(equipment_config) do
+        local trinket_data = data.trinket or { attachement_nodes = trinket_attachment_table, offset = {0,0,0}, angle = {0,0,0}, }
+        mod.trinkets[mesh_name] = table.clone(trinket_data, true) 
+    end
 end
 
+for cosmetic_name, cosmetic_data in pairs(Cosmetics) do
+    if cosmetic_data.third_person_attachment then
+        local mesh_name = cosmetic_data.third_person_attachment.unit
+        if not mod.trinkets[mesh_name] then
+            mod.trinkets[mesh_name] = {
+                attachement_nodes = trinket_attachment_table, offset = {0,0,0}, angle = {0,0,0},
+            }
+        end
+    end
+end
+
+mod.trinket_lookup = {
+	trinket_01 = "units/beings/player/generic_trophies/trophy_grey_wizards_token_01/trophy_grey_wizards_token_01",
+	trinket_02 = "units/beings/player/generic_trophies/trophy_badge_of_good_portents/trophy_badge_of_good_portents_01",
+	trinket_03 = "units/beings/player/generic_trophies/trophy_ancestor_badge/trophy_ancestor_badge_01",
+	trinket_04 = "units/beings/player/generic_trophies/trophy_solland_sigil/trophy_solland_sigil_01",
+	trinket_05 = "units/beings/player/generic_trophies/trophy_achievement_gem/trophy_achievement_gem",
+	trinket_06 = "units/beings/player/generic_trophies/trophy_scroll_01/trophy_scroll_01",
+	trinket_07 = "units/beings/player/generic_trophies/trophy_fish/trophy_fish_t1",
+	trinket_08 = "units/beings/player/generic_trophies/trophy_fox_skull/trophy_fox_skull_01",
+	trinket_09 = "units/beings/player/generic_trophies/trophy_jar_of_grinded_teeth/trophy_jar_of_grinded_teeth_01",
+	trinket_10 = "units/beings/player/generic_trophies/trophy_key_of_morr/trophy_key_of_morr_01",
+	trinket_11 = "units/beings/player/generic_trophies/trophy_pouch_of_blessed_bullets/trophy_pouch_of_blessed_bullets_01",
+	trinket_12 = "",
+}
 
 mod.big_weapons = {
   "dr_drakegun",
