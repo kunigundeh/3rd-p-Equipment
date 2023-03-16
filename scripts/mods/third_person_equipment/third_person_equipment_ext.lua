@@ -51,6 +51,11 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 
 	self.world = Managers.world:world("level_world")
 	self.weapons = {}
+
+	self.items_with_preset_scale = {
+		wpn_side_objective_tome_01 = 0.75,
+		wpn_grimoire_01 = 0.75,
+	}
 end
 
 ThirdPersonEquipmentExtension.destroy = function(self)
@@ -138,6 +143,27 @@ ThirdPersonEquipmentExtension.apply_skin_material_settings = function(self, unit
 end
 
 --[[
+	Applies scaling to units, supports preset scaling as defined in the ThirdPersonEquipmentExtension.items_with_preset_scale table
+	or based on some scaling number passed into it; determined by the type of the third arguement passed in.
+--]]
+local scaling_funcs = {
+	string = function(tpe, unit, item_name)
+		local scale_factor = tpe.items_with_preset_scale[item_name]
+		if scale_factor then
+			Unit.set_local_scale(unit, 0, Vector3(scale_factor, scale_factor, scale_factor))
+		end
+	end,
+
+	number = function(tpe, unit, scale_factor)
+		Unit.set_local_scale(unit, 0, Vector3(scale_factor, scale_factor, scale_factor))
+	end,
+}
+ThirdPersonEquipmentExtension.apply_scaling = function(self, unit, item_name_or_scale_factor)
+	local func_key = item_name_or_scale_factor or 1
+	scaling_funcs[type(func_key)](self, unit, func_key)
+end
+
+--[[
 	applies offset to a unit based off the mesh it's attached to, the unit name
 	defaults to vanilla preset nodes if the mod does not define an offset
 --]]
@@ -154,6 +180,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 		end
 		if item_attach_data then
 			local handed_attach_data = item_attach_data[hand]
+			local scaling_data = handed_attach_data.scale or item_attach_data.scale or item_name
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
 			if handed_attach_data then
 				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
@@ -169,9 +196,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					Unit.set_local_rotation(unit, 0, rot)
 
 					-- scaling for tome, grim
-					if item_name == "wpn_side_objective_tome_01" or item_name == "wpn_grimoire_01" then
-						Unit.set_local_scale(unit, 0, Vector3(0.75, 0.75, 0.75))
-					end
+					self:apply_scaling(unit, scaling_data)
 				end
 			else
 				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
@@ -187,16 +212,16 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					Unit.set_local_rotation(unit, 0, rot)
 
 					-- scaling for tome, grim
-					if item_name == "wpn_side_objective_tome_01" or item_name == "wpn_grimoire_01" then
-						Unit.set_local_scale(unit, 0, Vector3(0.75, 0.75, 0.75))
-					end
+					self:apply_scaling(unit, scaling_data)
 				end
 			end
 		else
 			self:link_unit(unit, attachment_node_tisch)
+			self:apply_scaling(unit, item_name)
 		end
 	else 
 		self:link_unit(unit, attachment_node_tisch)
+		self:apply_scaling(unit, item_name)
 	end
 end
 
