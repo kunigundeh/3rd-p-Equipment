@@ -450,13 +450,7 @@ function settings_menu.draw(self)
 
     local _player_nodes = Unit.bones(self.player_unit)
 
-    --- hacky on update reloading ---
-    if _changed == true or __changed == true or ___changed == true or ____changed == true then
-        mod:delete_all_units()
-        mod:reload_extensions()
-       -- mod:echo("reload--------")
-    end
-    ---
+    
 
     Imgui.text("Career: " .. self.career_name)
     
@@ -503,7 +497,10 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].offset[2] = melee_y_r
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].offset[3] = melee_z_r
 
-            _changed = Imgui.is_item_active()
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             
@@ -520,7 +517,10 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[2] = melee_r2_r
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].angle[3] = melee_r3_r
             
-            __changed = Imgui.is_item_active()
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+
             Imgui.spacing()
             -- Nodes m r 
 
@@ -574,7 +574,10 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].offset[2] = melee_y_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].offset[3] = melee_z_l
         
-            ___changed = Imgui.is_item_active()
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
 
             local melee_r1_l = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[1]
@@ -587,7 +590,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[1] = melee_r1_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[2] = melee_r2_l
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].angle[3] = melee_r3_l
-            ____changed = Imgui.is_item_active()
+
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes m l 
@@ -649,7 +656,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].offset[1] = ranged_x_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].offset[2] = ranged_y_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].offset[3] = ranged_z_r
-            _changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
          
@@ -665,7 +676,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[1] = ranged_r1_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[2] = ranged_r2_r
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].angle[3] = ranged_r3_r
-            __changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes 
@@ -719,7 +734,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[1] = ranged_x_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[2] = ranged_y_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].offset[3] = ranged_z_l
-            ___changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             
             Imgui.spacing()
 
@@ -733,7 +752,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[1] = ranged_r1_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[2] = ranged_r2_l
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].angle[3] = ranged_r3_l
-            ____changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes 
@@ -793,7 +816,11 @@ function settings_menu.draw(self)
         mod.trinkets[self.mesh_name].offset[1] = trinket_x
         mod.trinkets[self.mesh_name].offset[2] = trinket_y
         mod.trinkets[self.mesh_name].offset[3] = trinket_z
-        _changed = Imgui.is_item_active()
+        
+        if Imgui.is_item_active() == true then 
+            _changed = Imgui.is_item_active()
+        end
+        
 
         
         Imgui.spacing()
@@ -807,7 +834,11 @@ function settings_menu.draw(self)
         mod.trinkets[self.mesh_name].angle[1] = trinket_r1
         mod.trinkets[self.mesh_name].angle[2] = trinket_r2
         mod.trinkets[self.mesh_name].angle[3] = trinket_r3
-        __changed = Imgui.is_item_active()
+        
+        if Imgui.is_item_active() == true then 
+            _changed = Imgui.is_item_active()
+        end
+        
         Imgui.spacing()
         Imgui.tree_pop()
     end
@@ -846,7 +877,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[1] = health_x_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[2] = health_y_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].offset[3] = health_z_l
-            _changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             -- health rot
@@ -860,7 +895,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[1] = health_r1_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[2] = health_r2_l
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l].angle[3] = health_r3_l
-            __changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             
             Imgui.spacing()
@@ -923,7 +962,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[1] = health_x_r
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[2] = health_y_r
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].offset[3] = health_z_r
-            ___changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             -- health rot
@@ -937,7 +980,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[1] = health_r1_r
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[2] = health_r2_r
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r].angle[3] = health_r3_r
-            ____changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes m r 
@@ -1002,7 +1049,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_potion].offset[1] = potion_x
             mod.equipment[self.mesh_name][self.item_potion].offset[2] = potion_y
             mod.equipment[self.mesh_name][self.item_potion].offset[3] = potion_z
-            __changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             -- potion rot
@@ -1016,7 +1067,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_potion].angle[1] = potion_r1
             mod.equipment[self.mesh_name][self.item_potion].angle[2] = potion_r2
             mod.equipment[self.mesh_name][self.item_potion].angle[3] = potion_r3
-            _changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes m r 
@@ -1078,7 +1133,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[1] = grenade_x_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[2] = grenade_y_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].offset[3] = grenade_z_l
-            _changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             -- grenade l rot
@@ -1092,7 +1151,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[1] = grenade_r1_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[2] = grenade_r2_l
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l].angle[3] = grenade_r3_l
-            __changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
             -- Nodes m r 
@@ -1148,7 +1211,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[1] = grenade_x_r
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[2] = grenade_y_r
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].offset[3] = grenade_z_r
-            ___changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
             Imgui.spacing()
             
             -- grenade r rot
@@ -1162,7 +1229,11 @@ function settings_menu.draw(self)
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[1] = grenade_r1_r
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[2] = grenade_r2_r
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r].angle[3] = grenade_r3_r
-            ____changed = Imgui.is_item_active()
+            
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
+            
 
             Imgui.spacing()
            
@@ -1255,6 +1326,16 @@ function settings_menu.draw(self)
     end
     
     Imgui.separator()
+    
+    --- hacky on update reloading ---
+    if _changed == true   then --or __changed == true or ___changed == true or ____changed == true
+        mod:delete_all_units()
+        mod:reload_extensions()
+        _changed = false
+        -- mod:echo("reload--------")
+    end
+    ---
+
     Imgui.end_window()
 end
 
