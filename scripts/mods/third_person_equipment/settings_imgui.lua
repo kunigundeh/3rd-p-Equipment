@@ -430,6 +430,7 @@ end
 
 
 function settings_menu.open(self)
+    
     self._is_open = true
     settings_menu.get_equip_info(self)
     Imgui.open_imgui()
@@ -460,13 +461,12 @@ function settings_menu.capture_input()
 end
 
 function settings_menu.draw(self)
+    
     Imgui.begin_window("Third Person Equipment - Settings")
     Imgui.spacing()
 
     local _player_nodes = Unit.bones(self.player_unit)
-
     
-
     Imgui.text("Career: " .. self.career_name)
     
     Imgui.same_line()
@@ -630,6 +630,10 @@ function settings_menu.draw(self)
             _scale_melee_l = Imgui.slider_int("Size % L", _scale_melee_l, 50, 100)
 
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].scale = _scale_melee_l / 100
+
+            if Imgui.is_item_active() == true then 
+                _changed = Imgui.is_item_active()
+            end
 
             -- Nodes m l 
 
