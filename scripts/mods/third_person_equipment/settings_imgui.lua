@@ -1289,9 +1289,6 @@ function settings_menu.draw(self)
     Imgui.separator()
     Imgui.text("Nodes:")
 
-    
-
-
     -- Buttons
     Imgui.separator()
     Imgui.spacing()
@@ -1328,7 +1325,7 @@ function settings_menu.draw(self)
     Imgui.separator()
     
     --- hacky on update reloading ---
-    if _changed == true   then --or __changed == true or ___changed == true or ____changed == true
+    if _changed == true   then 
         mod:delete_all_units()
         mod:reload_extensions()
         _changed = false
