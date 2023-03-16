@@ -541,7 +541,7 @@ function settings_menu.draw(self)
             -- scaling                       
             local _scale_melee_r = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].scale * 100
             
-            _scale_melee_r = Imgui.slider_int("Size %", _scale_melee_r, 50, 100)
+            _scale_melee_r = Imgui.slider_int("Size % R", _scale_melee_r, 50, 100)
 
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_r].scale = _scale_melee_r / 100
             
@@ -627,7 +627,7 @@ function settings_menu.draw(self)
             -- scaling                       
             local _scale_melee_l = mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].scale * 100
             
-            _scale_melee_l = Imgui.slider_int("Size %", _scale_melee_l, 50, 100)
+            _scale_melee_l = Imgui.slider_int("Size % L", _scale_melee_l, 50, 100)
 
             mod.equipment[self.mesh_name][self.item_melee_type][self.item_melee_l].scale = _scale_melee_l / 100
 
@@ -718,7 +718,7 @@ function settings_menu.draw(self)
             -- scaling                       
             local _scale_ranged_r = mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].scale * 100
             
-            _scale_ranged_r = Imgui.slider_int("Size %", _scale_ranged_r, 50, 100)
+            _scale_ranged_r = Imgui.slider_int("Size % R", _scale_ranged_r, 50, 100)
 
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_r].scale = _scale_ranged_r / 100
             
@@ -805,7 +805,7 @@ function settings_menu.draw(self)
             -- scaling                       
             local _scale_ranged_l = mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].scale * 100
             
-            _scale_ranged_l = Imgui.slider_int("Size %", _scale_ranged_l, 50, 100)
+            _scale_ranged_l = Imgui.slider_int("Size % L", _scale_ranged_l, 50, 100)
 
             mod.equipment[self.mesh_name][self.item_ranged_type][self.item_ranged_l].scale = _scale_ranged_l / 100
             
