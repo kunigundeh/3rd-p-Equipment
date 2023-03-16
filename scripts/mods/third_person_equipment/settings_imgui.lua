@@ -255,7 +255,6 @@ function settings_menu.get_equip_info(self)
         if self.item_health_l ~= nil then
             mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                
-                scale = 1,
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -263,7 +262,7 @@ function settings_menu.get_equip_info(self)
         if self.item_health_r ~= nil then
             mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                 
-                scale = 1,
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -272,7 +271,7 @@ function settings_menu.get_equip_info(self)
         if self.item_potion_type ~= nil then
             mod.equipment[self.mesh_name][self.item_potion] = {
                
-                scale = 1,
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -285,7 +284,7 @@ function settings_menu.get_equip_info(self)
         if self.item_grenade_l ~= nil then
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                
-                scale = 1,
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -294,7 +293,7 @@ function settings_menu.get_equip_info(self)
         if self.item_grenade_r ~= nil then
             mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                 
-                scale = 1,
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
             }
@@ -362,7 +361,7 @@ function settings_menu.get_equip_info(self)
             if self.item_health_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_health][self.item_health_r] = {
                    
-                    scale = 1,
+                    
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
@@ -370,7 +369,7 @@ function settings_menu.get_equip_info(self)
             if self.item_health_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_health][self.item_health_l] = {
                     
-                    scale = 1,
+                    
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
@@ -386,7 +385,7 @@ function settings_menu.get_equip_info(self)
 
             mod.equipment[self.mesh_name][self.item_potion] = {
                     
-                scale = 1,
+                
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
@@ -403,7 +402,7 @@ function settings_menu.get_equip_info(self)
             if self.item_grenade_r ~= nil then
                 mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_r] = {
                     
-                    scale = 1,
+                    
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
@@ -411,7 +410,7 @@ function settings_menu.get_equip_info(self)
             if self.item_grenade_l ~= nil then
                 mod.equipment[self.mesh_name][self.item_grenade][self.item_grenade_l] = {
                     
-                    scale = 1,
+                   
                 offset = {0, 0, 0},
                 angle = {0, 0, 0}
                 }
