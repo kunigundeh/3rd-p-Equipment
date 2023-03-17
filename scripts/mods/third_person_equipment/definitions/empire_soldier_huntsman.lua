@@ -1,5 +1,6 @@
---config for Mercenary's VT1 skin
-local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_person_mesh"] = {
+-- config file for Huntsmans's VT2 base skin
+
+local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/chr_third_person_mesh"] = {
   healthkit_first_aid_kit_01 = {
     left = {
       offset = {
@@ -100,7 +101,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
       scale = 1
     }
   },
-  grenade_fire_02 = {
+  grenade_frag_02 = {
     right = {
       offset = {
         0.10999999940395,
@@ -170,21 +171,21 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     right = {
       angle = {
         3.1419999599457,
-        -0.065999999642372,
-        1.0759999752045
+        -0.041000001132488,
+        1.1679999828339
       },
       offset = {
-        0.0099999997764826,
-        0.27599999308586,
-        0.24099999666214
+        -0.013000000268221,
+        0.25999999046326,
+        0.28200000524521
       },
       scale = 1
     }
   },
   potion_speed_boost_01 = {
     offset = {
-      0.032000001519918,
-      -0.11500000208616,
+      0.0060000000521541,
+      -0.14300000667572,
       0.14599999785423
     },
     angle = {
@@ -291,14 +292,14 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
     },
     left = {
       offset = {
-        0.046000000089407,
-        0.092000000178814,
-        0
+        0.039000000804663,
+        0.10999999940395,
+        0.026000000536442
       },
       angle = {
-        -0.19300000369549,
-        -0.097000002861023,
-        0
+        -0.1630000025034,
+        -0.2039999961853,
+        0.16099999845028
       },
       scale = 1
     }
@@ -318,7 +319,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
       scale = 1
     }
   },
-  grenade_fire_01 = {
+  grenade_frag_01 = {
     right = {
       offset = {
         0.10999999940395,
@@ -371,7 +372,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
       scale = 1
     }
   },
-  grenade_frag_01 = {
+  grenade_fire_01 = {
     right = {
       offset = {
         0.10999999940395,
@@ -459,7 +460,7 @@ local tisch = {["units/beings/player/empire_soldier/third_person_base/chr_third_
       scale = 1
     }
   },
-  grenade_frag_02 = {
+  grenade_fire_02 = {
     right = {
       offset = {
         0.10999999940395,

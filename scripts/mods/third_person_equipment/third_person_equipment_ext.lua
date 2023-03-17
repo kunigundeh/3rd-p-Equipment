@@ -55,6 +55,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.items_with_preset_scale = {
 		wpn_side_objective_tome_01 = 0.67,
 		wpn_grimoire_01 = 0.80,
+		healthkit_first_aid_kit_01 = 0.85
 	}
 end
 
