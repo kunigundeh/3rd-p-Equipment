@@ -53,8 +53,8 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.weapons = {}
 
 	self.items_with_preset_scale = {
-		wpn_side_objective_tome_01 = 0.75,
-		wpn_grimoire_01 = 0.75,
+		wpn_side_objective_tome_01 = 0.67,
+		wpn_grimoire_01 = 0.80,
 	}
 end
 
@@ -180,7 +180,14 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 		end
 		if item_attach_data then
 			local handed_attach_data = item_attach_data[hand]
-			local scaling_data = handed_attach_data.scale or item_attach_data.scale or item_name
+			local scaling_data
+			-- fix for items indexed by item_name without handedness
+			if handed_attach_data then
+				scaling_data = handed_attach_data.scale or item_attach_data.scale or item_name
+			else
+				scaling_data = item_attach_data.scale or item_name
+			end
+			
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
 			if handed_attach_data then
 				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
@@ -211,7 +218,7 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
 
-					-- scaling for tome, grim
+					-- scaling 
 					self:apply_scaling(unit, scaling_data)
 				end
 			end
