@@ -59,6 +59,7 @@ for cosmetic_name, cosmetic_data in pairs(Cosmetics) do
 end
 
 mod.trinket_lookup = {
+    trinket = "units/beings/player/generic_trophies/trophy_grey_wizards_token_01/trophy_grey_wizards_token_01",
 	trinket_01 = "units/beings/player/generic_trophies/trophy_grey_wizards_token_01/trophy_grey_wizards_token_01",
 	trinket_02 = "units/beings/player/generic_trophies/trophy_badge_of_good_portents/trophy_badge_of_good_portents_01",
 	trinket_03 = "units/beings/player/generic_trophies/trophy_ancestor_badge/trophy_ancestor_badge_01",

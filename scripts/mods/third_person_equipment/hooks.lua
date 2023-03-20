@@ -43,11 +43,19 @@ mod:hook_safe(SimpleHuskInventoryExtension, "add_equipment", add_equipment)
 mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
 	if slot_name == "slot_trinket_1" then
 		local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
+		
+		
 		if inventory_extension then
+			
+			inventory_extension.tpe_extension.show = true
 			inventory_extension.tpe_extension:add_trinket(player.player_unit)
 		end
 	end
+	
+	
 end)
+
+
 
 local destroy_slot = function(func, self, slot_name, ...)
 	if self.tpe_extension and self.tpe_extension.initialized then

@@ -233,14 +233,14 @@ end
 
 --on Player join
 
-mod:hook_safe(PlayerManager, "add_remote_player", function(self)
-	--if player then
-		mod:hook_all_inventories()
-		self:add_all()
+-- mod:hook_safe(PlayerManager, "add_remote_player", function(self)
+-- 	--if player then
+-- 		mod:hook_all_inventories()
+		
 
-		mod:echo('player joined, add_all exec')
-	--end
-end
-)
+-- 		mod:echo('player joined, add_all exec')
+-- 	--end
+-- end
+-- )
 
 
