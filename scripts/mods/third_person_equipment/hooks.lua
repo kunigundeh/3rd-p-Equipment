@@ -30,6 +30,9 @@ local main_slots = {
 	slot_melee = "slot_melee",
 	slot_ranged = "slot_ranged",
 	slot_trinket_1 = "slot_trinket_1",
+	slot_healthkit = "slot_healthkit",
+	slot_potion = "slot_potion",
+	slot_grenade = "slot_grenade",
 }
 mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
 	if main_slots[slot_name] then
