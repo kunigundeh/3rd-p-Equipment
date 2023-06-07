@@ -57,6 +57,8 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 		wpn_grimoire_01 = 0.80,
 		healthkit_first_aid_kit_01 = 0.85
 	}
+
+	self.add_all_queue = false
 end
 
 ThirdPersonEquipmentExtension.destroy = function(self)
@@ -67,6 +69,13 @@ ThirdPersonEquipmentExtension.destroy = function(self)
 end
 
 ThirdPersonEquipmentExtension.update = function(self)
+	if self.update_trinket then
+		self:add_trinket(self.unit)
+	end
+	if self.add_all_queue then
+		self:add_all()
+		self.add_all_queue = false
+	end
 	if self.delayed_visibility_check then
 		self:set_equipment_visibility()
 		self.delayed_visibility_check = false
@@ -244,20 +253,99 @@ ThirdPersonEquipmentExtension.add_skin_name_to_unit = function(self, unit, skin_
 	end
 end
 
-ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 
-	local weapon_template = slot_data.item_template
-	local left_hand_unit_name = slot_data.left_hand_unit_name
-	local right_hand_unit_name = slot_data.right_hand_unit_name
+--[[
+	Adds equipment to a slot with given slot data
+--]]
+local mod = get_mod("third_person_equipment")
+ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 
 	local item_type = slot_data.item_data.item_type
 	local item_name = slot_data.item_data.name --for pickups
-	local material_settings = self:get_weapon_skin_material_settings(slot_data)
 	local skin_name = slot_data.skin
+
+
+	local item_data = ItemMasterList[item_name]
+
+	local weapon_template_name = item_data.template or item_data.temporary_template
+	local weapon_template = Weapons[weapon_template_name]
+
+	local item_type = item_data.item_type
+
+	local skin_data = WeaponSkins.skins[skin_name] or item_data
+	local material_settings = nil
+
+	local left_hand_unit_name = nil
+	local right_hand_unit_name = nil
+
+	if skin_data then
+		left_hand_unit_name = skin_data.left_hand_unit
+		right_hand_unit_name = skin_data.right_hand_unit
+	else 
+		left_hand_unit_name = weapon_template.left_hand_unit
+		right_hand_unit_name = weapon_template.right_hand_unit
+	end
+	
 
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
 		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name, skin_name)
+		if skin_data then
+			material_settings = skin_data.material_settings
+		end
+		self:apply_skin_material_settings(left_unit, material_settings)
+		self.weapons[left_unit] = slot_name
+		mod:echo("Left	"..tostring(left_unit))
+	end
+
+	if right_hand_unit_name then
+		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
+		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type, item_name, skin_name)
+		if skin_data then
+			material_settings = skin_data.material_settings
+		end
+		self:apply_skin_material_settings(right_unit, material_settings)
+		self.weapons[right_unit] = slot_name
+		mod:echo("Right	"..tostring(right_unit))
+	end
+
+    -- Update visibility
+    self:set_equipment_visibility()
+end
+
+--[[
+	Adds equipment to a slot with given item name and skin name
+--]]
+ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_name, skin_name)
+	local item_data = ItemMasterList[item_name]
+
+	local weapon_template_name = item_data.template or item_data.temporary_template
+	local weapon_template = Weapons[weapon_template_name]
+
+	local item_type = item_data.item_type
+
+	local skin_data = WeaponSkins.skins[skin_name] or item_data
+	local material_settings = nil
+
+	local left_hand_unit_name = nil
+	local right_hand_unit_name = nil
+
+	if skin_data then
+		left_hand_unit_name = skin_data.left_hand_unit
+		right_hand_unit_name = skin_data.right_hand_unit
+	else 
+		left_hand_unit_name = weapon_template.left_hand_unit
+		right_hand_unit_name = weapon_template.right_hand_unit
+	end
+
+	if left_hand_unit_name then
+		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
+		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name, skin_name)
+		
+		if skin_data then
+			material_settings = skin_data.material_settings
+		end
+
 		self:apply_skin_material_settings(left_unit, material_settings)
 		self.weapons[left_unit] = slot_name
 	end
@@ -265,6 +353,11 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	if right_hand_unit_name then
 		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
 		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type, item_name, skin_name)
+
+		if skin_data then
+			material_settings = skin_data.material_settings
+		end
+
 		self:apply_skin_material_settings(right_unit, material_settings)
 		self.weapons[right_unit] = slot_name
 	end
@@ -302,7 +395,9 @@ end
 ThirdPersonEquipmentExtension.add_all = function(self)	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
         if slot_name ~= "slot_packmaster_claw" then
+			self:clear_slot(slot_name)
 			self:add(slot_name, slot)
+			mod:echo(slot_name)
 		end
     end
 
@@ -315,6 +410,14 @@ ThirdPersonEquipmentExtension.add_all = function(self)
     self:set_equipment_visibility()
 end
 
+--[[
+	queue a call to self:add_item_to_slot() for executiorn 
+--]]
+ThirdPersonEquipmentExtension.queue_add_all = function(self)	
+    self.add_all_queue = true
+end
+
+--thsi may be getting loacl players skin and not the connected player's skin
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	local career_name = self:career_name()
 	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
@@ -323,11 +426,17 @@ ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	return mesh_name
 end
 
-ThirdPersonEquipmentExtension.get_trinket = function(self)
-	local career_name = self:career_name()
-	local trinket_data = BackendUtils.get_loadout_item(career_name, "slot_trinket_1")
-	local trinket_name = trinket_data.data.name
-	return trinket_name
+--[[
+	queue a call to self:add_trinket() for execution 
+--]]
+ThirdPersonEquipmentExtension.queue_trinket = function(self, trinket_name)
+	self.trinketName = trinket_name
+	self.update_trinket = true
+end
+
+ThirdPersonEquipmentExtension.trinket_name = function(self)
+	self.update_trinket = false
+	return self.trinketName
 end
 
 ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
@@ -335,41 +444,43 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local world = self.world --needs to be a class variable
 
 	local mesh_name = self:get_player_mesh()
-	local trinket_name = self:get_trinket()
+	local trinket_name = self:trinket_name()
 
-	local package_name = mod.trinket_lookup[trinket_name]
-	
-	local current_trinket_unit = self.attached_trophies["trinket"]
-	if current_trinket_unit then
-		local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
-		if current_trinket_name == package_name then
-			return
+	if trinket_name then
+		local package_name = mod.trinket_lookup[trinket_name]
+		
+		local current_trinket_unit = self.attached_trophies["trinket"]
+		if current_trinket_unit then
+			local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
+			if current_trinket_name == package_name then
+				return
+			end
 		end
+
+		if self.attached_trophies["trinket"] then
+			self:remove_trinket()
+		end
+		
+		Managers.package:load(package_name, "global")
+		local item_unit = unit_spawner:spawn_local_unit(package_name)
+
+		local item_attach_data = mod.trinkets[mesh_name]
+		local attachment_table = item_attach_data.attachement_nodes
+		local attachment_offset = item_attach_data.offset
+		local attachment_angle = item_attach_data.angle
+		
+		AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
+
+		local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
+		Unit.set_local_position(item_unit, 0, pos)
+
+		local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
+		Unit.set_local_rotation(item_unit, 0, rot)
+
+		self.attached_trophies["trinket"] = item_unit
+
+		self:set_trinket_visibility(item_unit)
 	end
-
-	if self.attached_trophies["trinket"] then
-		self:remove_trinket()
-	end
-	
-	Managers.package:load(package_name, "global")
-	local item_unit = unit_spawner:spawn_local_unit(package_name)
-
-	local item_attach_data = mod.trinkets[mesh_name]
-	local attachment_table = item_attach_data.attachement_nodes
-	local attachment_offset = item_attach_data.offset
-	local attachment_angle = item_attach_data.angle
-	
-	AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
-
-	local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
-	Unit.set_local_position(item_unit, 0, pos)
-
-	local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
-	Unit.set_local_rotation(item_unit, 0, rot)
-
-	self.attached_trophies["trinket"] = item_unit
-
-	self:set_trinket_visibility(item_unit)	
 end
 
 ThirdPersonEquipmentExtension.set_trinket_visibility = function(self, trinket_unit)

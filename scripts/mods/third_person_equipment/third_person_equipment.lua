@@ -24,6 +24,10 @@ mod:dofile("scripts/mods/third_person_equipment/equipment_settings")
 mod.extensions = {}
 mod.spawned_units = mod:persistent_table("spawned_units", {})
 
+--tables used as queues for the mod to use to bypass funky exectuion order of 
+--various inventory extensions on clients/host/bots
+mod.tpe_unit_init_queue = {}
+mod.tpe_init_w_trinket = {}
 
 -- ##### ███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗ ###################################
 -- ##### ██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝ ###################################
@@ -51,6 +55,25 @@ function mod.update()
     if mod.settings_menu and mod.settings_menu._is_open then
         mod.settings_menu:draw()
     end
+	for index,unit in pairs(mod.tpe_unit_init_queue) do
+		if not mod.extensions[unit] then 
+			local inventory_extension = ScriptUnit.extension(unit, "inventory_system")
+			if inventory_extension then
+				inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
+
+				local add_trinket = mod.tpe_init_w_trinket[unit]
+				if add_trinket then
+					inventory_extension.tpe_extension:queue_trinket(add_trinket)
+					mod.tpe_init_w_trinket[unit] = nil
+				end
+
+				inventory_extension.tpe_extension:queue_add_all()
+
+				mod.tpe_unit_init_queue[index] = nil
+				mod:echo("TPE init for:		"..tostring(unit))
+			end
+		end
+	end
 end
 
 function mod.toggle_camera_lock()
@@ -103,9 +126,7 @@ mod.hook_all_inventories = function(self)
     if Managers and Managers.state and Managers.state.network then
         local players = Managers.player:players()
 		for _, player in pairs(players) do
-			local inventory_extension = ScriptUnit.extension(player.player_unit, "inventory_system")
-			inventory_extension.tpe_extension = ThirdPersonEquipmentExtension:new(inventory_extension)
-			--mod:echo('all inv hooked')
+			mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player.player_unit
         end
     end
 end
@@ -143,15 +164,15 @@ end
 --[[
     Hook inventory extensions on init
 --]]
-local init_inventory_extension = function(self, extension_init_context, unit, extension_init_data)
+-- local init_inventory_extension = function(self, extension_init_context, unit, extension_init_data)
 
-	mod:dump(extension_init_context, "extension_init_context", 1)
-	mod:dump(extension_init_data, "extension_init_data", 1)
+-- 	mod:dump(extension_init_context, "extension_init_context", 1)
+-- 	mod:dump(extension_init_data, "extension_init_data", 1)
 
-	self.tpe_extension = ThirdPersonEquipmentExtension:new(self, extension_init_data)
-end
-mod:hook_safe(SimpleInventoryExtension, "init", init_inventory_extension)
-mod:hook_safe(SimpleHuskInventoryExtension, "init", init_inventory_extension)
+-- 	self.tpe_extension = ThirdPersonEquipmentExtension:new(self, extension_init_data)
+-- end
+-- mod:hook_safe(SimpleInventoryExtension, "init", init_inventory_extension)
+-- mod:hook_safe(SimpleHuskInventoryExtension, "init", init_inventory_extension)
 --[[
 	Hide third person weapons when climbing ladder
 	Not for local player
