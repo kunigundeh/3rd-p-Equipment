@@ -7,6 +7,12 @@ local mod = get_mod("third_person_equipment")
 	Authors: grasmann, kunigundeh, dalo_kraff
 --]]
 
+
+local excluded_slots = {
+	slot_packmaster_claw = true,
+	slot_career_skill_weapon = true,
+}
+
 local function radians_to_quaternion(theta, ro, phi)
     local c1 =  math.cos(theta/2)
     local c2 = math.cos(ro/2)
@@ -394,7 +400,7 @@ end
 
 ThirdPersonEquipmentExtension.add_all = function(self)	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
-        if slot_name ~= "slot_packmaster_claw" then
+        if not excluded_slots[slot_name] then
 			self:clear_slot(slot_name)
 			self:add(slot_name, slot)
 			mod:echo(slot_name)
@@ -417,13 +423,14 @@ ThirdPersonEquipmentExtension.queue_add_all = function(self)
     self.add_all_queue = true
 end
 
---thsi may be getting loacl players skin and not the connected player's skin
 ThirdPersonEquipmentExtension.get_player_mesh = function(self)
-	local career_name = self:career_name()
-	local item_skin =  BackendUtils.get_loadout_item(career_name, "slot_skin")
-	local skin_name = item_skin.data.name
-	local mesh_name = Cosmetics[skin_name].third_person_attachment.unit
-	return mesh_name
+	local units_cosmetic_extension = ScriptUnit.has_extension(self.unit, "cosmetic_system")
+	if units_cosmetic_extension then
+		local mesh = units_cosmetic_extension:get_third_person_mesh_unit()
+		self.mesh_queue = false
+		return Unit.get_data(mesh, "unit_name")
+	end
+	return nil
 end
 
 --[[
@@ -447,7 +454,7 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local trinket_name = self:trinket_name()
 
 	if trinket_name then
-		local package_name = mod.trinket_lookup[trinket_name]
+		local package_name = mod.trinket_lookup[trinket_name] or mod.trinket_lookup["trinket_11"]
 		
 		local current_trinket_unit = self.attached_trophies["trinket"]
 		if current_trinket_unit then

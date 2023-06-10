@@ -42,8 +42,12 @@ mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, ite
 		if player_unit then
 			local tpe_ext = mod.extensions[player_unit]
 			if tpe_ext then
-				tpe_ext:queue_trinket(item.key)
-				tpe_ext:add_all()
+				if string.find(item_name, "trinket") then
+					tpe_ext:queue_trinket(item_name)
+					tpe_ext:add_all()
+				else
+					tpe_ext:add_all()
+				end
 			else
 				mod.tpe_init_w_trinket[player_unit] = item.key
 				mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player_unit
@@ -67,11 +71,12 @@ mod:hook_safe(InventorySystem, "rpc_add_equipment", function(self, channel_id, g
 	
 	local tpe_ext = mod.extensions[unit]
 	if tpe_ext then
-
 		local slot_name = NetworkLookup.equipment_slots[slot_id]
-		local item_name = NetworkLookup.item_names[item_name_id]
-		local skin_name = NetworkLookup.weapon_skins[weapon_skin_id]
-		tpe_ext:add_item_to_slot(slot_name, item_name, skin_name)
+		if main_slots[slot_name] then
+			local item_name = NetworkLookup.item_names[item_name_id]
+			local skin_name = NetworkLookup.weapon_skins[weapon_skin_id]
+			tpe_ext:add_item_to_slot(slot_name, item_name, skin_name)
+		end
 	end	
 end)
 
