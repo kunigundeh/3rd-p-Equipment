@@ -42,9 +42,13 @@ mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, ite
 		if player_unit then
 			local tpe_ext = mod.extensions[player_unit]
 			if tpe_ext then
-				if string.find(item_name, "trinket") then
-					tpe_ext:queue_trinket(item_name)
-					tpe_ext:add_all()
+				if item_name ~= nil then
+					if  string.find(item_name, "trinket") then
+						tpe_ext:queue_trinket(item_name)
+						tpe_ext:add_all()
+					else
+						tpe_ext:add_all()
+					end
 				else
 					tpe_ext:add_all()
 				end
