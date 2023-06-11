@@ -6,14 +6,17 @@ mod.trinkets = {}
 local trinket_attachment_table = AttachmentNodeLinking.trophies.hanging.slot_trinket_1
 local base_path = "scripts/mods/third_person_equipment/definitions/"
 local base_skins = {
+    "dwarf_ranger_engineer_skin_01",
     "dwarf_ranger_ironbreaker_skin_01",
     "dwarf_ranger_upgraded_skin_01",
     "dwarf_ranger_upgraded",
     "dwarf_ranger",
     "empire_soldier",
+    "empire_soldier_breton",
     "empire_soldier_mercenary",
     "empire_soldier_mercenary_skin_01",
     "empire_soldier_huntsman",
+    "empire_soldier_knight_skin_02",
     "way_watcher_maiden_guard_skin_01",
     "way_watcher_maiden_guard",
     "way_watcher_moon_mantle",
