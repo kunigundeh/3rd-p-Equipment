@@ -100,9 +100,19 @@ mod:hook_safe(PlayerManager, "rpc_sync_loadout_slot", function(self, channel_id,
 			else
 				tpe_ext:add_all()
 			end
-		else 
-			mod.tpe_init_w_trinket[player_unit] = item_name
-			mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player_unit
+		else
+			if player_unit then
+				mod.tpe_init_w_trinket[player_unit] = item_name
+				mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player_unit
+			else
+				if string.find(item_name, "trinket") then
+					mod.tpe_player_init_queue[#mod.tpe_player_init_queue + 1] = {
+						local_player_id = local_player_id,
+						peer_id = peer_id,
+						item_name = item_name, 
+					}
+				end
+			end
 		end
 	end
 end)
