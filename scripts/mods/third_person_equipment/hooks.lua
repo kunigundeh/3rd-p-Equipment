@@ -41,7 +41,8 @@ mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, ite
 		local player_unit = player.player_unit
 		if player_unit then
 			local tpe_ext = mod.extensions[player_unit]
-			if tpe_ext then
+			local item_name = item.key or item.skin
+			if tpe_ext and item_name then
 				if string.find(item_name, "trinket") then
 					tpe_ext:queue_trinket(item_name)
 					tpe_ext:add_all()
