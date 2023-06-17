@@ -132,6 +132,29 @@ mod:hook(PlayerManager, "assign_unit_ownership", function(func, self, unit, play
 	return func(self, unit, player, is_player_unit)
 end)
 
+
+--[[
+    These two hooks allow control of emote/special state for a connect player's unit's tpe 
+--]]
+mod:hook(CosmeticSystem, "rpc_server_request_emote", function(func, self, channel_id, unit_id, anim_event_id, hide_weapons)
+	local unit = self.unit_storage:unit(unit_id)
+
+	if unit and mod.extensions[unit] then
+		mod.extensions[unit].special_state = true
+	end
+	return func(self, channel_id, unit_id, anim_event_id, hide_weapons)
+end)
+
+mod:hook(CosmeticSystem, "rpc_server_cancel_emote", function(func, self, channel_id, unit_id)
+	local unit = self.unit_storage:unit(unit_id)
+
+	if unit and mod.extensions[unit] then
+		mod.extensions[unit].special_state = false
+	end
+	return func(self, channel_id, unit_id)
+end)
+
+
 local destroy_slot = function(func, self, slot_name, ...)
 	if self.tpe_extension then
 		if table.contains(self.tpe_extension.slots, slot_name) then
