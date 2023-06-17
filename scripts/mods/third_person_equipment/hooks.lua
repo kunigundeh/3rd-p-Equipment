@@ -136,17 +136,21 @@ end)
 --[[
     These two hooks allow control of emote/special state for a connect player's unit's tpe 
 --]]
-mod:hook_safe(PlayerCharacterStateEmote, "_update_emote", function(self)
-	local tpe_ext =  mod.extensions[self.unit]
-	if self.current_emote then
-		tpe_ext.is_emoting = true 
-	end
-end)
 
-mod:hook_safe(PlayerCharacterStateEmote, "on_exit", function(self)
-	local tpe_ext =  mod.extensions[self.unit]
-	if not self.current_emote then
-		tpe_ext.is_emoting = false 
+mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim_id, go_id)
+	local event = NetworkLookup.anims[anim_id]
+	local unit = self.unit_storage:unit(go_id)
+	if unit then
+		local tpe_ext =  mod.extensions[unit]
+		if tpe_ext then
+			if string.find(event, "pose") then
+				tpe_ext.is_emoting = true 
+				
+				if string.find(event, "cancel") then
+					tpe_ext.is_emoting = false 
+				end
+			end
+		end
 	end
 end)
 
