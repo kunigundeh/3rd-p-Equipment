@@ -136,22 +136,18 @@ end)
 --[[
     These two hooks allow control of emote/special state for a connect player's unit's tpe 
 --]]
-mod:hook(CosmeticSystem, "rpc_server_request_emote", function(func, self, channel_id, unit_id, anim_event_id, hide_weapons)
-	local unit = self.unit_storage:unit(unit_id)
-
-	if unit and mod.extensions[unit] then
-		mod.extensions[unit].is_emoting = true
+mod:hook_safe(PlayerCharacterStateEmote, "_update_emote", function(self)
+	local tpe_ext =  mod.extensions[self.unit]
+	if self.current_emote then
+		tpe_ext.is_emoting = true 
 	end
-	return func(self, channel_id, unit_id, anim_event_id, hide_weapons)
 end)
 
-mod:hook(CosmeticSystem, "rpc_server_cancel_emote", function(func, self, channel_id, unit_id)
-	local unit = self.unit_storage:unit(unit_id)
-
-	if unit and mod.extensions[unit] then
-		mod.extensions[unit].is_emoting = false
+mod:hook_safe(PlayerCharacterStateEmote, "on_exit", function(self)
+	local tpe_ext =  mod.extensions[self.unit]
+	if not self.current_emote then
+		tpe_ext.is_emoting = false 
 	end
-	return func(self, channel_id, unit_id)
 end)
 
 
