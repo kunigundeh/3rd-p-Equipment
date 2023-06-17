@@ -42,7 +42,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
-		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", 
+		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote" 
 	}
 	self.is_emoting = false
 	self.special_states_remote_only = {
@@ -137,7 +137,7 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
-		if self:is_special_state() then
+		if self:is_special_state() or self.is_emoting then
 			Unit.set_unit_visibility(unit, true)
 		else 
 			Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
