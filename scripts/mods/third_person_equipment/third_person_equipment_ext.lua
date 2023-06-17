@@ -42,8 +42,9 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
-		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote", 
+		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", 
 	}
+	self.is_emoting = false
 	self.special_states_remote_only = {
 		"climbing_ladder",
 	}
@@ -99,22 +100,31 @@ end
 --]]
 ThirdPersonEquipmentExtension.is_special_state = function(self)
 	local is_special_state = false
-	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
-	--mod:echo("state = " .. state_system)
-	if state_system ~= nil then
-		local state = state_system.state_machine.state_current
-		for _, special_state in pairs(self.special_states) do
-			is_special_state = is_special_state or state.name == special_state
-		end
-		if not is_special_state and not self:is_local_player() then
-			for _, special_state in pairs(self.special_states_remote_only) do
-				is_special_state = is_special_state or state.name == special_state
-			end
+	local current_state = self:get_animation_state() 
+	for _, special_state in pairs(self.special_states) do
+		is_special_state = is_special_state or current_state == special_state or self.is_emoting
+	end
+	if not is_special_state and not self:is_local_player() then
+		for _, special_state in pairs(self.special_states_remote_only) do
+			is_special_state = is_special_state or current_state == special_state or self.is_emoting
 		end
 	end
 	--mod:echo('checked for special state')
-	return is_special_state
+	return is_special_state 
 	
+end
+
+--[[
+    Check for special state where equipment should be visible but base game tries to make it not so.
+--]]
+ThirdPersonEquipmentExtension.get_animation_state = function(self)
+	local state_system = ScriptUnit.extension(self.unit, "character_state_machine_system")
+	local current_state = nil
+	if state_system ~= nil then
+		local state = state_system.state_machine.state_current
+		current_state = state.name
+	end
+	return current_state
 end
 
 ThirdPersonEquipmentExtension.wield = function(self, slot_name)

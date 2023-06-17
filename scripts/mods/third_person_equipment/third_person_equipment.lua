@@ -28,6 +28,7 @@ mod.spawned_units = mod:persistent_table("spawned_units", {})
 --various inventory extensions on clients/host/bots
 mod.tpe_unit_init_queue = {}
 mod.tpe_init_w_trinket = {}
+mod.tpe_player_init_queue = {}
 
 -- ##### ███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗ ###################################
 -- ##### ██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝ ###################################
@@ -50,7 +51,7 @@ function mod.open_imgui()
 	end
 end
 
-
+local mod = get_mod("third_person_equipment")
 function mod.update()
     if mod.settings_menu and mod.settings_menu._is_open then
         mod.settings_menu:draw()
@@ -72,6 +73,26 @@ function mod.update()
 				mod.tpe_unit_init_queue[index] = nil
 				mod:echo("TPE init for:		"..tostring(unit))
 			end
+		end
+	end
+
+	for unit, trinket in pairs(mod.tpe_init_w_trinket) do
+		local tpe_extension = mod.extensions[unit]
+		if tpe_extension then
+			tpe_extension:queue_trinket(trinket)
+			mod.tpe_init_w_trinket[unit] = nil
+		end 
+	end
+
+	for index, player_data in pairs(mod.tpe_player_init_queue) do
+		local peer_id = player_data.peer_id
+		local local_player_id = player_data.local_player_id
+		local trinket_name = player_data.item_name
+		local player = Managers.player:player(peer_id, local_player_id)
+		if player.player_unit then
+			mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player.player_unit
+			mod.tpe_init_w_trinket[player.player_unit] = trinket_name
+			mod.tpe_player_init_queue[index] =  nil
 		end
 	end
 end

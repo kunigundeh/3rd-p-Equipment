@@ -41,7 +41,8 @@ mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, ite
 		local player_unit = player.player_unit
 		if player_unit then
 			local tpe_ext = mod.extensions[player_unit]
-			if tpe_ext then
+			local item_name = item.key or item.skin
+			if tpe_ext and item_name then
 				if string.find(item_name, "trinket") then
 					tpe_ext:queue_trinket(item_name)
 					tpe_ext:add_all()
@@ -99,9 +100,19 @@ mod:hook_safe(PlayerManager, "rpc_sync_loadout_slot", function(self, channel_id,
 			else
 				tpe_ext:add_all()
 			end
-		else 
-			mod.tpe_init_w_trinket[player_unit] = item_name
-			mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player_unit
+		else
+			if player_unit then
+				mod.tpe_init_w_trinket[player_unit] = item_name
+				mod.tpe_unit_init_queue[#mod.tpe_unit_init_queue + 1] = player_unit
+			else
+				if string.find(item_name, "trinket") then
+					mod.tpe_player_init_queue[#mod.tpe_player_init_queue + 1] = {
+						local_player_id = local_player_id,
+						peer_id = peer_id,
+						item_name = item_name, 
+					}
+				end
+			end
 		end
 	end
 end)
@@ -120,6 +131,43 @@ mod:hook(PlayerManager, "assign_unit_ownership", function(func, self, unit, play
 	end
 	return func(self, unit, player, is_player_unit)
 end)
+
+
+--[[
+    These two hooks allow control of emote/special state for a connect player's unit's tpe 
+--]]
+--for hosts
+mod:hook_safe(CharacterStateHelper, "play_animation_event", function(unit, anim_event)
+	local tpe_ext = mod.extensions[unit]
+	if tpe_ext then
+		if string.find(anim_event, "pose") then
+			tpe_ext.is_emoting = true 
+			
+			if string.find(anim_event, "cancel") then
+				tpe_ext.is_emoting = false 
+			end
+		end
+	end
+
+end)
+--for clients
+mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim_id, go_id)
+	local event = NetworkLookup.anims[anim_id]
+	local unit = self.unit_storage:unit(go_id)
+	if unit then
+		local tpe_ext =  mod.extensions[unit]
+		if tpe_ext then
+			if string.find(event, "pose") then
+				tpe_ext.is_emoting = true 
+				
+				if string.find(event, "cancel") then
+					tpe_ext.is_emoting = false 
+				end
+			end
+		end
+	end
+end)
+
 
 local destroy_slot = function(func, self, slot_name, ...)
 	if self.tpe_extension then
