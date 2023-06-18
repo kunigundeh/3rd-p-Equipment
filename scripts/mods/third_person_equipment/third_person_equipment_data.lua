@@ -31,6 +31,12 @@ return {
                 function_name = "toggle_camera_lock",
                 default_value = {}
             },
+            {
+                setting_id = "setting_show_pickups",
+                type = "checkbox",
+                default_value = true,
+                title = "Show Pickup Items"
+            }
 
         }
     }

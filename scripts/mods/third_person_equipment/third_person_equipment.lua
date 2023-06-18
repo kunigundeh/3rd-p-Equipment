@@ -214,19 +214,20 @@ end)
 -- ##### ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ╚════██║ #########################################################
 -- ##### ███████╗ ╚████╔╝ ███████╗██║ ╚████║   ██║   ███████║ #########################################################
 -- ##### ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ #########################################################
+
 --[[
 	Mod Setting changed
-	mod.on_setting_changed = function(setting_name)
-		
-		-- Downscale big weapons
-		if setting_name == "downscale_big_weapons" then
-			mod:echo("scale setting changed")
-			mod:delete_all_units()
-			mod:reload_extensions()
-		end
-		
+--]]
+mod.on_setting_changed = function(setting_name)
+
+	if setting_name == "setting_show_pickups" then
+		mod:echo("pickup setting changed")
+		mod:delete_all_units()
+    	mod:reload_extensions()
+        mod:echo("Reloaded")
 	end
-	--]]
+end
+	
 --[[
 	Mod Suspended
 --]]
@@ -254,6 +255,7 @@ local add_equipment = function(self, slot_name, item_data)
 		mod:echo("add_equipment not executed")
 	end
 end
+
 mod.on_enabled = function(initial_call)
 	if Managers and Managers.state and Managers.state.network then
         local players = Managers.player:players()
@@ -266,6 +268,7 @@ mod.on_enabled = function(initial_call)
     end
 	mod:echo("hooking inv after enable")
 end
+
 --[[
 	On unload
 --]]
@@ -273,16 +276,5 @@ mod.on_unload = function(exit_game)
 	mod:delete_all_units()
 end
 
---on Player join
-
--- mod:hook_safe(PlayerManager, "add_remote_player", function(self)
--- 	--if player then
--- 		mod:hook_all_inventories()
-		
-
--- 		mod:echo('player joined, add_all exec')
--- 	--end
--- end
--- )
 
 

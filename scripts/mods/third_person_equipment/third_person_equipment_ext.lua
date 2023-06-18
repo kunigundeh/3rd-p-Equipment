@@ -13,6 +13,14 @@ local excluded_slots = {
 	slot_career_skill_weapon = true,
 }
 
+local excluded_slots_choice = {
+	slot_packmaster_claw = true,
+	slot_career_skill_weapon = true,
+	slot_healthkit = true,
+	slot_potion = true,
+	slot_grenade = true,
+}
+
 local function radians_to_quaternion(theta, ro, phi)
     local c1 =  math.cos(theta/2)
     local c2 = math.cos(ro/2)
@@ -31,6 +39,7 @@ end
 ThirdPersonEquipmentExtension = class(ThirdPersonEquipmentExtension)
 
 ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
+	self.show_pickups = mod:get("setting_show_pickups")
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
     self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
@@ -42,7 +51,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
 		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
 		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
-		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", 
+		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote" 
 	}
 	self.is_emoting = false
 	self.special_states_remote_only = {
@@ -137,7 +146,7 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
-		if self:is_special_state() then
+		if self:is_special_state() or self.is_emoting then
 			Unit.set_unit_visibility(unit, true)
 		else 
 			Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
@@ -410,10 +419,19 @@ end
 
 ThirdPersonEquipmentExtension.add_all = function(self)	
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
-        if not excluded_slots[slot_name] then
-			self:clear_slot(slot_name)
-			self:add(slot_name, slot)
-			mod:echo(slot_name)
+		if self.show_pickups == true then 
+			if not excluded_slots[slot_name] then
+				self:clear_slot(slot_name)
+				self:add(slot_name, slot)
+				mod:echo(slot_name)
+			end
+		else
+			if not excluded_slots_choice[slot_name] then
+				self:clear_slot(slot_name)
+				self:add(slot_name, slot)
+				mod:echo(slot_name)
+				mod:echo("pickups not shown")
+			end
 		end
     end
 
