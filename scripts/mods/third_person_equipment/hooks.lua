@@ -136,13 +136,18 @@ end)
 --[[
     These two hooks allow control of emote/special state for a connect player's unit's tpe 
 --]]
+
 --for hosts
 mod:hook_safe(CharacterStateHelper, "play_animation_event", function(unit, anim_event)
 	local tpe_ext = mod.extensions[unit]
 	if tpe_ext then
 		if string.find(anim_event, "pose") then
-			tpe_ext.is_emoting = true 
-			
+			if string.find(anim_event, "unarmed") then -- support armed emotes
+				tpe_ext.is_emoting = true 
+			else
+				tpe_ext.is_emoting = false             -- catch transition armed/unarmed
+			end
+
 			if string.find(anim_event, "cancel") then
 				tpe_ext.is_emoting = false 
 			end
@@ -150,6 +155,7 @@ mod:hook_safe(CharacterStateHelper, "play_animation_event", function(unit, anim_
 	end
 
 end)
+
 --for clients
 mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim_id, go_id)
 	local event = NetworkLookup.anims[anim_id]
@@ -158,11 +164,15 @@ mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim
 		local tpe_ext =  mod.extensions[unit]
 		if tpe_ext then
 			if string.find(event, "pose") then
-				tpe_ext.is_emoting = true 
-				
-				if string.find(event, "cancel") then
-					tpe_ext.is_emoting = false 
+				if string.find(anim_event, "unarmed") then -- support armed emotes
+					tpe_ext.is_emoting = true 
+				else
+					tpe_ext.is_emoting = false             -- catch transition armed/unarmed
 				end
+			end 
+				
+			if string.find(event, "cancel") then
+				tpe_ext.is_emoting = false 
 			end
 		end
 	end
