@@ -11,7 +11,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 
 ### To do:
 - More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
-- Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
+- [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
 - 
 ### Placements to do:
 - Saltzpyre
