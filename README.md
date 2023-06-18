@@ -8,3 +8,34 @@ Works for yourself, other players and bots
 
 
 Original idea and code by grasmann, update, partial rewrite and new functionality by dalo_kraff and kunigundeh.
+
+### To do:
+- More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
+- Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
+- 
+### Placements to do:
+- Saltzpyre
+- [ ] Witch Hunter Captain
+- [ ] Bounty Hunter
+- [ ] Zealot
+- [ ] Warrior Priest
+- Kruber
+- [x] Mercenary
+- [ ] Huntsman
+- [ ] Footknight
+- [ ] Grail Knight
+- Bardin
+- [ ] Ranger Veteran
+- [ ] Ironbreaker
+- [ ] Slayer
+- [ ] Engineer
+- Kerillian
+- [ ] Waystalker
+- [ ] Handmaiden
+- [ ] Shade
+- [ ] Sister of the Thorns
+- Sienna
+- [ ] Battle Wizard
+- [ ] Pyromancer
+- [ ] Unchained
+- [ ] ...well wouldn't we all love to know...    
