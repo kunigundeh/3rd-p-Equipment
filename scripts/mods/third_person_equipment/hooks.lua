@@ -145,6 +145,8 @@ mod:hook_safe(CharacterStateHelper, "play_animation_event", function(unit, anim_
 		if string.find(anim_event, "pose") then
 			if string.find(anim_event, "unarmed") then -- filter for unarmed pose for compatibility with more-emotes-mod
 				tpe_ext.is_emoting = true 
+			else
+				tpe_ext.is_emoting = false 
 			end
 
 			if string.find(anim_event, "cancel") then
@@ -165,6 +167,8 @@ mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim
 			if string.find(event, "pose") then
 				if string.find(anim_event, "unarmed") then -- filter for unarmed pose for compatibility with more-emotes-mod
 					tpe_ext.is_emoting = true 
+				else
+					tpe_ext.is_emoting = false
 				end 
 				
 				if string.find(event, "cancel") then
