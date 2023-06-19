@@ -15,7 +15,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
  
 ### Placements to do:
 - Saltzpyre
-- [ ] Witch Hunter Captain
+- [x] Witch Hunter Captain
 - [ ] Bounty Hunter
 - [ ] Zealot
 - [ ] Warrior Priest
