@@ -10,7 +10,7 @@ Works for yourself, other players and bots
 Original idea and code by grasmann, update, partial rewrite and new functionality by dalo_kraff and kunigundeh.
 
 ### To do:
-- [ ] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
+- [x] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
 - [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
  
 ### Placements to do:
