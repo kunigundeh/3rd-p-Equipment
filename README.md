@@ -20,8 +20,8 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Zealot
 - [ ] Warrior Priest
 - Kruber
-- [x] Mercenary
-- [ ] Huntsman
+- [x] Mercenary (needs revisit for spear&shield and correspondingly ranged weapons)
+- [x] Huntsman
 - [ ] Footknight
 - [ ] Grail Knight
 - Bardin
