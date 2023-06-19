@@ -3,15 +3,15 @@
 local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_person_base/chr_third_person_mesh"] = {
   healthkit_first_aid_kit_01 = {
     left = {
-      offset = {
-        0.0060000000521541,
-        -0.083999998867512,
-        -0.11500000208616
-      },
       angle = {
         -1.5099999904633,
         -0.082000002264977,
         -2.779000043869
+      },
+      offset = {
+        0.0060000000521541,
+        -0.083999998867512,
+        -0.11500000208616
       },
       attachement_nodes = {
         {
@@ -23,15 +23,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   wpn_side_objective_tome_01 = {
     left = {
-      offset = {
-        0.0080000003799796,
-        -0.14599999785423,
-        -0.10000000149012
-      },
       angle = {
         1.4980000257492,
         -2.9000000953674,
         0
+      },
+      offset = {
+        0.0080000003799796,
+        -0.14599999785423,
+        -0.10000000149012
       },
       attachement_nodes = {
         {
@@ -44,14 +44,14 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   es_repeating_handgun = {
     right = {
       angle = {
-        -3.1419999599457,
-        0.021999999880791,
-        1.1640000343323
+        3.0759999752045,
+        -0.195999994874,
+        1.069000005722
       },
       offset = {
-        -0.017000000923872,
-        0.24099999666214,
-        0.31799998879433
+        -0.020999999716878,
+        0.14599999785423,
+        0.30399999022484
       },
       scale = 1
     }
@@ -60,13 +60,13 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
     right = {
       angle = {
         0,
-        0,
+        0.32600000500679,
         0
       },
       offset = {
         0,
-        0,
-        0
+        0.090999998152256,
+        -0.12200000137091
       },
       scale = 1
     }
@@ -103,15 +103,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   grenade_frag_02 = {
     right = {
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
       angle = {
         1.6319999694824,
         -0.40799999237061,
         0.2419999986887
+      },
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
       },
       attachement_nodes = {
         {
@@ -121,15 +121,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
       }
     },
     left = {
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
       angle = {
         0.77499997615814,
         0.1630000025034,
         -0.32199999690056
+      },
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
       },
       attachement_nodes = {
         {
@@ -141,15 +141,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   es_1h_sword_shield = {
     right = {
-      offset = {
-        0,
-        0,
-        0
-      },
       angle = {
         0,
-        0,
+        0.32600000500679,
         0
+      },
+      offset = {
+        0,
+        0.090999998152256,
+        -0.12200000137091
       },
       scale = 1
     },
@@ -170,28 +170,28 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   es_handgun = {
     right = {
       angle = {
-        3.1419999599457,
-        -0.041000001132488,
-        1.1679999828339
+        3.0759999752045,
+        -0.195999994874,
+        1.069000005722
       },
       offset = {
-        -0.013000000268221,
-        0.25999999046326,
-        0.28200000524521
+        -0.020999999716878,
+        0.14599999785423,
+        0.30399999022484
       },
       scale = 1
     }
   },
   potion_speed_boost_01 = {
-    offset = {
-      0.0060000000521541,
-      -0.14300000667572,
-      0.14599999785423
-    },
     angle = {
       1.99899995327,
       0.19799999892712,
       -0.19799999892712
+    },
+    offset = {
+      0.0060000000521541,
+      -0.14300000667572,
+      0.14599999785423
     },
     attachement_nodes = {
       {
@@ -201,15 +201,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
     }
   },
   potion_damage_boost_01 = {
-    offset = {
-      0,
-      -0.11500000208616,
-      0.14599999785423
-    },
     angle = {
       1.99899995327,
       0.19799999892712,
       -0.03999999910593
+    },
+    offset = {
+      0,
+      -0.11500000208616,
+      0.14599999785423
     },
     attachement_nodes = {
       {
@@ -258,16 +258,50 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
       }
     }
   },
-  potion_cooldown_reduction_01 = {
-    offset = {
-      0,
-      -0.11500000208616,
-      0.14599999785423
+  es_deus_01 = {
+    right = {
+      scale = 0.93,
+      offset = {
+        0.030999999493361,
+        -0.17700000107288,
+        0
+      },
+      angle = {
+        1.8980000019073,
+        0,
+        0
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
     },
+    left = {
+      offset = {
+        0.050000000745058,
+        0.0099999997764826,
+        -0.076999999582767
+      },
+      angle = {
+        -0.12200000137091,
+        -0.064999997615814,
+        0.097000002861023
+      },
+      scale = 1
+    }
+  },
+  potion_cooldown_reduction_01 = {
     angle = {
       1.99899995327,
       0.19799999892712,
       -0.03999999910593
+    },
+    offset = {
+      0,
+      -0.11500000208616,
+      0.14599999785423
     },
     attachement_nodes = {
       {
@@ -279,9 +313,9 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   es_1h_mace_shield = {
     right = {
       offset = {
-        0,
-        0,
-        0
+        0.020999999716878,
+        0.093999996781349,
+        -0.046000000089407
       },
       angle = {
         0,
@@ -292,13 +326,13 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
     },
     left = {
       offset = {
-        0.039000000804663,
+        0.019999999552965,
         0.10999999940395,
         0.026000000536442
       },
       angle = {
-        -0.1630000025034,
-        -0.2039999961853,
+        -0.195999994874,
+        -0.13099999725819,
         0.16099999845028
       },
       scale = 1
@@ -321,15 +355,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   grenade_frag_01 = {
     right = {
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
       angle = {
         1.6319999694824,
         -0.40799999237061,
         0.2419999986887
+      },
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
       },
       attachement_nodes = {
         {
@@ -339,15 +373,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
       }
     },
     left = {
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
       angle = {
         0.77499997615814,
         0.1630000025034,
         -0.32199999690056
+      },
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
       },
       attachement_nodes = {
         {
@@ -374,15 +408,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   grenade_fire_01 = {
     right = {
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
       angle = {
         1.6319999694824,
         -0.40799999237061,
         0.2419999986887
+      },
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
       },
       attachement_nodes = {
         {
@@ -392,15 +426,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
       }
     },
     left = {
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
       angle = {
         0.77499997615814,
         0.1630000025034,
         -0.32199999690056
+      },
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
       },
       attachement_nodes = {
         {
@@ -427,15 +461,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   },
   potion_healing_draught_01 = {
     left = {
-      offset = {
-        0.018999999389052,
-        -0.097000002861023,
-        -0.18600000441074
-      },
       angle = {
         1.3869999647141,
         -0.2039999961853,
         -0.12099999934435
+      },
+      offset = {
+        0.018999999389052,
+        -0.097000002861023,
+        -0.18600000441074
       },
       attachement_nodes = {
         {
@@ -448,29 +482,29 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
   es_blunderbuss = {
     right = {
       angle = {
-        -3.1419999599457,
-        -0.065999999642372,
-        1.2079999446869
+        3.0759999752045,
+        -0.195999994874,
+        1.069000005722
       },
       offset = {
-        -0.017000000923872,
-        0.25499999523163,
-        0.33199998736382
+        -0.020999999716878,
+        0.14599999785423,
+        0.30399999022484
       },
       scale = 1
     }
   },
   grenade_fire_02 = {
     right = {
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
       angle = {
         1.6319999694824,
         -0.40799999237061,
         0.2419999986887
+      },
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
       },
       attachement_nodes = {
         {
@@ -480,15 +514,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
       }
     },
     left = {
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
       angle = {
         0.77499997615814,
         0.1630000025034,
         -0.32199999690056
+      },
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
       },
       attachement_nodes = {
         {
@@ -499,15 +533,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary_skin_01/third_pers
     }
   },
   wpn_grimoire_01 = {
-    offset = {
-      -0.030999999493361,
-      -0.14599999785423,
-      0.076999999582767
-    },
     angle = {
       1.5950000286102,
       2.9479999542236,
       -0.048000000417233
+    },
+    offset = {
+      -0.030999999493361,
+      -0.14599999785423,
+      0.076999999582767
     },
     attachement_nodes = {
       {
