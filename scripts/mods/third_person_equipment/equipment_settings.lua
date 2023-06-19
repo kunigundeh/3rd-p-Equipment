@@ -19,6 +19,7 @@ local base_skins = {
     "empire_soldier_huntsman",
     "empire_soldier_longshark",
     "empire_soldier_huntsman_skin_01",
+    "empire_soldier_knight",
     "empire_soldier_knight_skin_02",
     "way_watcher_maiden_guard_skin_01",
     "way_watcher_maiden_guard",
