@@ -446,9 +446,9 @@ local tisch = {["units/beings/player/empire_soldier_longshark/third_person_base/
       offset = {
         0,
         0,
-        0
+        -0.026000000536442
       },
-      scale = 1
+      scale = 0.9
     }
   },
   grenade_fire_01 = {
