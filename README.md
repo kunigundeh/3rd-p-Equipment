@@ -22,7 +22,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - Kruber
 - [x] Mercenary 
 - [x] Huntsman
-- [ ] Footknight
+- [x] Footknight
 - [ ] Grail Knight
 - Bardin
 - [ ] Ranger Veteran
