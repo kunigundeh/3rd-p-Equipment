@@ -446,9 +446,9 @@ local tisch = {["units/beings/player/empire_soldier_huntsman_skin_01/third_perso
       offset = {
         0,
         0,
-        0
+        -0.026000000536442
       },
-      scale = 1
+      scale = 0.9
     }
   },
   grenade_frag_01 = {
