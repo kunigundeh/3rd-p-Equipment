@@ -69,19 +69,19 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       }
     }
   },
-  dr_crossbow = {
-    left = {
-      angle = {
-        0.93800002336502,
-        0.041000001132488,
-        1.4900000095367
-      },
+  dr_1h_hammer = {
+    right = {
       offset = {
-        -0.093999996781349,
-        0.026000000536442,
-        0.082999996840954
+        0.052000001072884,
+        0.039000000804663,
+        -0.035999998450279
       },
-      scale = 1
+      angle = {
+        -1.2439999580383,
+        -0.041000001132488,
+        0.16099999845028
+      },
+      scale = 0.8
     }
   },
   dr_1h_hammer_shield = {
@@ -127,7 +127,7 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       scale = 1
     }
   },
-  grenade_fire_02 = {
+  grenade_frag_02 = {
     right = {
       angle = {
         1.8980000019073,
@@ -245,19 +245,19 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       0.10999999940395
     }
   },
-  dr_1h_hammer = {
-    right = {
-      offset = {
-        0.052000001072884,
-        0.039000000804663,
-        -0.035999998450279
-      },
+  dr_crossbow = {
+    left = {
       angle = {
-        -1.2439999580383,
-        -0.041000001132488,
-        0.16099999845028
+        0.93800002336502,
+        0.041000001132488,
+        1.4900000095367
       },
-      scale = 0.8
+      offset = {
+        -0.093999996781349,
+        0.026000000536442,
+        0.082999996840954
+      },
+      scale = 1
     }
   },
   dr_1h_axe_shield = {
@@ -288,7 +288,7 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       scale = 1
     }
   },
-  grenade_frag_01 = {
+  grenade_fire_01 = {
     right = {
       angle = {
         1.8980000019073,
@@ -335,7 +335,7 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       }
     }
   },
-  grenade_fire_01 = {
+  grenade_frag_01 = {
     right = {
       angle = {
         1.8980000019073,
@@ -381,13 +381,13 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       scale = 1,
       offset = {
         0.21899999678135,
-        -0.15600000321865,
-        0.12899999320507
+        -0.1879999935627,
+        -0.046000000089407
       },
       angle = {
-        -0.39300000667572,
-        -1.6360000371933,
-        -3.1419999599457
+        -0.32699999213219,
+        -1.4400000572205,
+        2.1700000762939
       },
       attachement_nodes = {
         {
@@ -409,7 +409,7 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       0
     }
   },
-  grenade_frag_02 = {
+  grenade_fire_02 = {
     right = {
       angle = {
         1.8980000019073,
