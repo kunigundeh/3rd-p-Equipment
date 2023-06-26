@@ -25,7 +25,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Footknight
 - [ ] Grail Knight
 - Bardin
-- [ ] Ranger Veteran
+- [x] Ranger Veteran
 - [ ] Ironbreaker
 - [ ] Slayer
 - [ ] Engineer
