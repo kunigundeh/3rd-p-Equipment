@@ -10,6 +10,7 @@ local base_skins = {
     "dwarf_ranger_engineer_skin_01",
     "dwarf_ranger_ironbreaker_skin_01",
     "dwarf_ranger_upgraded_skin_01",
+    "dwarf_ranger_upgraded_skin_02",
     "dwarf_ranger_upgraded",
     "dwarf_ranger",
     "empire_soldier",
