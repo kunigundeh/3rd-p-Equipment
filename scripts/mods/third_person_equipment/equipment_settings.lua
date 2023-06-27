@@ -8,6 +8,8 @@ local base_path = "scripts/mods/third_person_equipment/definitions/"
 local base_skins = {
     "dwarf_ranger_engineer",
     "dwarf_ranger_engineer_skin_01",
+    "dwarf_ranger_ironbreaker",
+    "dwarf_ranger_irondrake",
     "dwarf_ranger_ironbreaker_skin_01",
     "dwarf_ranger_upgraded_skin_01",
     "dwarf_ranger_upgraded_skin_02",
