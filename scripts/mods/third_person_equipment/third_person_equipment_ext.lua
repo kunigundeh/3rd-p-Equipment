@@ -21,6 +21,22 @@ local excluded_slots_choice = {
 	slot_grenade = true,
 }
 
+--used to check for units that are excluded and replace them with hopefully visibel ones
+--for example throwing axes' right_hand_unit vs ammo_unit
+local excluded_units = {
+	["units/weapons/player/wpn_invisible_weapon"] = true,
+}
+
+local check_for_excluded_units = function(weapon_skin_data, unit_name)
+	local new_unit_name = unit_name
+	
+	if excluded_units[unit_name] then
+		new_unit_name = weapon_skin_data.ammo_unit or weapon_skin_data.unit_name
+	end
+
+	return new_unit_name
+end
+
 local function radians_to_quaternion(theta, ro, phi)
     local c1 =  math.cos(theta/2)
     local c2 = math.cos(ro/2)
@@ -71,7 +87,7 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.items_with_preset_scale = {
 		wpn_side_objective_tome_01 = 0.67,
 		wpn_grimoire_01 = 0.80,
-		healthkit_first_aid_kit_01 = 0.85
+		healthkit_first_aid_kit_01 = 0.75
 	}
 
 	self.add_all_queue = false
@@ -304,11 +320,11 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local right_hand_unit_name = nil
 
 	if skin_data then
-		left_hand_unit_name = skin_data.left_hand_unit
-		right_hand_unit_name = skin_data.right_hand_unit
+		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
+		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
 	else 
-		left_hand_unit_name = weapon_template.left_hand_unit
-		right_hand_unit_name = weapon_template.right_hand_unit
+		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
+		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
 	end
 	
 
@@ -356,11 +372,11 @@ ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_
 	local right_hand_unit_name = nil
 
 	if skin_data then
-		left_hand_unit_name = skin_data.left_hand_unit
-		right_hand_unit_name = skin_data.right_hand_unit
+		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
+		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
 	else 
-		left_hand_unit_name = weapon_template.left_hand_unit
-		right_hand_unit_name = weapon_template.right_hand_unit
+		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
+		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
 	end
 
 	if left_hand_unit_name then
