@@ -27,7 +27,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Grail Knight
 - Bardin
 - [x] Ranger Veteran
-- [ ] Ironbreaker
+- [x] Ironbreaker
 - [ ] Slayer
 - [ ] Engineer
 - Kerillian
