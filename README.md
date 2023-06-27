@@ -13,6 +13,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
 - [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
 - [ ] Implement exception for dual-shield-visibility (grailknight)
+- [ ] Implement same weapon handling for slayer(?)
  
 ### Placements to do:
 - Saltzpyre
