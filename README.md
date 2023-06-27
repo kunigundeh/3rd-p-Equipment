@@ -29,7 +29,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Ranger Veteran
 - [x] Ironbreaker
 - [ ] Slayer
-- [ ] Engineer
+- [x] Engineer
 - Kerillian
 - [ ] Waystalker
 - [ ] Handmaiden
