@@ -462,7 +462,22 @@ local tisch = {["units/beings/player/dwarf_ranger_upgraded_skin_02/third_person_
       -0.19200000166893,
       0.33899998664856
     }
-  }
+  },
+  dr_1h_throwing_axes = {
+    right = {
+      offset = {
+        -0.10400000214577,
+        0.20800000429153,
+        -0.087999999523163
+      },
+      angle = {
+        2.1600000858307,
+        -1.0470000505447,
+        -0.22699999809265
+      },
+      scale = 0.68
+    }
+  },
 }
 }
 
