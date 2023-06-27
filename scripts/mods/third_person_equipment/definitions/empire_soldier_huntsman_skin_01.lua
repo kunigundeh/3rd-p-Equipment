@@ -1,17 +1,17 @@
--- config file for Huntsmans's VT2 base skin
+-- config file for Kruber Huntsman's Wulfhart's Array Skin
 
-local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/chr_third_person_mesh"] = {
+local tisch = {["units/beings/player/empire_soldier_huntsman_skin_01/third_person_base/chr_third_person_mesh"] = {
   healthkit_first_aid_kit_01 = {
     left = {
       angle = {
-        -1.5099999904633,
-        -0.082000002264977,
-        -2.779000043869
+        -1.5709999799728,
+        -3.1419999599457,
+        -2.6229999065399
       },
       offset = {
-        0.0060000000521541,
-        -0.083999998867512,
-        -0.11500000208616
+        -0.030999999493361,
+        0.1879999935627,
+        0.087999999523163
       },
       attachement_nodes = {
         {
@@ -24,14 +24,14 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
   wpn_side_objective_tome_01 = {
     left = {
       angle = {
-        1.4980000257492,
-        -2.9000000953674,
-        0
+        1.5049999952316,
+        0.32699999213219,
+        0.16200000047684
       },
       offset = {
-        0.0080000003799796,
-        -0.14599999785423,
-        -0.082999996840954
+        -0.041999999433756,
+        0.19799999892712,
+        0.057000000029802
       },
       attachement_nodes = {
         {
@@ -116,7 +116,7 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       scale = 1
     }
   },
-  grenade_fire_02 = {
+  grenade_frag_02 = {
     right = {
       angle = {
         1.6319999694824,
@@ -197,38 +197,22 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       scale = 1
     }
   },
-  es_deus_01 = {
-    right = {
-      scale = 0.93,
-      offset = {
-        0.0099999997764826,
-        -0.17700000107288,
-        0
-      },
-      angle = {
-        1.8980000019073,
-        0,
-        0
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
-      }
+  potion_damage_boost_01 = {
+    offset = {
+      0.039000000804663,
+      -0.064999997615814,
+      0.19900000095367
     },
-    left = {
-      offset = {
-        0.032000001519918,
-        0.10999999940395,
-        0.026000000536442
-      },
-      angle = {
-        -0.12200000137091,
-        -0.1630000025034,
-        0.03999999910593
-      },
-      scale = 1
+    angle = {
+      1.7539999485016,
+      0.1630000025034,
+      -0.03999999910593
+    },
+    attachement_nodes = {
+      {
+        source = "j_spine",
+        target = 0
+      }
     }
   },
   es_1h_mace = {
@@ -264,16 +248,16 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       }
     }
   },
-  potion_damage_boost_01 = {
+  potion_cooldown_reduction_01 = {
+    angle = {
+      1.99899995327,
+      0.19799999892712,
+      -0.19799999892712
+    },
     offset = {
       0.039000000804663,
       -0.064999997615814,
-      0.19900000095367
-    },
-    angle = {
-      1.7539999485016,
-      0.1630000025034,
-      -0.03999999910593
+      0.20499999821186
     },
     attachement_nodes = {
       {
@@ -322,22 +306,38 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       }
     }
   },
-  potion_cooldown_reduction_01 = {
-    angle = {
-      1.99899995327,
-      0.19799999892712,
-      -0.19799999892712
-    },
-    offset = {
-      0.039000000804663,
-      -0.064999997615814,
-      0.20499999821186
-    },
-    attachement_nodes = {
-      {
-        source = "j_spine",
-        target = 0
+  es_deus_01 = {
+    right = {
+      scale = 0.93,
+      offset = {
+        0.0099999997764826,
+        -0.17700000107288,
+        0
+      },
+      angle = {
+        1.8980000019073,
+        0,
+        0
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
       }
+    },
+    left = {
+      offset = {
+        0.032000001519918,
+        0.10999999940395,
+        0.026000000536442
+      },
+      angle = {
+        -0.12200000137091,
+        -0.1630000025034,
+        0.03999999910593
+      },
+      scale = 1
     }
   },
   es_2h_sword_executioner = {
@@ -398,59 +398,6 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       scale = 1
     }
   },
-  grenade_frag_01 = {
-    right = {
-      angle = {
-        1.6319999694824,
-        -0.40799999237061,
-        0.2419999986887
-      },
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
-      }
-    },
-    left = {
-      angle = {
-        0.77499997615814,
-        0.1630000025034,
-        -0.32199999690056
-      },
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
-      }
-    }
-  },
-  es_2h_halberd = {
-    right = {
-      angle = {
-        0,
-        0,
-        0
-      },
-      offset = {
-        0,
-        0,
-        -0.026000000536442
-      },
-      scale = 0.9
-    }
-  },
   grenade_fire_01 = {
     right = {
       angle = {
@@ -489,6 +436,59 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       }
     }
   },
+  es_2h_halberd = {
+    right = {
+      angle = {
+        0,
+        0,
+        0
+      },
+      offset = {
+        0,
+        0,
+        -0.026000000536442
+      },
+      scale = 0.9
+    }
+  },
+  grenade_frag_01 = {
+    right = {
+      angle = {
+        1.6319999694824,
+        -0.40799999237061,
+        0.2419999986887
+      },
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
+    },
+    left = {
+      angle = {
+        0.77499997615814,
+        0.1630000025034,
+        -0.32199999690056
+      },
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
+    }
+  },
   es_2h_heavy_spear = {
     right = {
       offset = {
@@ -507,14 +507,14 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
   potion_healing_draught_01 = {
     left = {
       angle = {
-        1.3869999647141,
+        1.7669999599457,
         -0.2039999961853,
         -0.12099999934435
       },
       offset = {
         0.018999999389052,
-        -0.097000002861023,
-        -0.18600000441074
+        -0.14599999785423,
+        0.10800000280142
       },
       attachement_nodes = {
         {
@@ -539,7 +539,7 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
       scale = 1
     }
   },
-  grenade_frag_02 = {
+  grenade_fire_02 = {
     right = {
       angle = {
         1.6319999694824,
@@ -579,14 +579,14 @@ local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/c
   },
   wpn_grimoire_01 = {
     angle = {
-      1.5950000286102,
-      2.9479999542236,
-      -0.048000000417233
+      1.5709999799728,
+      -1.8980000019073,
+      0.097000002861023
     },
     offset = {
-      -0.030999999493361,
-      -0.14599999785423,
-      0.076999999582767
+      -0.052000001072884,
+      -0.052000001072884,
+      -0.23199999332428
     },
     attachement_nodes = {
       {

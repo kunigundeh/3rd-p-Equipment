@@ -10,22 +10,23 @@ Works for yourself, other players and bots
 Original idea and code by grasmann, update, partial rewrite and new functionality by dalo_kraff and kunigundeh.
 
 ### To do:
-- [ ] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
+- [x] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly)
 - [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
+- [ ] Implement exception for dual-shield-visibility (grailknight)
  
 ### Placements to do:
 - Saltzpyre
-- [ ] Witch Hunter Captain
+- [x] Witch Hunter Captain
 - [ ] Bounty Hunter
 - [ ] Zealot
 - [ ] Warrior Priest
 - Kruber
-- [x] Mercenary
-- [ ] Huntsman
-- [ ] Footknight
+- [x] Mercenary 
+- [x] Huntsman
+- [x] Footknight
 - [ ] Grail Knight
 - Bardin
-- [ ] Ranger Veteran
+- [x] Ranger Veteran
 - [ ] Ironbreaker
 - [ ] Slayer
 - [ ] Engineer

@@ -20,17 +20,18 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
       }
     }
   },
-  wpn_side_objective_tome_01 = {
-    left = {
+  es_deus_01 = {
+    right = {
+      scale = 0.93,
       offset = {
-        0.0080000003799796,
-        -0.14599999785423,
-        -0.10000000149012
+        0.0099999997764826,
+        -0.1879999935627,
+        0
       },
       angle = {
-        1.4980000257492,
-        -2.9000000953674,
-        0
+        1.9630000591278,
+        -0.91600000858307,
+        -0.032000001519918
       },
       attachement_nodes = {
         {
@@ -38,19 +39,32 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
           target = 0
         }
       }
+    },
+    left = {
+      offset = {
+        0.020999999716878,
+        0.063000001013279,
+        0.026000000536442
+      },
+      angle = {
+        -0.12200000137091,
+        0,
+        0.03999999910593
+      },
+      scale = 1
     }
   },
   es_repeating_handgun = {
     right = {
       angle = {
-        -3.1419999599457,
-        0.021999999880791,
-        1.1640000343323
+        3.0759999752045,
+        -0.195999994874,
+        1.1979999542236
       },
       offset = {
-        -0.017000000923872,
-        0.24099999666214,
-        0.31799998879433
+        -0.030999999493361,
+        0.19799999892712,
+        0.28200000524521
       },
       scale = 1
     }
@@ -140,15 +154,15 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
   },
   es_1h_sword_shield = {
     right = {
-      offset = {
-        0,
-        0,
-        0
-      },
       angle = {
         0,
-        0,
+        0.32600000500679,
         0
+      },
+      offset = {
+        0.018999999389052,
+        0.090999998152256,
+        -0.12200000137091
       },
       scale = 1
     },
@@ -169,14 +183,29 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
   es_handgun = {
     right = {
       angle = {
-        3.0599999427795,
-        -0.041000001132488,
-        1.1679999828339
+        3.0759999752045,
+        -0.195999994874,
+        1.1979999542236
       },
       offset = {
-        -0.026000000536442,
-        0.1879999935627,
+        -0.030999999493361,
+        0.19799999892712,
         0.28200000524521
+      },
+      scale = 1
+    }
+  },
+  es_1h_mace = {
+    right = {
+      offset = {
+        0.020999999716878,
+        0.093999996781349,
+        -0.046000000089407
+      },
+      angle = {
+        0,
+        0,
+        0
       },
       scale = 1
     }
@@ -257,30 +286,70 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
       }
     }
   },
-  potion_cooldown_reduction_01 = {
-    offset = {
-      0,
-      -0.11500000208616,
-      0.14599999785423
+  wpn_side_objective_tome_01 = {
+    left = {
+      offset = {
+        0.0080000003799796,
+        -0.14599999785423,
+        -0.10000000149012
+      },
+      angle = {
+        1.4980000257492,
+        -2.9000000953674,
+        0
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
+    }
+  },
+  grenade_fire_01 = {
+    right = {
+      offset = {
+        0.10999999940395,
+        0.19499999284744,
+        -0.082999996840954
+      },
+      angle = {
+        1.6319999694824,
+        -0.40799999237061,
+        0.2419999986887
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
     },
-    angle = {
-      1.99899995327,
-      0.19799999892712,
-      -0.03999999910593
-    },
-    attachement_nodes = {
-      {
-        source = "j_spine",
-        target = 0
+    left = {
+      offset = {
+        0.20100000500679,
+        0.16200000047684,
+        -0.096000000834465
+      },
+      angle = {
+        0.77499997615814,
+        0.1630000025034,
+        -0.32199999690056
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
       }
     }
   },
   es_1h_mace_shield = {
     right = {
       offset = {
-        0,
-        0,
-        0
+        0.020999999716878,
+        0.093999996781349,
+        -0.046000000089407
       },
       angle = {
         0,
@@ -318,7 +387,7 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
       scale = 1
     }
   },
-  grenade_frag_01 = {
+  grenade_fire_02 = {
     right = {
       offset = {
         0.10999999940395,
@@ -371,7 +440,7 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
       scale = 1
     }
   },
-  grenade_fire_01 = {
+  grenade_frag_01 = {
     right = {
       offset = {
         0.10999999940395,
@@ -400,6 +469,26 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
         0.77499997615814,
         0.1630000025034,
         -0.32199999690056
+      },
+      attachement_nodes = {
+        {
+          source = "j_spine",
+          target = 0
+        }
+      }
+    }
+  },
+  potion_healing_draught_01 = {
+    left = {
+      offset = {
+        0.018999999389052,
+        -0.097000002861023,
+        -0.18600000441074
+      },
+      angle = {
+        1.3869999647141,
+        -0.2039999961853,
+        -0.12099999934435
       },
       attachement_nodes = {
         {
@@ -424,76 +513,36 @@ local tisch = {["units/beings/player/empire_soldier_mercenary/third_person_base/
       scale = 1
     }
   },
-  potion_healing_draught_01 = {
-    left = {
-      offset = {
-        0.018999999389052,
-        -0.097000002861023,
-        -0.18600000441074
-      },
-      angle = {
-        1.3869999647141,
-        -0.2039999961853,
-        -0.12099999934435
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
-      }
-    }
-  },
   es_blunderbuss = {
     right = {
       angle = {
-        -3.1419999599457,
-        -0.065999999642372,
-        1.2079999446869
+        3.0759999752045,
+        -0.195999994874,
+        1.1979999542236
       },
       offset = {
-        -0.017000000923872,
-        0.25499999523163,
-        0.33199998736382
+        -0.030999999493361,
+        0.19799999892712,
+        0.28200000524521
       },
       scale = 1
     }
   },
-  grenade_fire_02 = {
-    right = {
-      offset = {
-        0.10999999940395,
-        0.19499999284744,
-        -0.082999996840954
-      },
-      angle = {
-        1.6319999694824,
-        -0.40799999237061,
-        0.2419999986887
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
-      }
+  potion_cooldown_reduction_01 = {
+    offset = {
+      0,
+      -0.11500000208616,
+      0.14599999785423
     },
-    left = {
-      offset = {
-        0.20100000500679,
-        0.16200000047684,
-        -0.096000000834465
-      },
-      angle = {
-        0.77499997615814,
-        0.1630000025034,
-        -0.32199999690056
-      },
-      attachement_nodes = {
-        {
-          source = "j_spine",
-          target = 0
-        }
+    angle = {
+      1.99899995327,
+      0.19799999892712,
+      -0.03999999910593
+    },
+    attachement_nodes = {
+      {
+        source = "j_spine",
+        target = 0
       }
     }
   },

@@ -1,6 +1,6 @@
--- config file for Huntsmans's VT2 base skin
+-- config file for Kruber Huntsman's Herald of King Taal Skin
 
-local tisch = {["units/beings/player/empire_soldier_huntsman/third_person_base/chr_third_person_mesh"] = {
+local tisch = {["units/beings/player/empire_soldier_longshark/third_person_base/chr_third_person_mesh"] = {
   healthkit_first_aid_kit_01 = {
     left = {
       angle = {
