@@ -32,7 +32,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Slayer
 - [x] Engineer
 - Kerillian
-- [x] Waystalker
+- [ ] Waystalker
 - [ ] Handmaiden
 - [ ] Shade
 - [ ] Sister of the Thorns
