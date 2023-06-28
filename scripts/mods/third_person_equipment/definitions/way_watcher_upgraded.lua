@@ -1,17 +1,7 @@
-local default_elf_attach = {
-    {
-        target = 0,
-        source = "j_spine2"
-    },
-}
+-- config file for Kerillian Waywacther's Base Skin
 
 local tisch = {
     ["units/beings/player/way_watcher_upgraded/third_person_base/chr_third_person_mesh"] = {
-<<<<<<< Updated upstream
-        trinket = {
-            attachement_nodes = default_elf_attach, offset = {0.05, 0.155, -0.05}, angle = {1.5,0,0},
-        },
-=======
       healthkit_first_aid_kit_01 = {
         left = {
           scale = 0.5,
@@ -487,7 +477,6 @@ local tisch = {
           }
         }
       }
->>>>>>> Stashed changes
     }
 }
 
