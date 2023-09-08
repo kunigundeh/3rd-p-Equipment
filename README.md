@@ -40,4 +40,4 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Battle Wizard
 - [ ] Pyromancer
 - [ ] Unchained
-- [ ] ...well wouldn't we all love to know...    
+- [ ] Necromancer (Hypetrain wooh, yeah...)   
