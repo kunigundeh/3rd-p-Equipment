@@ -1,4 +1,4 @@
--- config file for Saltzypre Zealot's naked Skin
+-- config file for Saltzpyre Zealot's Redemptive One skin
 
 local tisch = {
     ["units/beings/player/witch_hunter_zealot_skin_01/third_person_base/chr_third_person_mesh"] = {
