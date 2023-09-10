@@ -1,6 +1,5 @@
 --config file for Saltzpyre zealot's base skin
 
-
 local tisch = {
     ["units/beings/player/witch_hunter_zealot/third_person_base/chr_third_person_mesh"] = {
         healthkit_first_aid_kit_01 = {
