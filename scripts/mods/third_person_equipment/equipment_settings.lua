@@ -162,4 +162,28 @@ local new_items = {
 }
 
 table.merge(mod.equipment, new_items)
+
+
+trinket overrides:
+
+  ["units/beings/player/witch_hunter_bounty_hunter_skin_01/third_person_base/chr_third_person_mesh"] = {
+    offset = {
+      0.10000000149012,
+      0.096000000834465,
+      0.079999998211861
+    },
+    angle = {
+      1.1779999732971,
+      0,
+      0.29100000858307
+    },
+    attachement_nodes = {
+      {
+        source = "j_spine2",
+        target = 0
+      }
+    }
+  },
+
+
 --]]
