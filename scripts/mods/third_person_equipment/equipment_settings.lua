@@ -42,6 +42,7 @@ local base_skins = {
     "witch_hunter_captain_skin_01",
     "witch_hunter_captain",
     "witch_hunter_flagellant",
+    "witch_hunter_warrior_priest_skin_01",
     "witch_hunter_warrior_priest_skin_02",
     "witch_hunter_warrior_priest",
     "witch_hunter_zealot_skin_01",
