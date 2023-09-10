@@ -15,7 +15,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Implement exception for dual-shield-visibility (grailknight)
 - [ ] Implement same weapon handling for slayer(?)
  
-### Placements to do:
+### Placements to do: (second pass needed once everything's done)
 - Saltzpyre
 - [x] Witch Hunter Captain
 - [x] Bounty Hunter
