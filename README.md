@@ -19,7 +19,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - Saltzpyre
 - [x] Witch Hunter Captain
 - [x] Bounty Hunter
-- [ ] Zealot
+- [ ] Zealot (WIP by KunigundeH)
 - [ ] Warrior Priest
 - Kruber
 - [x] Mercenary 
