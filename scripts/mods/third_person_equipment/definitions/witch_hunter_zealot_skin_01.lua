@@ -1,9 +1,4 @@
-local default_salts_attach = {
-    {
-        target = 0,
-        source = "j_spine2"
-    },
-}
+-- config file for Saltzpyre Zealot's Redemptive One skin
 
 local tisch = {
     ["units/beings/player/witch_hunter_zealot_skin_01/third_person_base/chr_third_person_mesh"] = {
