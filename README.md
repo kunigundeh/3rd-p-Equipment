@@ -29,7 +29,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - Bardin
 - [x] Ranger Veteran
 - [x] Ironbreaker
-- [ ] Slayer
+- [ ] Slayer - in progress (dalo_kraff)
 - [x] Engineer
 - Kerillian
 - [ ] Waystalker
