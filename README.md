@@ -20,7 +20,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Witch Hunter Captain
 - [x] Bounty Hunter
 - [x] Zealot
-- [ ] Warrior Priest
+- [ ] Warrior Priest - in progress (kunigundeh)
 - Kruber
 - [x] Mercenary 
 - [x] Huntsman
