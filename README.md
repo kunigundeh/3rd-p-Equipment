@@ -3,8 +3,8 @@ Update and partial rewrite of grasman's [Third Person Equipment Mod](https://git
 
 Description :
 Shows your equipment on your character.
-Melee- and ranged weapon as well as tomes, grims, potions, bombs, heal items and equipped trinket.
-Works for yourself, other players and bots
+Melee- and ranged weapon as well as tomes, grims, potions, bombs, heal items and equipped trinket are visible on yourself, bots and teammates.
+Display of Pick-up-items optional. Toggle anytime via mod-menu.
 
 
 Original idea and code by grasmann, update, partial rewrite and new functionality by dalo_kraff and kunigundeh.
