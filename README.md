@@ -14,6 +14,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
 - [ ] Implement exception for dual-shield-visibility (grailknight, warrior-priest)
 - [ ] Implement same weapon handling for slayer, grailknight, warrior-priest(?)
+- [ ] Implement handling for javelins (visible right-hand-/ammo-unit)
 
  
 ### Placements to do: (second pass needed once everything's done)
