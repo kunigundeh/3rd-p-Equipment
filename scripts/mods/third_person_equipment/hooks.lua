@@ -134,7 +134,7 @@ end)
 
 
 --[[
-    These two hooks allow control of emote/special state for a connect player's unit's tpe 
+    These two hooks allow control of emote/special state for a connected player's unit's tpe 
 --]]
 
 --for hosts
