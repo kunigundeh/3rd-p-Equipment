@@ -1,3 +1,4 @@
+--config file for Saltzpyre Warior-priests's base skin
 
 local tisch = {
     ["units/beings/player/witch_hunter_warrior_priest/third_person_base/chr_third_person_mesh"] = {
