@@ -34,7 +34,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Slayer - in progress (dalo_kraff)
 - [x] Engineer
 - Kerillian
-- [ ] Waystalker - in progress (kunigundeh)
+- [x] Waystalker
 - [ ] Handmaiden
 - [ ] Shade
 - [ ] Sister of the Thorns
