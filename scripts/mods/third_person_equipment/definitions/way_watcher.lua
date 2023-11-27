@@ -215,7 +215,7 @@ local tisch = {
           }
         },
         wpn_grimoire_01 = {
-          scale = 0.5,
+          scale = 0.7,
           angle = {
             1.5049999952316,
             -0.32699999213219,
