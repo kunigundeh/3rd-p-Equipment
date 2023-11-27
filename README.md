@@ -35,7 +35,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Engineer
 - Kerillian
 - [x] Waystalker
-- [ ] Handmaiden
+- [ ] Handmaiden - in progress (kunigundeh)
 - [ ] Shade
 - [ ] Sister of the Thorns
 - Sienna
