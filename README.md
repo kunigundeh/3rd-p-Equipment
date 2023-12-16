@@ -15,6 +15,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Implement exception for dual-shield-visibility (grailknight, warrior-priest)
 - [ ] Implement same weapon handling for slayer, grailknight, warrior-priest(?)
 - [ ] Implement handling for javelins (visible right-hand-/ammo-unit)
+- [ ] Do repass of previously completed for new skins
 
  
 ### Placements to do: (second pass needed once everything's done)
