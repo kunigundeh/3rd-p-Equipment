@@ -29,7 +29,7 @@ local excluded_units = {
 
 local check_for_excluded_units = function(weapon_skin_data, unit_name)
 	local new_unit_name = unit_name
-	
+
 	if excluded_units[unit_name] then
 		new_unit_name = weapon_skin_data.ammo_unit or weapon_skin_data.unit_name
 	end
@@ -58,16 +58,16 @@ ThirdPersonEquipmentExtension.init = function(self, inventory_extension, data)
 	self.show_pickups = mod:get("setting_show_pickups")
 	self.inventory_extension = inventory_extension
     self.unit = inventory_extension._unit
-    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",} 
+    self.slots = {"slot_melee", "slot_ranged", "slot_healthkit", "slot_potion", "slot_grenade",}
     self.active_slot = inventory_extension:equipment().wielded_slot or "slot_melee"
 	self.equipment = {}
 	self.show = false
 	self.delayed_visibility_check = false
 	self.special_states = {
-		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor", 
-		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting", 
-		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging", 
-		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote" 
+		"catapulted", "dead", "grabbed_by_chaos_spawn", "grabbed_by_corruptor",
+		"grabbed_by_pack_master", "grabbed_by_tentacle", "in_hanging_cage", "in_vortex", "interacting",
+		"knocked_down", "leave_ledge_hanging_falling", "leave_ledge_hanging_pull_up", "ledge_hanging",
+		"overcharge_exploding", "overpowered", "pounced_down", "waiting_for_assisted_respawn", "emote"
 	}
 	self.is_emoting = false
 	self.special_states_remote_only = {
@@ -125,7 +125,7 @@ end
 --]]
 ThirdPersonEquipmentExtension.is_special_state = function(self)
 	local is_special_state = false
-	local current_state = self:get_animation_state() 
+	local current_state = self:get_animation_state()
 	for _, special_state in pairs(self.special_states) do
 		is_special_state = is_special_state or current_state == special_state or self.is_emoting
 	end
@@ -135,8 +135,8 @@ ThirdPersonEquipmentExtension.is_special_state = function(self)
 		end
 	end
 	--mod:echo('checked for special state')
-	return is_special_state 
-	
+	return is_special_state
+
 end
 
 --[[
@@ -164,7 +164,7 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 	for unit, slot in pairs(self.weapons) do
 		if self:is_special_state() or self.is_emoting then
 			Unit.set_unit_visibility(unit, true)
-		else 
+		else
 			Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
 		end
 	end
@@ -219,13 +219,13 @@ end
 	defaults to vanilla preset nodes if the mod does not define an offset
 --]]
 ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_type, attachment_node_tisch, hand, item_name)
-	local mesh_name = self:get_player_mesh()
-	local mesh_attach_data = mod.equipment[mesh_name]  
+	local mesh_name, mesh_unit = self:get_player_mesh()
+	local mesh_attach_data = mod.equipment[mesh_name]
 	local item_attach_data
 	--check if pickup item and index by name if true
 	if mesh_attach_data then
 		if item_type == "healthkit" or item_type == "potion" or item_type == "grenade" then
-			item_attach_data = mesh_attach_data[item_name] 
+			item_attach_data = mesh_attach_data[item_name]
 		else
 			item_attach_data = mesh_attach_data[item_type]
 		end
@@ -238,12 +238,17 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 			else
 				scaling_data = item_attach_data.scale or item_name
 			end
-			
+
 			--assumes that if item_attach_data exists then it has handed or non-handed attachment data
 			if handed_attach_data then
-				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch
-				self:link_unit(unit, attachment_table)
-				
+				local attachment_table = handed_attach_data.attachement_nodes or attachment_node_tisch or {
+					{
+						source = 0,
+						target = 0
+					}
+				}
+				self:link_unit(unit, mesh_unit, attachment_table)
+
 				local attachment_offset = handed_attach_data.offset
 				local attachment_angle = handed_attach_data.angle
 				if attachment_offset and attachment_angle then
@@ -253,13 +258,13 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
 
-					-- scaling 
+					-- scaling
 					self:apply_scaling(unit, scaling_data)
 				end
 			else
 				local attachment_table = item_attach_data.attachement_nodes or attachment_node_tisch
-				self:link_unit(unit, attachment_table)
-				
+				self:link_unit(unit, mesh_unit, attachment_table)
+
 				local attachment_offset = item_attach_data.offset
 				local attachment_angle = item_attach_data.angle
 				if attachment_offset and attachment_angle then
@@ -269,16 +274,16 @@ ThirdPersonEquipmentExtension.offset_unit_by_mesh = function(self, unit, item_ty
 					local rot = radians_to_quaternion(attachment_angle[1], attachment_angle[2], attachment_angle[3])
 					Unit.set_local_rotation(unit, 0, rot)
 
-					-- scaling 
+					-- scaling
 					self:apply_scaling(unit, scaling_data)
 				end
 			end
 		else
-			self:link_unit(unit, attachment_node_tisch)
+			self:link_unit(unit, mesh_unit, attachment_node_tisch)
 			self:apply_scaling(unit, item_name)
 		end
-	else 
-		self:link_unit(unit, attachment_node_tisch)
+	else
+		self:link_unit(unit, mesh_unit, attachment_node_tisch)
 		self:apply_scaling(unit, item_name)
 	end
 end
@@ -322,11 +327,11 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	if skin_data then
 		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
-	else 
+	else
 		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
 	end
-	
+
 
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
@@ -374,7 +379,7 @@ ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_
 	if skin_data then
 		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
-	else 
+	else
 		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
 	end
@@ -382,7 +387,7 @@ ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_
 	if left_hand_unit_name then
 		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
 		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name, skin_name)
-		
+
 		if skin_data then
 			material_settings = skin_data.material_settings
 		end
@@ -408,9 +413,9 @@ ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_
 end
 
 ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type, item_name, skin_name)
-	
+
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
-	
+
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
 
@@ -421,11 +426,13 @@ ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_
 	return item_unit
 end
 
-ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, attachment_node_tisch)
+ThirdPersonEquipmentExtension.link_unit = function(self, item_unit, mesh_unit, attachment_node_tisch)
 	local world = self.world
-	local player_unit = self.unit
-
-	AttachmentUtils.link(world, player_unit, item_unit, attachment_node_tisch)
+	if mesh_unit and Unit.has_node(mesh_unit, attachment_node_tisch[1].source) then
+		AttachmentUtils.link(world, mesh_unit, item_unit, attachment_node_tisch)
+	else
+		AttachmentUtils.link(world, self.unit, item_unit, attachment_node_tisch)
+	end
 end
 
 ThirdPersonEquipmentExtension.reload = function(self)
@@ -433,9 +440,9 @@ ThirdPersonEquipmentExtension.reload = function(self)
 	self:add_all()
 end
 
-ThirdPersonEquipmentExtension.add_all = function(self)	
+ThirdPersonEquipmentExtension.add_all = function(self)
     for slot_name, slot in pairs(self.inventory_extension:equipment().slots) do
-		if self.show_pickups == true then 
+		if self.show_pickups == true then
 			if not excluded_slots[slot_name] then
 				self:clear_slot(slot_name)
 				self:add(slot_name, slot)
@@ -461,9 +468,9 @@ ThirdPersonEquipmentExtension.add_all = function(self)
 end
 
 --[[
-	queue a call to self:add_item_to_slot() for executiorn 
+	queue a call to self:add_item_to_slot() for executiorn
 --]]
-ThirdPersonEquipmentExtension.queue_add_all = function(self)	
+ThirdPersonEquipmentExtension.queue_add_all = function(self)
     self.add_all_queue = true
 end
 
@@ -472,13 +479,13 @@ ThirdPersonEquipmentExtension.get_player_mesh = function(self)
 	if units_cosmetic_extension then
 		local mesh = units_cosmetic_extension:get_third_person_mesh_unit()
 		self.mesh_queue = false
-		return Unit.get_data(mesh, "unit_name")
+		return Unit.get_data(mesh, "unit_name"), mesh
 	end
-	return nil
+	return nil, nil
 end
 
 --[[
-	queue a call to self:add_trinket() for execution 
+	queue a call to self:add_trinket() for execution
 --]]
 ThirdPersonEquipmentExtension.queue_trinket = function(self, trinket_name)
 	self.trinketName = trinket_name
@@ -494,12 +501,12 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 	local unit_spawner = Managers.state.unit_spawner --needs to be a class variable
 	local world = self.world --needs to be a class variable
 
-	local mesh_name = self:get_player_mesh()
+	local mesh_name, _ = self:get_player_mesh()
 	local trinket_name = self:trinket_name()
 
 	if trinket_name then
 		local package_name = mod.trinket_lookup[trinket_name] or mod.trinket_lookup["trinket_11"]
-		
+
 		local current_trinket_unit = self.attached_trophies["trinket"]
 		if current_trinket_unit then
 			local current_trinket_name = Unit.get_data(current_trinket_unit, "unit_name")
@@ -511,7 +518,7 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 		if self.attached_trophies["trinket"] then
 			self:remove_trinket()
 		end
-		
+
 		Managers.package:load(package_name, "global")
 		local item_unit = unit_spawner:spawn_local_unit(package_name)
 
@@ -519,7 +526,7 @@ ThirdPersonEquipmentExtension.add_trinket = function(self, player_unit)
 		local attachment_table = item_attach_data.attachement_nodes
 		local attachment_offset = item_attach_data.offset
 		local attachment_angle = item_attach_data.angle
-		
+
 		AttachmentUtils.link(world, player_unit, item_unit, attachment_table)
 
 		local pos = Vector3(attachment_offset[1], attachment_offset[2], attachment_offset[3])
