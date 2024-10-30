@@ -40,8 +40,15 @@ end
 --this table is used in the "set_equipment_visibility" method to help track when weapons of the same type (greatsword and greatsword) are both visible and to prevent them from being so
 local dupe_weapon_type_tracker = {}
 for _,item_data in pairs(ItemMasterList) do
-	if item_data.item_type then
-		dupe_weapon_type_tracker[item_data.item_type] = true
+	local item_type = item_data.item_type
+	if item_type then
+		if item_data.left_hand_unit then
+			dupe_weapon_type_tracker[item_type.."left"] = false
+		end
+		if item_data.right_hand_unit then
+			dupe_weapon_type_tracker[item_type.."right"] = false
+		end
+		dupe_weapon_type_tracker[item_type] = false
 	end
 end
 
@@ -165,25 +172,34 @@ ThirdPersonEquipmentExtension.wield = function(self, slot_name)
     self:set_equipment_visibility()
 end
 
-ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
-	local hide = not self.show
+ThirdPersonEquipmentExtension.set_weapon_visibility = function(self, unit, item_type, slot)
+	if dupe_weapon_type_tracker[item_type] then
+		dupe_weapon_type_tracker[item_type] = false
+	elseif dupe_weapon_type_tracker[item_type] == nil then
+		dupe_weapon_type_tracker[item_type] = true
+		Unit.set_unit_visibility(unit, true)
+	else
+		if self:is_special_state() or self.is_emoting then
+			Unit.set_unit_visibility(unit, true)
+			dupe_weapon_type_tracker[item_type] = true
+		else
+			Unit.set_unit_visibility(unit, slot ~= self.active_slot and self.show)
+			dupe_weapon_type_tracker[item_type] = (slot ~= self.active_slot and self.show)
+		end
+	end
+end
 
-	local active_slot = self.active_slot
+ThirdPersonEquipmentExtension.set_weapon_type_visibility = function(self, unit, slot_data, slot)
+	local item_type = Unit.get_data(unit, "third_person_equipment_type")
+
+	self:set_weapon_visibility(unit, item_type, slot)
+end
+
+ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
+
 	for unit, slot in pairs(self.weapons) do
 		local slot_data = self.inventory_extension:get_slot_data(slot)
-		local item_type = slot_data.item_data.item_type
-		print(item_type, dupe_weapon_type_tracker[item_type])
-		if dupe_weapon_type_tracker[item_type] then
-			if self:is_special_state() or self.is_emoting then
-				Unit.set_unit_visibility(unit, true)
-				dupe_weapon_type_tracker[item_type] = false
-			else
-				Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
-				dupe_weapon_type_tracker[item_type] = not (slot ~= active_slot and self.show)
-			end
-		else
-			dupe_weapon_type_tracker[item_type] = true
-		end
+		self:set_weapon_type_visibility(unit, slot_data, slot)
 	end
 
 	self:set_trinket_visibility(self.attached_trophies["trinket"])
@@ -432,6 +448,7 @@ end
 ThirdPersonEquipmentExtension.spawn = function(self, unit_name, attachment_node_tisch, hand, item_type, item_name, skin_name)
 
     local item_unit = Managers.state.unit_spawner:spawn_local_unit(unit_name)
+	Unit.set_data(item_unit, "third_person_equipment_type", item_type..hand)
 
 	-- Add to spawned units
     mod.spawned_units[item_unit] = item_unit
