@@ -37,6 +37,14 @@ local check_for_excluded_units = function(weapon_skin_data, unit_name)
 	return new_unit_name
 end
 
+--this table is used in the "set_equipment_visibility" method to help track when weapons of the same type (greatsword and greatsword) are both visible and to prevent them from being so
+local dupe_weapon_type_tracker = {}
+for _,item_data in pairs(ItemMasterList) do
+	if item_data.item_type then
+		dupe_weapon_type_tracker[item_data.item_type] = true
+	end
+end
+
 local function radians_to_quaternion(theta, ro, phi)
     local c1 =  math.cos(theta/2)
     local c2 = math.cos(ro/2)
@@ -162,10 +170,19 @@ ThirdPersonEquipmentExtension.set_equipment_visibility = function(self)
 
 	local active_slot = self.active_slot
 	for unit, slot in pairs(self.weapons) do
-		if self:is_special_state() or self.is_emoting then
-			Unit.set_unit_visibility(unit, true)
+		local slot_data = self.inventory_extension:get_slot_data(slot)
+		local item_type = slot_data.item_data.item_type
+		print(item_type, dupe_weapon_type_tracker[item_type])
+		if dupe_weapon_type_tracker[item_type] then
+			if self:is_special_state() or self.is_emoting then
+				Unit.set_unit_visibility(unit, true)
+				dupe_weapon_type_tracker[item_type] = false
+			else
+				Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
+				dupe_weapon_type_tracker[item_type] = not (slot ~= active_slot and self.show)
+			end
 		else
-			Unit.set_unit_visibility(unit, slot ~= active_slot and self.show)
+			dupe_weapon_type_tracker[item_type] = true
 		end
 	end
 
