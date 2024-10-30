@@ -10,6 +10,7 @@ local base_skins = {
     "dwarf_ranger_engineer_skin_01",
     "dwarf_ranger_ironbreaker",
     "dwarf_ranger_irondrake",
+    "dwarf_ranger_slayer",
     "dwarf_ranger_ironbreaker_skin_01",
     "dwarf_ranger_upgraded_skin_01",
     "dwarf_ranger_upgraded_skin_02",
@@ -55,7 +56,7 @@ for _, file_name in pairs(base_skins) do
     table.merge(mod.equipment, equipment_config)
     for mesh_name, data in pairs(equipment_config) do
         local trinket_data = data.trinket or { attachement_nodes = trinket_attachment_table, offset = {0,0,0}, angle = {0,0,0}, }
-        mod.trinkets[mesh_name] = table.clone(trinket_data, true) 
+        mod.trinkets[mesh_name] = table.clone(trinket_data, true)
     end
 end
 
@@ -111,7 +112,7 @@ table structure is like so:
         attachement_nodes = {
             {
                 target = "node_target_unit", --this is usually just 0
-                source = "node_source_unit" 
+                source = "node_source_unit"
             },
         },
         offset = {0,0,0},
@@ -129,8 +130,8 @@ local new_items = {
             right = {
                 attachement_nodes = {
                     {
-                        target = 0, 
-                        source = "a_unwielded_2h" 
+                        target = 0,
+                        source = "a_unwielded_2h"
                     },
                 },
                 offset = {0.2,0.2,-0.1},
@@ -141,23 +142,23 @@ local new_items = {
         ["healthkit"] = {
             attachement_nodes = {
                 {
-                    target = 0, 
-                    source = "a_unwielded_2h" 
+                    target = 0,
+                    source = "a_unwielded_2h"
                 },
             },
             offset = {0.2,0.2,-0.1},
-            angle = {0.5,0,2},          
+            angle = {0.5,0,2},
         },
         --weapon example
         ["es_2h_war_hammer"] = {
             attachement_nodes = {
                 {
-                    target = 0, 
-                    source = "a_unwielded_2h" 
+                    target = 0,
+                    source = "a_unwielded_2h"
                 },
             },
             offset = {0,0,0},
-            angle = {1.5,0,0},          
+            angle = {1.5,0,0},
         },
     },
 }
