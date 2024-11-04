@@ -248,6 +248,26 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
             }
             }
         },
+        healthkit_first_aid_kit_01 = {
+            left = {
+                angle = {
+                1.3370000123978,
+                -2.7409999370575,
+                0.20100000500679
+                },
+                offset = {
+                0.032000001519918,
+                -0.13799999654293,
+                -0.13799999654293
+                },
+                attachement_nodes = {
+                {
+                    source = "j_hips",
+                    target = 0
+                }
+                }
+            }
+        },
         wpn_grimoire_01 = {
             angle = {
             1.5369999408722,
@@ -459,6 +479,26 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
                 }
             }
+            }
+        },
+        healthkit_first_aid_kit_01 = {
+            left = {
+                angle = {
+                1.3370000123978,
+                -2.7409999370575,
+                0.20100000500679
+                },
+                offset = {
+                0.032000001519918,
+                -0.13799999654293,
+                -0.13799999654293
+                },
+                attachement_nodes = {
+                {
+                    source = "j_hips",
+                    target = 0
+                }
+                }
             }
         },
         potion_damage_boost_01 = {
@@ -728,6 +768,26 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
             }
             }
         },
+        healthkit_first_aid_kit_01 = {
+            left = {
+                angle = {
+                1.3370000123978,
+                -2.7409999370575,
+                0.20100000500679
+                },
+                offset = {
+                0.032000001519918,
+                -0.13799999654293,
+                -0.13799999654293
+                },
+                attachement_nodes = {
+                {
+                    source = "j_hips",
+                    target = 0
+                }
+                }
+            }
+        },
         potion_damage_boost_01 = {
             offset = {
             -0.043000001460314,
@@ -993,6 +1053,26 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
                 }
             }
+            }
+        },
+        healthkit_first_aid_kit_01 = {
+            left = {
+                angle = {
+                1.3370000123978,
+                -2.7409999370575,
+                0.20100000500679
+                },
+                offset = {
+                0.032000001519918,
+                -0.13799999654293,
+                -0.13799999654293
+                },
+                attachement_nodes = {
+                {
+                    source = "j_hips",
+                    target = 0
+                }
+                }
             }
         },
         potion_damage_boost_01 = {
