@@ -285,7 +285,22 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
             }
             }
-        }
+        },
+        bw_ghost_scythe = {
+            right = {
+                offset = {
+                0,
+                0,
+                -0.096000000834465
+                },
+                angle = {
+                0,
+                1.6039999723434,
+                -0.93599998950958
+                },
+                scale = 1
+            }
+        },
     },
     ["units/beings/player/bright_wizard/third_person_base/chr_third_person_mesh"] =
     {
@@ -572,7 +587,22 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
             }
             }
-        }
+        },
+        bw_ghost_scythe = {
+            right = {
+                offset = {
+                0,
+                0,
+                -0.096000000834465
+                },
+                angle = {
+                0,
+                1.6039999723434,
+                -0.93599998950958
+                },
+                scale = 1
+            }
+        },
     },
     ["units/beings/player/bright_wizard_adept_skin_01/third_person_base/chr_third_person_mesh"] =
     {
@@ -859,7 +889,22 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
             }
             }
-        }
+        },
+        bw_ghost_scythe = {
+            right = {
+                offset = {
+                0,
+                0,
+                -0.096000000834465
+                },
+                angle = {
+                0,
+                1.6039999723434,
+                -0.93599998950958
+                },
+                scale = 1
+            }
+        },
     },
     ["units/beings/player/bright_wizard_adept_skin_02/third_person_base/chr_third_person_mesh"] =
     {
@@ -1146,7 +1191,22 @@ local tisch = { ["units/beings/player/bright_wizard_adept/third_person_base/chr_
                 target = 0
             }
             }
-        }
+        },
+        bw_ghost_scythe = {
+            right = {
+                offset = {
+                0,
+                0,
+                -0.096000000834465
+                },
+                angle = {
+                0,
+                1.6039999723434,
+                -0.93599998950958
+                },
+                scale = 1
+            }
+        },
     }
 
 }

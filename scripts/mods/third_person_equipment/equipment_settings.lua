@@ -92,6 +92,7 @@ mod.big_weapons = {
   "dr_drakegun",
   "wh_repeating_crossbow",
   "wh_crossbow",
+  "bw_ghost_scythe",
   "bw_staff_beam",
   "bw_staff_spear",
   "bw_staff_geiser",

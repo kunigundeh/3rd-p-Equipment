@@ -332,6 +332,16 @@ ThirdPersonEquipmentExtension.add_skin_name_to_unit = function(self, unit, skin_
 	end
 end
 
+-- local player = Managers.player:local_player()
+-- local player_unit = player.player_unit
+-- local inventory_extension = ScriptUnit.extension(player_unit, "inventory_system")
+-- for slot_name, slot in pairs(inventory_extension:equipment().slots) do
+-- 	for k,v in pairs(slot) do
+-- 		print(k,v)
+-- 	end
+-- 	mod:echo(slot.skin)
+-- end
+
 
 --[[
 	Adds equipment to a slot with given slot data
@@ -342,7 +352,6 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local item_type = slot_data.item_data.item_type
 	local item_name = slot_data.item_data.name --for pickups
 	local skin_name = slot_data.skin
-
 
 	local item_data = ItemMasterList[item_name]
 
@@ -358,8 +367,18 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 	local right_hand_unit_name = nil
 
 	if skin_data then
-		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
-		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
+		local real_left_unit = skin_data.left_hand_unit
+		local real_right_unit = skin_data.right_hand_unit
+		if skin_data.right_hand_unit_override then
+			local career_name = self:career_name()
+			real_right_unit = skin_data.right_hand_unit_override[career_name]
+		end
+		if skin_data.left_hand_unit_override then
+			local career_name = self:career_name()
+			real_left_unit = skin_data.left_hand_unit_override[career_name]
+		end
+		left_hand_unit_name = check_for_excluded_units(skin_data, real_left_unit)
+		right_hand_unit_name = check_for_excluded_units(skin_data, real_right_unit)
 	else
 		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
