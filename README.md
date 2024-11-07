@@ -12,8 +12,8 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 ### To do:
 - [x] More emotes mod (ScakicPL) -compatibility (filter for emote-name-string and set visibility false for wielded weapon accordingly) (Remember: remove 'emote' from special states-list for showcase/release/use, keep it in for placement-adjusting!!!)
 - [x] Implement User-choice for showing pick-up items (filter for slots based on mod-menu-setting)
-- [ ] Implement exception for dual-shield-visibility (grailknight, warrior-priest)
-- [ ] Implement same weapon handling for slayer, grailknight, warrior-priest(?)
+- [x] Implement exception for dual-shield-visibility (grailknight, warrior-priest)
+- [x] Implement same weapon handling for slayer, grailknight, warrior-priest(?)
 - [ ] Implement handling for javelins (visible right-hand-/ammo-unit)
 - [ ] Do repass of previously completed for new skins
 
@@ -28,11 +28,11 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [x] Mercenary 
 - [x] Huntsman
 - [x] Footknight
-- [ ] Grail Knight
+- [x] Grail Knight
 - Bardin
 - [x] Ranger Veteran
 - [x] Ironbreaker
-- [ ] Slayer - in progress (dalo_kraff)
+- [x] Slayer
 - [x] Engineer
 - Kerillian
 - [x] Waystalker
@@ -40,7 +40,7 @@ Original idea and code by grasmann, update, partial rewrite and new functionalit
 - [ ] Shade
 - [ ] Sister of the Thorns
 - Sienna
-- [ ] Battle Wizard
+- [x] Battle Wizard
 - [ ] Pyromancer
 - [ ] Unchained
 - [ ] Necromancer (Hypetrain wooh, yeah...)   
