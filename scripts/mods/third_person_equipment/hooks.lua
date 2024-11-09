@@ -23,6 +23,16 @@ end
 mod:hook_safe(SimpleInventoryExtension, "wield", wield)
 mod:hook_safe(SimpleHuskInventoryExtension, "wield", wield)
 
+local add_additional_item = function(self, slot_name, item_data, skip_resync)
+    if self.tpe_extension then
+		self.tpe_extension:add_all()
+	else
+		mod:echo("Additional item not executed")
+	end
+end
+mod:hook_safe(SimpleInventoryExtension, "store_additional_item", add_additional_item)
+mod:hook_safe(SimpleInventoryExtension, "remove_additional_item", add_additional_item)
+
 --[[
     Sync trinkets slots on hotjoin
 --]]
@@ -36,8 +46,6 @@ local main_slots = {
 }
 mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, item, sync_to_specific_peer_id)
 	if main_slots[slot_name] then
-
-
 		local player_unit = player.player_unit
 		if player_unit then
 			local tpe_ext = mod.extensions[player_unit]
@@ -55,8 +63,6 @@ mod:hook_safe(LoadoutUtils, "sync_loadout_slot", function(player, slot_name, ite
 			end
 		end
 	end
-	
-	
 end)
 
 
@@ -69,7 +75,7 @@ mod:hook_safe(InventorySystem, "rpc_add_equipment", function(self, channel_id, g
 	if unit == nil or not ALIVE[unit] then
 		return
 	end
-	
+
 	local tpe_ext = mod.extensions[unit]
 	if tpe_ext then
 		local slot_name = NetworkLookup.equipment_slots[slot_id]
@@ -77,15 +83,16 @@ mod:hook_safe(InventorySystem, "rpc_add_equipment", function(self, channel_id, g
 			local item_name = NetworkLookup.item_names[item_name_id]
 			local skin_name = NetworkLookup.weapon_skins[weapon_skin_id]
 			tpe_ext:add_item_to_slot(slot_name, item_name, skin_name)
+			tpe_ext:add_additional_slots(slot_name)
 		end
-	end	
+	end
 end)
 
 --[[
     add units to queue for trinkets when swapping them
 --]]
 mod:hook_safe(PlayerManager, "rpc_sync_loadout_slot", function(self, channel_id, peer_id, local_player_id, slot_id, item_id, ...)
-	local slot_name, item = LoadoutUtils.create_loadout_item_from_rpc_data(slot_id, item_id, ...) 
+	local slot_name, item = LoadoutUtils.create_loadout_item_from_rpc_data(slot_id, item_id, ...)
 	if slot_name == "slot_trinket_1" then
 		local unique_id = PlayerUtils.unique_player_id(peer_id, local_player_id)
 		local player = self._players[unique_id]
@@ -109,7 +116,7 @@ mod:hook_safe(PlayerManager, "rpc_sync_loadout_slot", function(self, channel_id,
 					mod.tpe_player_init_queue[#mod.tpe_player_init_queue + 1] = {
 						local_player_id = local_player_id,
 						peer_id = peer_id,
-						item_name = item_name, 
+						item_name = item_name,
 					}
 				end
 			end
@@ -134,7 +141,7 @@ end)
 
 
 --[[
-    These two hooks allow control of emote/special state for a connected player's unit's tpe 
+    These two hooks allow control of emote/special state for a connected player's unit's tpe
 --]]
 
 --for hosts
@@ -143,13 +150,13 @@ mod:hook_safe(CharacterStateHelper, "play_animation_event", function(unit, anim_
 	if tpe_ext then
 		if string.find(anim_event, "pose") then
 			if string.find(anim_event, "unarmed") then -- support armed emotes
-				tpe_ext.is_emoting = true 
+				tpe_ext.is_emoting = true
 			else
 				tpe_ext.is_emoting = false             -- catch transition armed/unarmed
 			end
 
 			if string.find(anim_event, "cancel") then
-				tpe_ext.is_emoting = false 
+				tpe_ext.is_emoting = false
 			end
 		end
 	end
@@ -165,14 +172,14 @@ mod:hook_safe(AnimationSystem, "rpc_anim_event", function(self, channel_id, anim
 		if tpe_ext then
 			if string.find(event, "pose") then
 				if string.find(anim_event, "unarmed") then -- support armed emotes
-					tpe_ext.is_emoting = true 
+					tpe_ext.is_emoting = true
 				else
 					tpe_ext.is_emoting = false             -- catch transition armed/unarmed
 				end
-			end 
-				
+			end
+
 			if string.find(event, "cancel") then
-				tpe_ext.is_emoting = false 
+				tpe_ext.is_emoting = false
 			end
 		end
 	end
@@ -185,7 +192,6 @@ local destroy_slot = function(func, self, slot_name, ...)
 			-- self.tpe_extension:remove_weapons()
             self.tpe_extension:clear_slot(slot_name)
 		end
-        
 	else
 		mod:echo("destroy_slot not executed")
 	end

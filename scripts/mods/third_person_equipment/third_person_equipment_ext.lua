@@ -332,33 +332,45 @@ ThirdPersonEquipmentExtension.add_skin_name_to_unit = function(self, unit, skin_
 	end
 end
 
--- local player = Managers.player:local_player()
--- local player_unit = player.player_unit
--- local inventory_extension = ScriptUnit.extension(player_unit, "inventory_system")
--- for slot_name, slot in pairs(inventory_extension:equipment().slots) do
--- 	for k,v in pairs(slot) do
--- 		print(k,v)
--- 	end
--- 	mod:echo(slot.skin)
--- end
+--[[
+	Adds equipment to a slot with given slot data
+--]]
+ThirdPersonEquipmentExtension.add_additional_slots = function(self, slot_name)
+	local additional_items = self.inventory_extension._additional_items
 
+	for _, additional_data in pairs(additional_items) do
+		for _,item_data in pairs(additional_data['items']) do
+			if type(item_data) == "table" then
+				local item_name = item_data.name
+				self:add_item_to_slot(slot_name, item_name, '')
+			end
+		end
+	end
+end
 
 --[[
 	Adds equipment to a slot with given slot data
 --]]
-local mod = get_mod("third_person_equipment")
 ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 
 	local item_type = slot_data.item_data.item_type
 	local item_name = slot_data.item_data.name --for pickups
 	local skin_name = slot_data.skin
 
+	self:add_item_to_slot(slot_name, item_name, skin_name)
+	self:add_additional_slots(slot_name)
+end
+
+--[[
+	Adds equipment to a slot with given item name and skin name
+--]]
+ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_name, skin_name)
 	local item_data = ItemMasterList[item_name]
 
 	local weapon_template_name = item_data.template or item_data.temporary_template
 	local weapon_template = Weapons[weapon_template_name]
 
-	local item_type = item_data.item_type
+	local item_type = item_data.item_type or ''
 
 	local skin_data = WeaponSkins.skins[skin_name] or item_data
 	local material_settings = nil
@@ -371,66 +383,14 @@ ThirdPersonEquipmentExtension.add = function(self, slot_name, slot_data)
 		local real_right_unit = skin_data.right_hand_unit
 		if skin_data.right_hand_unit_override then
 			local career_name = self:career_name()
-			real_right_unit = skin_data.right_hand_unit_override[career_name]
+			real_right_unit = skin_data.right_hand_unit_override[career_name] or skin_data.right_hand_unit
 		end
 		if skin_data.left_hand_unit_override then
 			local career_name = self:career_name()
-			real_left_unit = skin_data.left_hand_unit_override[career_name]
+			real_left_unit = skin_data.left_hand_unit_override[career_name] or skin_data.left_hand_unit
 		end
 		left_hand_unit_name = check_for_excluded_units(skin_data, real_left_unit)
 		right_hand_unit_name = check_for_excluded_units(skin_data, real_right_unit)
-	else
-		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
-		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
-	end
-
-
-	if left_hand_unit_name then
-		local left_attach_tisch = weapon_template.left_hand_attachment_node_linking.third_person.unwielded
-		local left_unit = self:spawn(left_hand_unit_name .. "_3p", left_attach_tisch, "left", item_type, item_name, skin_name)
-		if skin_data then
-			material_settings = skin_data.material_settings
-		end
-		self:apply_skin_material_settings(left_unit, material_settings)
-		self.weapons[left_unit] = slot_name
-		mod:echo("Left	"..tostring(left_unit))
-	end
-
-	if right_hand_unit_name then
-		local right_attach_tisch = weapon_template.right_hand_attachment_node_linking.third_person.unwielded
-		right_unit =self:spawn(right_hand_unit_name .. "_3p", right_attach_tisch, "right", item_type, item_name, skin_name)
-		if skin_data then
-			material_settings = skin_data.material_settings
-		end
-		self:apply_skin_material_settings(right_unit, material_settings)
-		self.weapons[right_unit] = slot_name
-		mod:echo("Right	"..tostring(right_unit))
-	end
-
-    -- Update visibility
-    self:set_equipment_visibility()
-end
-
---[[
-	Adds equipment to a slot with given item name and skin name
---]]
-ThirdPersonEquipmentExtension.add_item_to_slot = function(self, slot_name, item_name, skin_name)
-	local item_data = ItemMasterList[item_name]
-
-	local weapon_template_name = item_data.template or item_data.temporary_template
-	local weapon_template = Weapons[weapon_template_name]
-
-	local item_type = item_data.item_type
-
-	local skin_data = WeaponSkins.skins[skin_name] or item_data
-	local material_settings = nil
-
-	local left_hand_unit_name = nil
-	local right_hand_unit_name = nil
-
-	if skin_data then
-		left_hand_unit_name = check_for_excluded_units(skin_data, skin_data.left_hand_unit)
-		right_hand_unit_name = check_for_excluded_units(skin_data, skin_data.right_hand_unit)
 	else
 		left_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.left_hand_unit)
 		right_hand_unit_name = check_for_excluded_units(weapon_template, weapon_template.right_hand_unit)
